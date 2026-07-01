@@ -161,8 +161,16 @@ class Editeur:
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
             self.att2.rect.y -= 5
+            self.att2.rect.x =self.att.rect.x
         elif keys[pygame.K_DOWN]:
             self.att2.rect.y += 5
+            self.att2.rect.x = self.att.rect.x
+        elif keys[pygame.K_LEFT]:
+            self.att2.rect.x -= 5
+            self.att2.rect.y = self.att.rect.y
+        elif keys[pygame.K_RIGHT]:
+            self.att2.rect.x += 5
+            self.att2.rect.y = self.att.rect.y
 
         elif keys[pygame.K_RETURN]:
             Ascensseur(Niveau.en_cours, self.att.rect.x, self.att.rect.size, (self.att.rect.y, self.att2.rect.y))

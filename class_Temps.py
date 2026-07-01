@@ -1,0 +1,1 @@
+#néscéssite de la batterie sur mon autre pc pour que je puisse le recopier

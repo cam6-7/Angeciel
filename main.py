@@ -4,7 +4,7 @@ clock = pygame.time.Clock()
 
 # ==================== VARIABLES DU JEU ====================
 dossier = "/Users/camille/PycharmProjects/Angeciel"
-nombre_de_niveau = len(glob.glob(dossier + "/niveau*.json"))
+nombre_de_niveau = len(glob.glob(dossier + "/objets/niveau*.json"))
 premiere_ouverture = True
 ply = Joueur()
 editeur = Editeur()
@@ -13,7 +13,7 @@ editeur = Editeur()
 # ascensseurs
 
 for i in range(1, nombre_de_niveau+1):
-    with open("ascensseur"+str(i)+".json", "r") as f:
+    with open("objets/ascensseur"+str(i)+".json", "r") as f:
         data = json.load(f)
     for asc in data:
         Ascensseur(
@@ -24,7 +24,7 @@ for i in range(1, nombre_de_niveau+1):
         )
 # plateformes
 for i in range(1, nombre_de_niveau+1):
-    with open("plateforme"+str(i)+".json", "r") as f:
+    with open("objets/plateforme"+str(i)+".json", "r") as f:
         data = json.load(f)
     for plat in data:
         Plateforme(
@@ -37,7 +37,7 @@ for i in range(1, nombre_de_niveau+1):
 
 # niveaux
 for i in range(1, nombre_de_niveau+1):
-    with open("niveau"+str(i)+".json", "r") as f:
+    with open("objets/niveau"+str(i)+".json", "r") as f:
         data = json.load(f)
         Niveau(
             Plateforme.liste[i],
@@ -269,15 +269,15 @@ while Niveau.etat != "close":
 
 # sauvergarde des objets quand le jeu est fini
 for i in range(1, Niveau.nombre + 1):
-    with open("ascensseur"+ str(i) +".json", "w") as f:
+    with open("objets/ascensseur"+ str(i) +".json", "w") as f:
         json.dump([asc.to_dict() for asc in Ascensseur.liste[i]], f, indent=4)
 
 for i in range(1, Niveau.nombre + 1):
-    with open("plateforme"+str(i)+".json", "w") as f:
+    with open("objets/plateforme"+str(i)+".json", "w") as f:
         json.dump([plat.to_dict() for plat in Plateforme.liste[i]], f, indent=4)
 
 for i in range(1, Niveau.nombre + 1):
-    with open("niveau"+str(i)+".json", "w") as f:
+    with open("objets/niveau"+str(i)+".json", "w") as f:
         json.dump(Niveau.liste[i-1].to_dict(), f, indent=4)
 
 pygame.quit()
