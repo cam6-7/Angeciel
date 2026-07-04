@@ -173,7 +173,7 @@ class Editeur:
             self.att2.rect.y = self.att.rect.y
 
         elif keys[pygame.K_RETURN]:
-            Ascensseur(Niveau.en_cours, self.att.rect.x, self.att.rect.size, (self.att.rect.y, self.att2.rect.y))
+            Ascensseur(Niveau.en_cours, self.att.rect.size, self.att.rect.topleft, self.att2.rect.topleft)
             self.att.supprimer()
             self.att2.supprimer()
             self.action = "rien"

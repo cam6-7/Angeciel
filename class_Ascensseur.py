@@ -9,26 +9,48 @@ class Ascensseur(Plateforme):
         liste[i] = []
 
 
-    def __init__(self, niveau, x, taille, max_min):
-        super().__init__(x, max_min[0], taille[0], taille[1], niveau )
+    def __init__(self, niveau, taille, pos1, pos2):
         self.taille = taille
-        self.max = sorted(max_min)
-        self.rect = pygame.Rect(x, self.max[0], taille[0], taille[1])
+        self.pos1 = pos1
+        self.pos2 = pos2
+        self.rect = pygame.Rect(self.pos1[0], self.pos1[1], taille[0], taille[1])
         self.niveau = niveau
-        self.monte = True
+        self.avance = True
+        self.direction = "h" if pos1[0] != pos2[0] else "v"
+        if self.direction == "v":
+            self.sens = True if pos1[1] < pos2[1] else False
+        elif self.direction == "h":
+            self.sens = True if pos1[0] < pos2[0] else False
         Ascensseur.liste[self.niveau].append(self)
 
+
+
     def mouvement(self):
-        if self.rect.y < self.max[0]:
-            self.monte = False
-        elif self.rect.y > self.max[1]:
-            self.monte = True
-        self.rect.y += -1 if self.monte else 1
+
+        if not self.sens: self.avance = not self.avance
+        if self.direction == "v":
+            if self.avance:
+                self.rect.move_ip(0, 1)
+                if self.rect.y > self.pos2[1]:
+                    self.avance = False
+            else:
+                self.rect.move_ip(0, -1)
+                if self.rect.y < self.pos1[1]:
+                    self.avance = True
+        elif self.direction == "h":
+            if self.avance:
+                self.rect.move_ip(1, 0)
+                if self.rect.x > self.pos2[0]:
+                    self.avance = False
+            else:
+                self.rect.move_ip(-1, 0)
+                if self.rect.x < self.pos1[0]:
+                    self.avance = True
 
     def to_dict(self):
         return {
             "niveau": self.niveau,
-            "x": self.rect.x,
             "taille": self.rect.size,
-            "max_min": list(self.max),  # tuple -> liste JSON
+            "pos1": self.pos1,
+            "pos2": self.pos2,
         }

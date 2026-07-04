@@ -18,9 +18,10 @@ for i in range(1, nombre_de_niveau+1):
     for asc in data:
         Ascensseur(
             niveau =asc["niveau"],
-            x=asc["x"],
             taille=(asc["taille"]),
-            max_min=(asc["max_min"])
+            pos1=(asc["pos1"]),
+            pos2 =(asc["pos2"])
+
         )
 # plateformes
 for i in range(1, nombre_de_niveau+1):
@@ -218,22 +219,8 @@ while Niveau.etat != "close":
             ply.vitesse[1] += ply.force[1]
         ply.au_sol = False
 
-        # ==================== COLLISIONS ====================
-        ply.frect = ply.rect.copy()
-
-        ply.frect.y += ply.vitesse[1]
-        for obj in Niveau.actuel.objet:
-            if obj.rect.colliderect(ply.frect):
-                obj.collision_verticale()
-
-        ply.frect.x += ply.vitesse[0]
-        for obj in Niveau.actuel.objet:
-            if obj.rect.colliderect(ply.frect):
-                obj.collision_horizontale()
-
-    # ==================== MOUVEMENTS =====================
-        ply.rect = ply.frect.copy()
-        ply.limit_move()
+        # ==================== COLLISIONS + MOUVEMENTS ====================
+        ply.bouger()
         Screen.camera = max(0, min(ply.rect.x - Screen.largeur() // 2, Niveau.actuel.taille - Screen.largeur()))
 
         # ==================== AFFICHAGE ==================================================================================

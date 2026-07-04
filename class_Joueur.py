@@ -13,6 +13,22 @@ class Joueur:
         self.taille = 25
         Joueur.ply = self
 
+    def bouger(self):
+        self.frect = self.rect.copy()
+
+        self.frect.y += self.vitesse[1]
+        for obj in Niveau.actuel.objet:
+            if obj.rect.colliderect(self.frect):
+                obj.collision_verticale()
+
+        self.frect.x += self.vitesse[0]
+        for obj in Niveau.actuel.objet:
+            if obj.rect.colliderect(self.frect):
+                obj.collision_horizontale()
+
+        self.rect = self.frect.copy()
+        self.limit_move()
+
     def limit_move(self):
         # si on va trop a gauche
         if self.rect.left + self.vitesse[0] < 0:

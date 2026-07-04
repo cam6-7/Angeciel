@@ -59,14 +59,6 @@ class Plateforme:
             ply.frect.top = self.rect.bottom
             ply.vitesse[1] = 0
 
-        for obj in Niveau.actuel.objet:
-            if obj.rect.colliderect(ply.frect):
-                if obj in Niveau.actuel.ascensseurs and obj.monte == True:
-                    ply.frect.bottom = obj.rect.top
-                    ply.au_sol = True
-                    ply.vitesse[1] = 0
-                else:
-                    ply.reinitialiser_jeu()
 
     def to_dict(self):
         return {
