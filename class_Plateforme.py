@@ -14,7 +14,7 @@ class Plateforme:
     def __init__(self, x, y, l, h, niveau):
         self.niveau = niveau
         self.rect = pygame.Rect(x, y, l, h)
-        if type(self) is Plateforme: Plateforme.liste[self.niveau].append(self)
+        Plateforme.liste[self.niveau].append(self)
 
     def supprimer(self):
         if self in Niveau.actuel.ascensseurs :

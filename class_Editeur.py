@@ -47,10 +47,6 @@ class Editeur:
         for b in self.boutons:
             b.afficher()
 
-        #self.t.mise_a_jour(self.action + "      " + self.type)
-        #self.t.afficher()
-
-
     def gestion_camera(self):
         self.camera = Screen.camera - 200
         if self.action != "modifier":
@@ -90,9 +86,7 @@ class Editeur:
             if pygame.mouse.get_pos()[0] > 200:
                 if pygame.mouse.get_pressed()[0]:
                     if self.action == "rien":
-                        self.souris1 = pygame.mouse.get_pos()
                         self._clic_debut()
-                        self.att = Plateforme(0, 0, 0, 0, Niveau.en_cours)
                     if self.action == "creer" and self.type != "rien":
                         self._clic_enfonce()
                 elif event.type == pygame.MOUSEBUTTONUP and event.button == 1 and self.action == "creer":
@@ -102,18 +96,18 @@ class Editeur:
 
 
     def _clic_debut(self):
-        clic = 0
+
+        self.souris1 = pygame.mouse.get_pos()
         sourisE = list(pygame.mouse.get_pos())
         sourisE[0] += self.camera
-        for plat in Niveau.actuel.plateformes:
-            if plat.rect.collidepoint(sourisE):
-                plat.supprimer()
-                clic = 1
-        for asc in Niveau.actuel.ascensseurs:
-            if asc.rect.collidepoint(sourisE):
-                asc.supprimer()
+
+        clic = 0
+        for obj in Niveau.actuel.objet:
+            if obj.rect.collidepoint(sourisE):
+                obj.supprimer()
                 clic = 1
         if clic == 0 and self.type != "rien":
+            self.att = Plateforme(0, 0, 0, 0, Niveau.en_cours)
             self.action = "creer"
 
     def _clic_enfonce(self):
@@ -146,10 +140,7 @@ class Editeur:
     def _clic_relache(self):
         r = self.att.rect
         if self.type == "plat":
-            self.att.copy()
-            self.att.supprimer()
             self.action = "rien"
-            self.type = "rien"
 
         elif self.type == "asc":
             self.action = "modifier"

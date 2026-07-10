@@ -1,9 +1,9 @@
-import sys, json, glob
+import sys, json, glob, os
 from mes_class import *
 clock = pygame.time.Clock()
 
 # ==================== VARIABLES DU JEU ====================
-dossier = "/Users/camille/PycharmProjects/Angeciel"
+dossier = os.path.dirname(os.path.abspath(__file__))
 nombre_de_niveau = len(glob.glob(dossier + "/objets/niveau*.json"))
 premiere_ouverture = True
 ply = Joueur()
@@ -107,7 +107,7 @@ input_box1 = ZoneDeTexte("", (130, 230), "couleur", Niveau.actuel)
 input_box2 = ZoneDeTexte("", (100, 370), "taille", Niveau.actuel)
 
 
-
+print("début")
 # ==================== BOUCLE PRINCIPALE ====================
 while Niveau.etat != "close":
     events = []

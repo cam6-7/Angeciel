@@ -1,3 +1,4 @@
+from class_Joueur import Joueur
 from class_Plateforme import Plateforme
 import pygame
 pygame.init()
@@ -21,31 +22,51 @@ class Ascensseur(Plateforme):
             self.sens = True if pos1[1] < pos2[1] else False
         elif self.direction == "h":
             self.sens = True if pos1[0] < pos2[0] else False
+        self.pos_g, self.pos_d = sorted([pos1, pos2], key=lambda x: x[0])
+        self.pos_h, self.pos_b = sorted([pos1, pos2], key=lambda x: x[1])
         Ascensseur.liste[self.niveau].append(self)
 
 
 
     def mouvement(self):
-
-        if not self.sens: self.avance = not self.avance
+        ply = Joueur.ply
+        move = [0, 0]
         if self.direction == "v":
             if self.avance:
-                self.rect.move_ip(0, 1)
-                if self.rect.y > self.pos2[1]:
+                move[1] = 2
+                if self.rect.y > self.pos_b[1]:
                     self.avance = False
             else:
-                self.rect.move_ip(0, -1)
-                if self.rect.y < self.pos1[1]:
+                move[1] = -2
+                if self.rect.y < self.pos_h[1]:
                     self.avance = True
+
+
         elif self.direction == "h":
             if self.avance:
-                self.rect.move_ip(1, 0)
-                if self.rect.x > self.pos2[0]:
+                move[0] = 2
+                if self.rect.x > self.pos_d[0]:
                     self.avance = False
             else:
-                self.rect.move_ip(-1, 0)
-                if self.rect.x < self.pos1[0]:
+                move[0] = -2
+                if self.rect.x < self.pos_g[0]:
                     self.avance = True
+
+        if not ply.rect.colliderect(self.rect) and ply.rect.colliderect(self.rect.move(*move)) :
+            self.rect.move_ip(*move)
+            ply.rect.move_ip(*move)
+            if move[1] == 2:
+                ply.collids["haut"] = 2
+            elif move[1] == -2:
+                ply.collids["bas"] = 2
+            elif move[0] == 2:
+                ply.collids["gauche"] = 2
+            elif move[0] == -2:
+                ply.collids["droite"] = 2
+        else:
+            self.rect.move_ip(*move)
+
+
 
     def to_dict(self):
         return {
