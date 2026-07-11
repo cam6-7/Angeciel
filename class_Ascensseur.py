@@ -1,12 +1,13 @@
 from class_Joueur import Joueur
 from class_Plateforme import Plateforme
-import pygame
+import pygame, os, glob
 pygame.init()
-
+dossier = os.path.dirname(os.path.abspath(__file__))
+nombre_de_niveau = len(glob.glob(dossier + "/objets/niveau*.json"))
 class Ascensseur(Plateforme):
 
     liste = {}
-    for i in range(1,5):
+    for i in range(1,nombre_de_niveau + 1):
         liste[i] = []
 
 

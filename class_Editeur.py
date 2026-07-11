@@ -1,15 +1,20 @@
 from class_Screen import Screen
-from class_Bouton import Bouton
+from class_Bouton import Bouton, ListeBouton
 from class_Niveau import Niveau
 from class_Plateforme import Plateforme
 from class_Ascensseur import Ascensseur
 from fonction_texture import dessiner_plateforme_texturee
 from class_Texte import Texte
 from cp import *
-import pygame
+from fonction_ressource_path import resource_path
+from class_BoutonIMG import BoutonIMG
+import pygame, os, glob
 pygame.init()
 clock = pygame.time.Clock()
-
+fleche_d = pygame.image.load(resource_path("resources/flèche2.png"))
+fleche_g = pygame.transform.flip(pygame.image.load(resource_path("resources/flèche2.png")), True, False)
+dossier = os.path.dirname(os.path.abspath(__file__))
+nombre_de_niveau = len(glob.glob(dossier + "/objets/niveau*.json"))
 class Editeur:
 
     def __init__(self ):
@@ -19,14 +24,25 @@ class Editeur:
         self.att = None
         self.souris1 = None
         self.type = "rien"
+        self.decalage = 0
         self.boutons = [
-    Bouton("Retour", [10, 50], couleur= WHITE),
-    Bouton("Tester", [10, 100], couleur= WHITE),
-    Bouton("changer de\nniveau", [10, 200], couleur=WHITE),
-    Bouton("paramettre\ndu niveau", [10, 300], couleur=WHITE),
-    Bouton("créer une\nplateforme", [10, 400], couleur=WHITE),
-    Bouton("créer un\nascensseur", [10, 500], couleur=WHITE),
-]
+            Bouton("Retour", [10, 50], couleur= WHITE),
+            Bouton("Tester", [10, 100], couleur= WHITE),
+            Bouton("paramettre\ndu niveau", [10, 300], couleur=WHITE),
+            Bouton("créer une\nplateforme", [10, 400], couleur=WHITE),
+            Bouton("créer un\nascensseur", [10, 500], couleur=WHITE),]
+
+        self.boutons_n = []
+        for i, n in enumerate(Niveau.liste):
+            b = Bouton(n.name, (i * 150 + 300, 25), couleur="WHITE")
+            b.afficher()
+            self.boutons_n.append(b)
+        self.boutons_n = ListeBouton(self.boutons_n)
+
+        self.fleche_d = BoutonIMG(fleche_d, (Screen.largeur() - 75, 15))
+        self.fleche_g = BoutonIMG(fleche_g, (200, 15))
+
+
 
 
 
@@ -42,10 +58,35 @@ class Editeur:
             asc.mouvement()
             dessiner_plateforme_texturee(asc.rect.move(- self.camera, 0))
 
+
+        #boutons
+
         pygame.draw.rect(Screen.screen, (0, 0, 0), (0, 0, 200, Screen.hauteur()))
+        pygame.draw.rect(Screen.screen, (0, 0, 0), (0, 0, Screen.largeur(), 75))
 
         for b in self.boutons:
             b.afficher()
+        self.boutons_n.afficher(self.decalage, nombre_de_niveau - 1)
+
+
+        self.fleche_d.afficher()
+        self.fleche_g.afficher()
+
+        if self.fleche_g.est_clique():
+            self.decalage -= 1
+            if self.decalage < 0:
+                self.decalage = 0
+            else:
+                self.boutons_n.decaler(-1)
+
+        elif self.fleche_d.est_clique():
+            self.decalage += 1
+            if self.decalage > nombre_de_niveau - 4:
+                self.decalage = nombre_de_niveau - 4
+                print("probleme ")
+            else:
+                self.boutons_n.decaler(1)
+
 
     def gestion_camera(self):
         self.camera = Screen.camera - 200
@@ -64,22 +105,22 @@ class Editeur:
 
 
     def gestion_bouton(self):
-        etat = "editeur"
         if self.boutons[0].est_clique():
             self.fermer()
-            etat = "menu"
+            Niveau.etat = "menu"
         if self.boutons[1].est_clique():
             self.fermer()
-            etat = "test"
+            Niveau.etat = "test"
         elif self.boutons[2].est_clique():
-            etat = "choix_niv2"
+            Niveau.etat = "paramettre"
         elif self.boutons[3].est_clique():
-            etat = "paramettre"
-        elif self.boutons[4].est_clique():
             self.type = "plat"
-        elif self.boutons[5].est_clique():
+        elif self.boutons[4].est_clique():
             self.type = "asc"
-        return etat
+        elif self.boutons_n.est_cliquer():
+            Niveau.changer(self.boutons_n.boutons.index(self.boutons_n.bouton) + 1)
+            self.fermer(1)
+
 
     def gestion_creation(self, events):
         for event in events:
@@ -173,12 +214,15 @@ class Editeur:
 
 
 
-    def fermer(self):
+    def fermer(self, force = 0):
         Screen.camera = -200
         self.action = "rien"
         self.type = "rien"
         self.att = None
         self.souris1 = None
+        if force == 0:
+            self.boutons_n.decaler(self.decalage)
+            self.decalage = 0
 
     @staticmethod
     def draw_grid(surface=Screen.screen, cell_size=25):

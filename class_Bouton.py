@@ -10,11 +10,14 @@ class Bouton(Texte):
         super().__init__(text, position, couleur, taille, police, centre)
         self.gtaille = self.taille + 10
         self.ptaille = self.taille
+        self.active = True
 
-    def afficher(self):
-        self._changetaille()
-        self.centrer()
-        Screen.screen.blit(self.ecri, (self.x, self.y))
+    def afficher(self, active = True):
+        self.active = active
+        if active:
+            self._changetaille()
+            self.centrer()
+            Screen.screen.blit(self.ecri, (self.x, self.y))
 
     def _changetaille(self):
         if self.rect.collidepoint(pygame.mouse.get_pos()):
@@ -33,8 +36,35 @@ class Bouton(Texte):
         t = pygame.time.get_ticks()
         if self.rect.collidepoint(pygame.mouse.get_pos()):
             if pygame.mouse.get_pressed()[0]:
-                if t - Bouton.last_clic > 200:
+                if t - Bouton.last_clic > 200 and self.active:
                     touch = True
                     s_click.play()
                     Bouton.last_clic = pygame.time.get_ticks()
         return touch
+
+class ListeBouton:
+    def __init__(self, boutons):
+        self.boutons = boutons
+        self.bouton = None
+        self.pos = []
+        for b in self.boutons:
+            self.pos.append([b.x, b.y])
+
+    def est_cliquer(self):
+        clique = False
+        for b in self.boutons:
+            if b.est_clique():
+                clique = True
+                self.bouton = b
+        return clique
+
+    def afficher(self, decalage = 0, nb = 4):
+        for b in self.boutons:
+            touch = False
+            if decalage <= self.boutons.index(b) < decalage + nb:
+                touch = True
+            b.afficher(touch)
+
+    def decaler(self, quantite):
+        for i,b in enumerate(self.boutons):
+            b.mise_a_jour("", (b.x - (quantite * 150), b.y))

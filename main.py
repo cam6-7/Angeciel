@@ -7,7 +7,6 @@ dossier = os.path.dirname(os.path.abspath(__file__))
 nombre_de_niveau = len(glob.glob(dossier + "/objets/niveau*.json"))
 premiere_ouverture = True
 ply = Joueur()
-editeur = Editeur()
 
 # ================= IMPORTS ===================
 # ascensseurs
@@ -46,6 +45,9 @@ for i in range(1, nombre_de_niveau+1):
             data["taille"],
             data["couleur"]
         )
+
+
+editeur = Editeur()
 
 
 # images
@@ -150,16 +152,6 @@ while Niveau.etat != "close":
                 Niveau.changer(menu_c.boutons.index(bouton))
                 Niveau.etat = "menu"
 
-    if Niveau.etat == "choix_niv2":
-        menu_c.afficher()
-        if menu_c.boutons[0].est_clique():
-            Niveau.etat = "editeur"
-
-        for bouton in menu_c.boutons:
-            if bouton.est_clique():
-                Niveau.changer(menu_c.boutons.index(bouton))
-                Niveau.etat = "editeur"
-
     if Niveau.etat == "paramettre":
         menu_p.afficher()
         input_box1.afficher(events)
@@ -172,7 +164,7 @@ while Niveau.etat != "close":
         editeur.gestion_camera()
         editeur.afficher()
         editeur.gestion_creation(events)
-        Niveau.etat = editeur.gestion_bouton()
+        editeur.gestion_bouton()
 
     # ==================== VICTOIRE ====================
     if Niveau.etat == "victoire":

@@ -8,14 +8,19 @@ class Niveau:
     etat = "menu"
 
     liste = []
-    def __init__(self, plateformes, ascensseurs, taille, couleur):
+    def __init__(self, plateformes, ascensseurs, taille, couleur, name = f""):
         self.plateformes = plateformes
         self.ascensseurs = ascensseurs
         self.taille = taille
         self.couleur = couleur
+
         Niveau.nombre += 1
         Niveau.liste.append(self)
         self.numero = Niveau.nombre
+        if name == "":
+            self.name = f"niveau{Niveau.nombre}"
+        else:
+            self.name = name
         if self.numero == Niveau.en_cours:
             Niveau.actuel = self
 

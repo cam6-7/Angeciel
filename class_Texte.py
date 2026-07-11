@@ -40,12 +40,12 @@ class Texte:
             surface.blit(s, (0, 0))
         return surface
 
-    def mise_a_jour(self, nouveau_text = "", nouvelle_pos = (0, 0)):
+    def mise_a_jour(self, nouveau_text = "", nouvelle_pos = False):
         if nouveau_text != "":
             self.text = nouveau_text
             self.surface = self._get_surface()
             self.rect = self.surface.get_rect(topleft = (self.x, self.y))
-        if nouvelle_pos != (0, 0):
+        if nouvelle_pos:
             self.x = nouvelle_pos[0]
             self.y = nouvelle_pos[1]
             self.rect = self.surface.get_rect(topleft = nouvelle_pos)
