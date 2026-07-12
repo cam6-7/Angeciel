@@ -3,7 +3,7 @@ from class_Screen import Screen
 
 class Texte:
     def __init__(self, text, position, couleur=BLACK, taille = 30, police = "arial", centre = ""):
-        self.text = text
+        self.text = str(text)
         self.x = position[0]
         self.y = position[1]
         self.couleur = couleur

@@ -1,3 +1,4 @@
+from class_Joueur import Joueur
 from class_Screen import Screen
 from class_Bouton import Bouton, ListeBouton
 from class_Niveau import Niveau
@@ -8,6 +9,7 @@ from class_Texte import Texte
 from cp import *
 from fonction_ressource_path import resource_path
 from class_BoutonIMG import BoutonIMG
+from class_Message import Message
 import pygame, os, glob
 pygame.init()
 clock = pygame.time.Clock()
@@ -58,9 +60,7 @@ class Editeur:
             asc.mouvement()
             dessiner_plateforme_texturee(asc.rect.move(- self.camera, 0))
 
-
         #boutons
-
         pygame.draw.rect(Screen.screen, (0, 0, 0), (0, 0, 200, Screen.hauteur()))
         pygame.draw.rect(Screen.screen, (0, 0, 0), (0, 0, Screen.largeur(), 75))
 
@@ -83,12 +83,12 @@ class Editeur:
             self.decalage += 1
             if self.decalage > nombre_de_niveau - 4:
                 self.decalage = nombre_de_niveau - 4
-                print("probleme ")
             else:
                 self.boutons_n.decaler(1)
 
 
     def gestion_camera(self):
+        Screen.camera -= Screen.camera % 25
         self.camera = Screen.camera - 200
         if self.action != "modifier":
             keys = pygame.key.get_pressed()
@@ -109,8 +109,8 @@ class Editeur:
             self.fermer()
             Niveau.etat = "menu"
         if self.boutons[1].est_clique():
-            self.fermer()
-            Niveau.etat = "test"
+            self.action = "test"
+            Message("Cliquer là où vous voulez allez")
         elif self.boutons[2].est_clique():
             Niveau.etat = "paramettre"
         elif self.boutons[3].est_clique():
@@ -133,7 +133,9 @@ class Editeur:
                 elif event.type == pygame.MOUSEBUTTONUP and event.button == 1 and self.action == "creer":
                     self._clic_relache()
         if self.action == "modifier":
-            self._creation_asc()
+            self._creation_asc(events)
+        elif self.action == "test":
+            self._gestion_test()
 
 
     def _clic_debut(self):
@@ -187,35 +189,44 @@ class Editeur:
             self.action = "modifier"
             self.att2 = self.att.copy()
 
+    def _gestion_test(self):
+        if pygame.mouse.get_pos()[0] > 200 and pygame.mouse.get_pos()[1] > 75:
+            if pygame.mouse.get_pressed()[0]:
+                souris = list(pygame.mouse.get_pos())
+                souris[0] = self.arrondir25(souris[0], "i") + self.camera
+                souris[1] = self.arrondir25(souris[1], "i")
+                Niveau.etat = "test"
+                Joueur.ply.rect.topleft = souris
+                #Screen.camera = max(0, min(Joueur.ply.rect.x - Screen.largeur() // 2, Niveau.actuel.taille - Screen.largeur()))
+                self.fermer(2)
 
 
-    def _creation_asc(self):
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_UP]:
-            self.att2.rect.y -= 5
-            self.att2.rect.x =self.att.rect.x
-        elif keys[pygame.K_DOWN]:
-            self.att2.rect.y += 5
-            self.att2.rect.x = self.att.rect.x
-        elif keys[pygame.K_LEFT]:
-            self.att2.rect.x -= 5
-            self.att2.rect.y = self.att.rect.y
-        elif keys[pygame.K_RIGHT]:
-            self.att2.rect.x += 5
-            self.att2.rect.y = self.att.rect.y
-
-        elif keys[pygame.K_RETURN]:
-            Ascensseur(Niveau.en_cours, self.att.rect.size, self.att.rect.topleft, self.att2.rect.topleft)
-            self.att.supprimer()
-            self.att2.supprimer()
-            self.action = "rien"
-            self.type = "rien"
+    def _creation_asc(self, events):
+        for event in events:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    self.att2.rect.y -= 25
+                    self.att2.rect.x =self.att.rect.x
+                elif event.key == pygame.K_DOWN:
+                    self.att2.rect.y += 25
+                    self.att2.rect.x = self.att.rect.x
+                elif event.key == pygame.K_LEFT:
+                    self.att2.rect.x -= 25
+                    self.att2.rect.y = self.att.rect.y
+                elif event.key == pygame.K_RIGHT:
+                    self.att2.rect.x += 25
+                    self.att2.rect.y = self.att.rect.y
+                elif event.key == pygame.K_RETURN:
+                    Ascensseur(Niveau.en_cours, self.att.rect.size, self.att.rect.topleft, self.att2.rect.topleft)
+                    self.att.supprimer()
+                    self.att2.supprimer()
+                    self.action = "rien"
+                    self.type = "rien"
 
 
 
 
     def fermer(self, force = 0):
-        Screen.camera = -200
         self.action = "rien"
         self.type = "rien"
         self.att = None
@@ -223,6 +234,8 @@ class Editeur:
         if force == 0:
             self.boutons_n.decaler(-self.decalage)
             self.decalage = 0
+        if force <= 1:
+            Screen.camera = -200
 
     @staticmethod
     def draw_grid(surface=Screen.screen, cell_size=25):

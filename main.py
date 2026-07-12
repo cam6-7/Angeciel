@@ -96,7 +96,7 @@ menu_p = Menu([
 # textes de tutoriels
 aide1 = TexteD('Utilisez les\nflèches directionnelles\npour vous déplacer', [50, 425], taille = 20)
 aide2 = TexteD("Appuyez sur espace\npour sauter", (500, 440), taille = 20)
-aide3 = TexteD("Attention\nà ne pas tomber", (1050, 300), taille = 20)
+aide3 = TexteD("Attention\nà ne pas tomber", (1200, 330), taille = 20)
 aide4 = TexteD("Sautez\nIl n'y a aucun dégat de chute!", (3300, 50), taille = 20)
 aide5 = TexteD("Bravo,\nvous avez fini le tutoriel,\nbonne chance pour\nla suite !", (4700, 150), taille = 20)
 debug1 = TexteD(f"niveau : {Niveau.en_cours}", (Screen.largeur() - 200, 20))
