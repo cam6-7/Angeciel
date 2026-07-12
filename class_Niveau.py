@@ -8,7 +8,7 @@ class Niveau:
     etat = "menu"
 
     liste = []
-    def __init__(self, plateformes, ascensseurs, taille, couleur, name = f""):
+    def __init__(self, plateformes, ascensseurs, taille, couleur, name = ""):
         self.plateformes = plateformes
         self.ascensseurs = ascensseurs
         self.taille = taille

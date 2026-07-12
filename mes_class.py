@@ -12,4 +12,6 @@ from fonction_texture import dessiner_plateforme_texturee
 from fonction_ressource_path import resource_path
 from class_ZoneDeTexte import ZoneDeTexte
 from class_TexteD import TexteD
+from class_Message import Message
+from class_Temps import Timer
 from cp import *

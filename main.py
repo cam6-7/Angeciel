@@ -49,6 +49,8 @@ for i in range(1, nombre_de_niveau+1):
 
 editeur = Editeur()
 
+def direbonjour():
+    print("hello")
 
 # images
 image_player_d = pygame.image.load(resource_path("resources/image_player_d.png"))
@@ -241,7 +243,7 @@ while Niveau.etat != "close":
             aide4.move(Screen.camera, ply.rect_ecran)
             aide5.move(Screen.camera, ply.rect_ecran)
 
-
+    Timer.mise_a_jour()
     pygame.display.flip()
     clock.tick(60)
 

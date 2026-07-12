@@ -221,7 +221,7 @@ class Editeur:
         self.att = None
         self.souris1 = None
         if force == 0:
-            self.boutons_n.decaler(self.decalage)
+            self.boutons_n.decaler(-self.decalage)
             self.decalage = 0
 
     @staticmethod
