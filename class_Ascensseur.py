@@ -35,6 +35,8 @@ class Ascensseur(Plateforme):
         if self.direction == "v":
             if self.avance:
                 move[1] = 2
+                if self.rect.move(0, -2).colliderect(ply.rect):
+                    ply.rect.move_ip((0, 2))
                 if self.rect.y > self.pos_b[1]:
                     self.avance = False
             else:

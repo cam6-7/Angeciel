@@ -11,11 +11,23 @@ class Plateforme:
     for i in range(1, nombre_de_niveau + 1):
         liste[i] = []
 
+    def toucher(self, rect):
+        if self.rect.colliderect(rect.inflate(2,2)):
+            distance = { "gauche" : self.rect.right - rect.left, "droite" : rect.right - self.rect.left , "haut" : self.rect.bottom - rect.top , "bas" : rect.bottom - self.rect.top}
+            cles = [cle for cle, valeur in distance.items() if valeur >= 0]
+            distance = {cle: distance[cle] for cle in cles}
+            valeur_max = min(distance.values())
+            return [cle for cle, valeur in distance.items() if valeur == valeur_max]
+        else :
+            return False
+
+
 
     def __init__(self, x, y, l, h, niveau):
         self.niveau = niveau
         self.rect = pygame.Rect(x, y, l, h)
-        Plateforme.liste[self.niveau].append(self)
+        if type(self) is Plateforme:
+            Plateforme.liste[self.niveau].append(self)
 
     def supprimer(self):
         if self in Niveau.actuel.ascensseurs :
@@ -29,15 +41,6 @@ class Plateforme:
         Plateforme.liste[self.niveau].append(self)
 
 
-    def collision_horizontale(self):
-        ply = Joueur.ply
-        # par la gauche
-        if ply.vitesse[0] > 0:
-            ply.frect.right = self.rect.x
-        # par la droite
-        elif ply.vitesse[0] < 0:
-            ply.frect.x = self.rect.right
-
     def collidepoint(self, point):
         if self.rect.collidepoint(point):
             return True
@@ -47,18 +50,41 @@ class Plateforme:
     def copy(self):
         return Plateforme(self.rect.x, self.rect.y, self.rect.width, self.rect.height, self.niveau)
 
-    def collision_verticale(self):
+    def collision(self, direction):
         ply = Joueur.ply
-        # Collision par le dessus
-        if ply.vitesse[1] > 0:
-            ply.frect.bottom = self.rect.top
-            ply.au_sol = True
-            ply.vitesse[1] = 0
+        collids = ply.collids
+        d = ""
+        if direction == "h":
+            # par la droite
+            if ply.vitesse[0] >= 0:
+                ply.frect.right = self.rect.x
+                ply.vitesse[0] = 0
+                d = "droite"
 
-        # Collision par le dessous
-        elif ply.vitesse[1] <= 0:
-            ply.frect.top = self.rect.bottom
-            ply.vitesse[1] = 0
+            # par la gauche
+            elif ply.vitesse[0] < 0:
+                ply.frect.x = self.rect.right
+                ply.vitesse[0] = 0
+                d = "gauche"
+
+
+        elif direction == "v":
+        # Collision par le dessus
+            if ply.vitesse[1] > 0:
+                ply.frect.bottom = self.rect.top
+                ply.au_sol = True
+                ply.vitesse[1] = 0
+                d = "bas"
+
+            # Collision par le dessous
+            elif ply.vitesse[1] <= 0:
+                ply.frect.top = self.rect.bottom
+                ply.vitesse[1] = 0
+                d = "haut"
+        collids[d] = 1 if collids[d] == 0 else 2
+
+
+
 
 
     def to_dict(self):

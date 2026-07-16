@@ -26,14 +26,6 @@
     {
         "type": "Plateforme",
         "niveau": 1,
-        "x": 0,
-        "y": 500,
-        "largeur": 700,
-        "hauteur": 25
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 3400,
         "y": 100,
         "largeur": 100,
@@ -222,5 +214,21 @@
         "y": 0,
         "largeur": 0,
         "hauteur": 0
+    },
+    {
+        "type": "Plateforme",
+        "niveau": 1,
+        "x": 0,
+        "y": 500,
+        "largeur": 700,
+        "hauteur": 25
+    },
+    {
+        "type": "Plateforme",
+        "niveau": 1,
+        "x": 250,
+        "y": 325,
+        "largeur": 175,
+        "hauteur": 25
     }
 ]

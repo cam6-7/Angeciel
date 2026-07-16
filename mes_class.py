@@ -14,4 +14,5 @@ from class_ZoneDeTexte import ZoneDeTexte
 from class_TexteD import TexteD
 from class_Message import Message
 from class_Temps import Timer
+from class_Debug import Debug
 from cp import *

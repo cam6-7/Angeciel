@@ -106,30 +106,6 @@
     {
         "type": "Plateforme",
         "niveau": 4,
-        "x": 2550,
-        "y": 575,
-        "largeur": 25,
-        "hauteur": 25
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 4,
-        "x": 2575,
-        "y": 550,
-        "largeur": 25,
-        "hauteur": 25
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 4,
-        "x": 2600,
-        "y": 525,
-        "largeur": 25,
-        "hauteur": 25
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 4,
         "x": 2650,
         "y": 475,
         "largeur": 25,
@@ -362,22 +338,6 @@
     {
         "type": "Plateforme",
         "niveau": 4,
-        "x": 4450,
-        "y": 125,
-        "largeur": 150,
-        "hauteur": 25
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 4,
-        "x": 4650,
-        "y": 125,
-        "largeur": 150,
-        "hauteur": 25
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 4,
         "x": 3925,
         "y": 225,
         "largeur": 25,
@@ -397,70 +357,6 @@
         "x": 3525,
         "y": 575,
         "largeur": 50,
-        "hauteur": 25
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 4,
-        "x": 4050,
-        "y": 125,
-        "largeur": 350,
-        "hauteur": 25
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 4,
-        "x": 4400,
-        "y": 150,
-        "largeur": 50,
-        "hauteur": 25
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 4,
-        "x": 4600,
-        "y": 150,
-        "largeur": 50,
-        "hauteur": 25
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 4,
-        "x": 4800,
-        "y": 150,
-        "largeur": 50,
-        "hauteur": 25
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 4,
-        "x": 2350,
-        "y": 575,
-        "largeur": 200,
-        "hauteur": 25
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 4,
-        "x": 4250,
-        "y": 0,
-        "largeur": 25,
-        "hauteur": 100
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 4,
-        "x": 4850,
-        "y": 125,
-        "largeur": 175,
-        "hauteur": 25
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 4,
-        "x": 5125,
-        "y": 200,
-        "largeur": 225,
         "hauteur": 25
     },
     {
@@ -714,30 +610,6 @@
     {
         "type": "Plateforme",
         "niveau": 4,
-        "x": 2550,
-        "y": 575,
-        "largeur": 25,
-        "hauteur": 25
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 4,
-        "x": 2575,
-        "y": 550,
-        "largeur": 25,
-        "hauteur": 25
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 4,
-        "x": 2600,
-        "y": 525,
-        "largeur": 25,
-        "hauteur": 25
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 4,
         "x": 2650,
         "y": 475,
         "largeur": 25,
@@ -970,22 +842,6 @@
     {
         "type": "Plateforme",
         "niveau": 4,
-        "x": 4450,
-        "y": 125,
-        "largeur": 150,
-        "hauteur": 25
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 4,
-        "x": 4650,
-        "y": 125,
-        "largeur": 150,
-        "hauteur": 25
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 4,
         "x": 3925,
         "y": 225,
         "largeur": 25,
@@ -1005,70 +861,6 @@
         "x": 3525,
         "y": 575,
         "largeur": 50,
-        "hauteur": 25
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 4,
-        "x": 4050,
-        "y": 125,
-        "largeur": 350,
-        "hauteur": 25
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 4,
-        "x": 4400,
-        "y": 150,
-        "largeur": 50,
-        "hauteur": 25
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 4,
-        "x": 4600,
-        "y": 150,
-        "largeur": 50,
-        "hauteur": 25
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 4,
-        "x": 4800,
-        "y": 150,
-        "largeur": 50,
-        "hauteur": 25
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 4,
-        "x": 2350,
-        "y": 575,
-        "largeur": 200,
-        "hauteur": 25
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 4,
-        "x": 4250,
-        "y": 0,
-        "largeur": 25,
-        "hauteur": 100
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 4,
-        "x": 4850,
-        "y": 125,
-        "largeur": 175,
-        "hauteur": 25
-    },
-    {
-        "type": "Plateforme",
-        "niveau": 4,
-        "x": 5125,
-        "y": 200,
-        "largeur": 225,
         "hauteur": 25
     },
     {
@@ -1213,6 +1005,134 @@
         "x": 5325,
         "y": 50,
         "largeur": 25,
+        "hauteur": 25
+    },
+    {
+        "type": "Plateforme",
+        "niveau": 4,
+        "x": 2600,
+        "y": 525,
+        "largeur": 25,
+        "hauteur": 25
+    },
+    {
+        "type": "Plateforme",
+        "niveau": 4,
+        "x": 2575,
+        "y": 550,
+        "largeur": 25,
+        "hauteur": 25
+    },
+    {
+        "type": "Plateforme",
+        "niveau": 4,
+        "x": 2400,
+        "y": 575,
+        "largeur": 175,
+        "hauteur": 25
+    },
+    {
+        "type": "Plateforme",
+        "niveau": 4,
+        "x": 4100,
+        "y": 200,
+        "largeur": 300,
+        "hauteur": 25
+    },
+    {
+        "type": "Plateforme",
+        "niveau": 4,
+        "x": 4450,
+        "y": 200,
+        "largeur": 150,
+        "hauteur": 25
+    },
+    {
+        "type": "Plateforme",
+        "niveau": 4,
+        "x": 4650,
+        "y": 200,
+        "largeur": 150,
+        "hauteur": 25
+    },
+    {
+        "type": "Plateforme",
+        "niveau": 4,
+        "x": 4850,
+        "y": 200,
+        "largeur": 500,
+        "hauteur": 25
+    },
+    {
+        "type": "Plateforme",
+        "niveau": 4,
+        "x": 4575,
+        "y": 225,
+        "largeur": 25,
+        "hauteur": 50
+    },
+    {
+        "type": "Plateforme",
+        "niveau": 4,
+        "x": 4650,
+        "y": 225,
+        "largeur": 25,
+        "hauteur": 50
+    },
+    {
+        "type": "Plateforme",
+        "niveau": 4,
+        "x": 4600,
+        "y": 250,
+        "largeur": 50,
+        "hauteur": 25
+    },
+    {
+        "type": "Plateforme",
+        "niveau": 4,
+        "x": 4775,
+        "y": 225,
+        "largeur": 25,
+        "hauteur": 50
+    },
+    {
+        "type": "Plateforme",
+        "niveau": 4,
+        "x": 4850,
+        "y": 225,
+        "largeur": 25,
+        "hauteur": 50
+    },
+    {
+        "type": "Plateforme",
+        "niveau": 4,
+        "x": 4800,
+        "y": 250,
+        "largeur": 50,
+        "hauteur": 25
+    },
+    {
+        "type": "Plateforme",
+        "niveau": 4,
+        "x": 4375,
+        "y": 225,
+        "largeur": 25,
+        "hauteur": 50
+    },
+    {
+        "type": "Plateforme",
+        "niveau": 4,
+        "x": 4450,
+        "y": 225,
+        "largeur": 25,
+        "hauteur": 50
+    },
+    {
+        "type": "Plateforme",
+        "niveau": 4,
+        "x": 4400,
+        "y": 250,
+        "largeur": 50,
         "hauteur": 25
     }
 ]

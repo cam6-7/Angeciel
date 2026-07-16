@@ -48,10 +48,7 @@ for i in range(1, nombre_de_niveau+1):
 
 
 editeur = Editeur()
-
-def direbonjour():
-    print("hello")
-
+Debug("en_cours", Niveau, ["jeu", "test"], "Niveau ")
 # images
 image_player_d = pygame.image.load(resource_path("resources/image_player_d.png"))
 image_player_g = pygame.image.load(resource_path("resources/image_player_g.png"))
@@ -99,7 +96,6 @@ aide2 = TexteD("Appuyez sur espace\npour sauter", (500, 440), taille = 20)
 aide3 = TexteD("Attention\nà ne pas tomber", (1200, 330), taille = 20)
 aide4 = TexteD("Sautez\nIl n'y a aucun dégat de chute!", (3300, 50), taille = 20)
 aide5 = TexteD("Bravo,\nvous avez fini le tutoriel,\nbonne chance pour\nla suite !", (4700, 150), taille = 20)
-debug1 = TexteD(f"niveau : {Niveau.en_cours}", (Screen.largeur() - 200, 20))
 
 # nuages
 nb_nuage = 7
@@ -193,6 +189,8 @@ while Niveau.etat != "close":
     elif Niveau.etat == "jeu" or Niveau.etat == "test":
         m_menu.stop()
 
+
+        ply.collids = {"gauche": 0, "droite": 0, "haut": 0, "bas" : 0}
         # Mouvement des ascenseurs
         for asc in Niveau.actuel.ascensseurs:
             asc.mouvement()
@@ -232,9 +230,6 @@ while Niveau.etat != "close":
         # Joueur
         Screen.screen.blit(image, ply.rect_ecran)
 
-        # Textes de debug
-        debug1.mise_a_jour(f"niveau {Niveau.en_cours}",(Screen.largeur() - 200, 20))
-        debug1.afficher()
         # Aides pour le niveau 1
         if Niveau.en_cours == 1:
             aide1.move(Screen.camera, ply.rect_ecran)
