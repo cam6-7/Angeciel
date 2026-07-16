@@ -145,7 +145,7 @@ class Editeur:
         sourisE[0] += self.camera
 
         clic = 0
-        for obj in Niveau.actuel.objet:
+        for obj in Niveau.actuel.objets:
             if obj.rect.collidepoint(sourisE):
                 obj.supprimer()
                 clic = 1

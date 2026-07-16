@@ -1,234 +1,176 @@
 [
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 2025,
         "y": 0,
         "largeur": 25,
         "hauteur": 375
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 700,
         "y": 425,
         "largeur": 25,
         "hauteur": 100
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 2975,
         "y": 200,
         "largeur": 425,
         "hauteur": 25
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 3400,
         "y": 100,
         "largeur": 100,
         "hauteur": 25
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 4175,
         "y": 275,
         "largeur": 100,
         "hauteur": 25
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 4325,
         "y": 275,
         "largeur": 100,
         "hauteur": 25
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 4475,
         "y": 275,
         "largeur": 100,
         "hauteur": 25
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 3475,
         "y": 125,
         "largeur": 25,
         "hauteur": 475
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 3375,
         "y": 100,
         "largeur": 25,
         "hauteur": 100
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 4625,
         "y": 275,
         "largeur": 100,
         "hauteur": 25
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 4775,
         "y": 275,
         "largeur": 225,
         "hauteur": 25
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 725,
         "y": 425,
         "largeur": 550,
         "hauteur": 25
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 900,
         "y": 325,
         "largeur": 25,
         "hauteur": 100
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 2025,
         "y": 425,
         "largeur": 200,
         "hauteur": 25
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 2200,
         "y": 375,
         "largeur": 25,
         "hauteur": 50
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 2050,
         "y": 350,
         "largeur": 100,
         "hauteur": 25
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 2200,
         "y": 350,
         "largeur": 775,
         "hauteur": 25
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 3500,
         "y": 575,
         "largeur": 300,
         "hauteur": 25
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 3800,
         "y": 475,
         "largeur": 25,
         "hauteur": 125
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 3825,
         "y": 475,
         "largeur": 100,
         "hauteur": 25
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 3900,
         "y": 375,
         "largeur": 25,
         "hauteur": 100
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 3925,
         "y": 375,
         "largeur": 100,
         "hauteur": 25
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 4000,
         "y": 275,
         "largeur": 25,
         "hauteur": 100
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 4025,
         "y": 275,
         "largeur": 100,
         "hauteur": 25
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 0,
         "y": 0,
         "largeur": 0,
         "hauteur": 0
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 0,
         "y": 0,
         "largeur": 0,
         "hauteur": 0
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 0,
         "y": 0,
         "largeur": 0,
         "hauteur": 0
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
         "x": 0,
         "y": 500,
         "largeur": 700,
         "hauteur": 25
     },
     {
-        "type": "Plateforme",
-        "niveau": 1,
-        "x": 250,
-        "y": 325,
-        "largeur": 175,
+        "x": 475,
+        "y": 350,
+        "largeur": 100,
         "hauteur": 25
     }
 ]

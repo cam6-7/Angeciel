@@ -25,7 +25,7 @@ class Niveau:
             Niveau.actuel = self
 
     @property
-    def objet(self):
+    def objets(self):
         return self.plateformes + self.ascensseurs
 
     @classmethod
@@ -49,7 +49,6 @@ class Niveau:
         return {
             "taille": self.taille,
             "couleur": self.couleur,
-            "numero": self.numero,
         }
 
 

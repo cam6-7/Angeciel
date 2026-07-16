@@ -28,7 +28,7 @@ for i in range(1, nombre_de_niveau+1):
         data = json.load(f)
     for plat in data:
         Plateforme(
-            niveau = plat["niveau"],
+            niveau = i,
             x = plat["x"],
             y = plat["y"],
             l = plat["largeur"],
@@ -49,6 +49,7 @@ for i in range(1, nombre_de_niveau+1):
 
 editeur = Editeur()
 Debug("en_cours", Niveau, ["jeu", "test"], "Niveau ")
+
 # images
 image_player_d = pygame.image.load(resource_path("resources/image_player_d.png"))
 image_player_g = pygame.image.load(resource_path("resources/image_player_g.png"))
@@ -190,7 +191,6 @@ while Niveau.etat != "close":
         m_menu.stop()
 
 
-        ply.collids = {"gauche": 0, "droite": 0, "haut": 0, "bas" : 0}
         # Mouvement des ascenseurs
         for asc in Niveau.actuel.ascensseurs:
             asc.mouvement()
@@ -209,11 +209,9 @@ while Niveau.etat != "close":
         ply.vitesse[1] += ply.gravite
         if keys[pygame.K_SPACE] and ply.au_sol:
             ply.vitesse[1] += ply.force[1]
-        ply.au_sol = False
 
         # ==================== COLLISIONS + MOUVEMENTS ====================
         ply.bouger()
-        Screen.camera = max(0, min(ply.rect.x - Screen.largeur() // 2, Niveau.actuel.taille - Screen.largeur()))
 
         # ==================== AFFICHAGE ==================================================================================
         Screen.screen.fill(Niveau.actuel.couleur)
@@ -224,7 +222,7 @@ while Niveau.etat != "close":
 
 
         # Plateformes et ascenseurs
-        for obj in Niveau.actuel.objet:
+        for obj in Niveau.actuel.objets:
             dessiner_plateforme_texturee(obj.rect.move(- Screen.camera, 0))
 
         # Joueur
