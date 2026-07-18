@@ -49,6 +49,10 @@ for i in range(1, nombre_de_niveau+1):
 
 editeur = Editeur()
 Debug("en_cours", Niveau, ["jeu", "test"], "Niveau ")
+Debug("collids", Joueur.ply, ["jeu", "test"], "gauche : ", "gauche")
+Debug("collids", Joueur.ply, ["jeu", "test"], "droite : ", "droite")
+Debug("collids", Joueur.ply, ["jeu", "test"], "haut : ", "haut")
+Debug("collids", Joueur.ply, ["jeu", "test"], "bas : ", "bas")
 
 # images
 image_player_d = pygame.image.load(resource_path("resources/image_player_d.png"))
@@ -186,10 +190,15 @@ while Niveau.etat != "close":
             Screen.camera = 0
 
 
-    # ==================== JEU ====================
+    # ==================== JEU =================================================================
     elif Niveau.etat == "jeu" or Niveau.etat == "test":
         m_menu.stop()
 
+
+        ply.collids = {"gauche" : 0,
+                        "droite" : 0,
+                        "haut" : 0,
+                        "bas": 0}
 
         # Mouvement des ascenseurs
         for asc in Niveau.actuel.ascensseurs:

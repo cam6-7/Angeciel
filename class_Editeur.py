@@ -178,7 +178,7 @@ class Editeur:
             y = y2
         l = abs(x1 - x2)
         h = abs(y1 - y2)
-        self.att.move(x, y, l, h)
+        self.att.maj(x, y, l, h)
 
     def _clic_relache(self):
         r = self.att.rect

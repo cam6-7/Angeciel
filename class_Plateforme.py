@@ -22,7 +22,7 @@ class Plateforme:
         if self in Niveau.actuel.plateformes:
             Niveau.actuel.plateformes.remove(self)
 
-    def move(self, x, y, l, h):
+    def maj(self, x, y, l, h):
         self.rect = pygame.Rect(x, y, l, h)
 
 
