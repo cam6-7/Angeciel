@@ -44,17 +44,13 @@ class ZoneDeTexte(Texte):
             if event.type == pygame.KEYDOWN and self.active:
                 if event.key == pygame.K_RETURN:
                     self.active = False
-                    print(self.type)
                     if self.type == list:
-                        print("tuple !!!")
                         donnee = ast.literal_eval(self.text)
 
                     elif self.type == int:
                         donnee = int(self.text)
                     else:
                         donnee = self.text
-                    print(donnee)
-                    print(type(donnee))
                     setattr(self.module, self.var, donnee)
                 elif event.key == pygame.K_BACKSPACE:
                     self.text = self.text[:-1]

@@ -10,13 +10,11 @@ from cp import *
 from fonction_ressource_path import resource_path
 from class_BoutonIMG import BoutonIMG
 from class_Message import Message
-import pygame, os, glob
+import pygame
 pygame.init()
 clock = pygame.time.Clock()
 fleche_d = pygame.image.load(resource_path("resources/flèche2.png"))
 fleche_g = pygame.transform.flip(pygame.image.load(resource_path("resources/flèche2.png")), True, False)
-dossier = os.path.dirname(os.path.abspath(__file__))
-nombre_de_niveau = len(glob.glob(dossier + "/objets/niveau*.json"))
 class Editeur:
 
     def __init__(self ):
@@ -30,6 +28,7 @@ class Editeur:
         self.boutons = [
             Bouton("Retour", [10, 50], couleur= WHITE),
             Bouton("Tester", [10, 100], couleur= WHITE),
+            Bouton("Creer un \nnouveau niveau", [10, 200], couleur = WHITE, taille= 25),
             Bouton("paramettre\ndu niveau", [10, 300], couleur=WHITE),
             Bouton("créer une\nplateforme", [10, 400], couleur=WHITE),
             Bouton("créer un\nascensseur", [10, 500], couleur=WHITE),]
@@ -37,7 +36,6 @@ class Editeur:
         self.boutons_n = []
         for i, n in enumerate(Niveau.liste):
             b = Bouton(n.name, (i * 150 + 300, 25), couleur="WHITE")
-            b.afficher()
             self.boutons_n.append(b)
         self.boutons_n = ListeBouton(self.boutons_n)
 
@@ -66,7 +64,7 @@ class Editeur:
 
         for b in self.boutons:
             b.afficher()
-        self.boutons_n.afficher(self.decalage, nombre_de_niveau - 1)
+        self.boutons_n.afficher(self.decalage)
 
 
         self.fleche_d.afficher()
@@ -81,8 +79,8 @@ class Editeur:
 
         elif self.fleche_d.est_clique():
             self.decalage += 1
-            if self.decalage > nombre_de_niveau - 4:
-                self.decalage = nombre_de_niveau - 4
+            if self.decalage > Niveau.nombre - 4:
+                self.decalage = Niveau.nombre - 4
             else:
                 self.boutons_n.decaler(1)
 
@@ -108,14 +106,26 @@ class Editeur:
         if self.boutons[0].est_clique():
             self.fermer()
             Niveau.etat = "menu"
-        if self.boutons[1].est_clique():
+        elif self.boutons[1].est_clique():
             self.action = "test"
             Message("Cliquer là où vous voulez allez")
         elif self.boutons[2].est_clique():
-            Niveau.etat = "paramettre"
+            Plateforme.liste[Niveau.nombre + 1] = []
+            Ascensseur.liste[Niveau.nombre + 1] = []
+            Niveau(Plateforme.liste[Niveau.nombre + 1], Ascensseur.liste[Niveau.nombre + 1], 1000, [150, 150, 150])
+            Niveau.changer(Niveau.nombre)
+            self.boutons_n = []
+            for i, n in enumerate(Niveau.liste):
+                b = Bouton(n.name, (i * 150 + 300, 25), couleur="WHITE")
+                self.boutons_n.append(b)
+            self.boutons_n = ListeBouton(self.boutons_n)
+            self.boutons_n.decaler(Niveau.nombre - 4)
+            self.decalage = Niveau.nombre - 4
         elif self.boutons[3].est_clique():
-            self.type = "plat"
+            Niveau.etat = "paramettre"
         elif self.boutons[4].est_clique():
+            self.type = "plat"
+        elif self.boutons[5].est_clique():
             self.type = "asc"
         elif self.boutons_n.est_cliquer():
             Niveau.changer(self.boutons_n.boutons.index(self.boutons_n.bouton) + 1)

@@ -18,9 +18,9 @@ class Plateforme:
 
     def supprimer(self):
         if self in Niveau.actuel.ascensseurs :
-            Niveau.actuel.ascensseurs.remove(self)
+            Plateforme.liste[self.niveau].remove(self)
         if self in Niveau.actuel.plateformes:
-            Niveau.actuel.plateformes.remove(self)
+            Plateforme.liste[self.niveau].remove(self)
 
     def maj(self, x, y, l, h):
         self.rect = pygame.Rect(x, y, l, h)
