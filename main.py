@@ -49,10 +49,6 @@ for i in range(1, nombre_de_niveau+1):
 
 editeur = Editeur()
 Debug("en_cours", Niveau, ["jeu", "test"], "Niveau ")
-Debug("collids", Joueur.ply, ["jeu", "test"], "gauche : ", "gauche")
-Debug("collids", Joueur.ply, ["jeu", "test"], "droite : ", "droite")
-Debug("collids", Joueur.ply, ["jeu", "test"], "haut : ", "haut")
-Debug("collids", Joueur.ply, ["jeu", "test"], "bas : ", "bas")
 
 # images
 image_player_d = pygame.image.load(resource_path("resources/image_player_d.png"))
@@ -157,6 +153,8 @@ while Niveau.etat != "close":
 
     if Niveau.etat == "paramettre":
         menu_p.afficher()
+        input_box1.maj("couleur", Niveau.actuel)
+        input_box2.maj("taille", Niveau.actuel)
         input_box1.afficher(events)
         input_box2.afficher(events)
         if menu_p.boutons[0].est_clique():

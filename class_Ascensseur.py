@@ -33,7 +33,6 @@ class Ascensseur(Plateforme):
 
         if self.direction == "v" and self.avance and Joueur.ply.touche(0, 3) == 1:
             tolerance = 2
-            print("fonctionne")
         else:
             tolerance = 0
 

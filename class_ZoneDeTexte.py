@@ -13,6 +13,13 @@ class ZoneDeTexte(Texte):
         self.text = str(getattr(self.module, self.var))
         self.mise_a_jour(self.text)
 
+    def maj(self, variable, module):
+        if not self.active:
+            self.var = variable
+            self.module = module
+            self.type = type(getattr(self.module, self.var))
+            self.text = str(getattr(self.module, self.var))
+            self.mise_a_jour(self.text)
 
     def afficher(self, events):
 
