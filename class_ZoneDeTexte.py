@@ -1,4 +1,6 @@
 import ast
+
+from class_Editeur import Editeur
 from class_Screen import Screen
 from class_Texte import Texte
 from cp import *
@@ -52,6 +54,7 @@ class ZoneDeTexte(Texte):
                     else:
                         donnee = self.text
                     setattr(self.module, self.var, donnee)
+                    Editeur.e.recreation_bouton()
                 elif event.key == pygame.K_BACKSPACE:
                     self.text = self.text[:-1]
                 else:

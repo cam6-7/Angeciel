@@ -13,10 +13,9 @@ from class_Message import Message
 import pygame
 pygame.init()
 clock = pygame.time.Clock()
-fleche_d = pygame.image.load(resource_path("resources/flèche2.png"))
-fleche_g = pygame.transform.flip(pygame.image.load(resource_path("resources/flèche2.png")), True, False)
 class Editeur:
 
+    e = None
     def __init__(self ):
         self.camera = -200
         self.action = "rien"
@@ -32,19 +31,16 @@ class Editeur:
             Bouton("paramettre\ndu niveau", [10, 300], couleur=WHITE),
             Bouton("créer une\nplateforme", [10, 400], couleur=WHITE),
             Bouton("créer un\nascensseur", [10, 500], couleur=WHITE),]
+        self.recreation_bouton()
+        Editeur.e = self
 
-        self.boutons_n = []
-        for i, n in enumerate(Niveau.liste):
-            b = Bouton(n.name, (i * 150 + 300, 25), couleur="WHITE")
-            self.boutons_n.append(b)
-        self.boutons_n = ListeBouton(self.boutons_n)
-
-        self.fleche_d = BoutonIMG(fleche_d, (Screen.largeur() - 75, 15))
-        self.fleche_g = BoutonIMG(fleche_g, (200, 15))
-
-
-
-
+    def afficher_fleche(self):
+        image_d = pygame.image.load(resource_path("resources/flèche2.png"))
+        image_g = pygame.transform.flip(pygame.image.load(resource_path("resources/flèche2.png")), True, False)
+        self.fleche_d = BoutonIMG(image_d, (Screen.largeur() - 75, 15))
+        self.fleche_g = BoutonIMG(image_g, (200, 15))
+        self.fleche_d.afficher()
+        self.fleche_g.afficher()
 
     def afficher(self):
         #fond
@@ -64,25 +60,19 @@ class Editeur:
 
         for b in self.boutons:
             b.afficher()
-        self.boutons_n.afficher(self.decalage)
-
-
-        self.fleche_d.afficher()
-        self.fleche_g.afficher()
+        self.boutons_n.afficher()
+        self.afficher_fleche()
 
         if self.fleche_g.est_clique():
-            self.decalage -= 1
-            if self.decalage < 0:
-                self.decalage = 0
-            else:
-                self.boutons_n.decaler(-1)
+            self.decalage -= 1 if self.decalage >= 0 else 0
+            self.boutons_n.decaler(self.decalage)
 
         elif self.fleche_d.est_clique():
             self.decalage += 1
-            if self.decalage > Niveau.nombre - 4:
-                self.decalage = Niveau.nombre - 4
-            else:
-                self.boutons_n.decaler(1)
+            self.boutons_n.decaler(self.decalage)
+            while (Screen.largeur() - 50) - self.boutons_n.boutons[-1].rect.right >= self.boutons_n.boutons[-1].rect.width:
+                self.decalage -= 1
+                self.boutons_n.decaler(self.decalage)
 
 
     def gestion_camera(self):
@@ -114,13 +104,8 @@ class Editeur:
             Ascensseur.liste[Niveau.nombre + 1] = []
             Niveau(Plateforme.liste[Niveau.nombre + 1], Ascensseur.liste[Niveau.nombre + 1], 1000, [150, 150, 150])
             Niveau.changer(Niveau.nombre)
-            self.boutons_n = []
-            for i, n in enumerate(Niveau.liste):
-                b = Bouton(n.name, (i * 150 + 300, 25), couleur="WHITE")
-                self.boutons_n.append(b)
-            self.boutons_n = ListeBouton(self.boutons_n)
-            self.boutons_n.decaler(Niveau.nombre - 4)
-            self.decalage = Niveau.nombre - 4
+            self.recreation_bouton()
+
         elif self.boutons[3].est_clique():
             Niveau.etat = "paramettre"
         elif self.boutons[4].est_clique():
@@ -130,6 +115,17 @@ class Editeur:
         elif self.boutons_n.est_cliquer():
             Niveau.changer(self.boutons_n.boutons.index(self.boutons_n.bouton) + 1)
             self.fermer(1)
+
+    def recreation_bouton(self):
+        boutons_n = []
+        i = 250
+        for n in Niveau.liste:
+            b = Bouton(n.name, (i + 50, 25), couleur="WHITE")
+            boutons_n.append(b)
+            i = b.rect.right
+        self.boutons_n = ListeBouton(boutons_n)
+        self.decalage = Niveau.nombre - 4
+        self.boutons_n.decaler(self.decalage)
 
 
     def gestion_creation(self, events):
@@ -242,8 +238,8 @@ class Editeur:
         self.att = None
         self.souris1 = None
         if force == 0:
-            self.boutons_n.decaler(-self.decalage)
             self.decalage = 0
+            self.boutons_n.decaler(self.decalage)
         if force <= 1:
             Screen.camera = -200
 

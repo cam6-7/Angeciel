@@ -47,16 +47,7 @@ class Niveau:
                 Niveau.actuel = niv
     def to_dict(self):
         return {
+            "name": self.name,
             "taille": self.taille,
             "couleur": self.couleur,
         }
-
-
-
-
-
-
-
-
-
-

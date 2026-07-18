@@ -43,7 +43,8 @@ for i in range(1, nombre_de_niveau+1):
             Plateforme.liste[i],
             Ascensseur.liste[i],
             data["taille"],
-            data["couleur"]
+            data["couleur"],
+            name = data["name"]
         )
 
 
@@ -106,6 +107,7 @@ for i in range(nb_nuage):
 # zones de textes
 input_box1 = ZoneDeTexte("", (130, 230), "couleur", Niveau.actuel)
 input_box2 = ZoneDeTexte("", (100, 370), "taille", Niveau.actuel)
+input_box3 = ZoneDeTexte("", (100, 510), "name", Niveau.actuel)
 
 
 print("début")
@@ -155,8 +157,10 @@ while Niveau.etat != "close":
         menu_p.afficher()
         input_box1.maj("couleur", Niveau.actuel)
         input_box2.maj("taille", Niveau.actuel)
+        input_box3.maj("name", Niveau.actuel)
         input_box1.afficher(events)
         input_box2.afficher(events)
+        input_box3.afficher(events)
         if menu_p.boutons[0].est_clique():
             Niveau.etat = "editeur"
 

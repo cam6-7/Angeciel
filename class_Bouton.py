@@ -58,13 +58,18 @@ class ListeBouton:
                 self.bouton = b
         return clique
 
-    def afficher(self, decalage = 0, nb = 4):
+    def afficher(self):
         for b in self.boutons:
             touch = False
-            if decalage <= self.boutons.index(b) < decalage + nb:
+            if 300 <= b.rect.left and b.rect.right < Screen.largeur() - 50:
                 touch = True
             b.afficher(touch)
 
-    def decaler(self, quantite):
-        for i,b in enumerate(self.boutons):
-            b.mise_a_jour("", (b.x - (quantite * 150), b.y))
+    def decaler(self, decalage):
+        i = 250
+        for index,b in enumerate(self.boutons):
+            if index < decalage:
+                b.mise_a_jour("", (0, b.y))
+            else :
+                b.mise_a_jour("", (i + 50, b.y))
+                i = b.rect.right
