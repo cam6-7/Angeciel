@@ -1,17 +1,16 @@
 import ast
-
 from class_Editeur import Editeur
 from class_Screen import Screen
 from class_Texte import Texte
 from cp import *
 
 class ZoneDeTexte(Texte):
-    def __init__(self, text, position,  variable, module, couleur=BLACK, taille = 30, police = "arial", centre = ""):
+    def __init__(self, text, position,  variable, module, couleur=BLACK, taille = 30, police = "arial", centre = "", typ = False):
         super().__init__(text, position, couleur, taille, police, centre)
         self.active = False
         self.var = variable
         self.module = module
-        self.type = type(getattr(self.module, self.var))
+        self.type = typ if typ else type(getattr(self.module, self.var))
         self.text = str(getattr(self.module, self.var))
         self.mise_a_jour(self.text)
 
@@ -19,19 +18,16 @@ class ZoneDeTexte(Texte):
         if not self.active:
             self.var = variable
             self.module = module
-            self.type = type(getattr(self.module, self.var))
             self.text = str(getattr(self.module, self.var))
             self.mise_a_jour(self.text)
 
     def afficher(self, events):
 
         self.gerer_events(events)
-
         if self.active:
             couleur = BLUE
         else:
             couleur = BLACK
-
         pygame.draw.rect(Screen.screen, couleur, self.rect.inflate(20, 10), 3)
         super().afficher()
 

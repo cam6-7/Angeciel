@@ -46,9 +46,8 @@ for i in range(1, nombre_de_niveau+1):
             data["couleur"],
             name = data["name"]
         )
-
-
 editeur = Editeur()
+paramettre = Paramettre()
 Debug("en_cours", Niveau, ["jeu", "test"], "Niveau ")
 
 # images
@@ -86,11 +85,7 @@ menu_c = Menu([
             Bouton("niveau3", [1000/3, 400], centre = "spe"),
             Bouton("niveau4", [1000/3 * 2, 400], centre = "spe")
             ])
-menu_p = Menu([
-            Bouton("retour", [10, 50]),
-            Texte("couleur :", [0, 230]),
-            Texte("taille :", [0, 370])
-])
+
 
 # textes de tutoriels
 aide1 = TexteD('Utilisez les\nflèches directionnelles\npour vous déplacer', [50, 425], taille = 20)
@@ -105,12 +100,13 @@ for i in range(nb_nuage):
     Nuage()
 
 # zones de textes
+"""
 input_box1 = ZoneDeTexte("", (130, 230), "couleur", Niveau.actuel)
 input_box2 = ZoneDeTexte("", (100, 370), "taille", Niveau.actuel)
-input_box3 = ZoneDeTexte("", (100, 510), "name", Niveau.actuel)
+input_box3 = ZoneDeTexte("", (100, 510), "name", Niveau.actuel)"""
 
 
-print("début")
+print("\ndébut\n")
 # ==================== BOUCLE PRINCIPALE ====================
 while Niveau.etat != "close":
     events = []
@@ -154,16 +150,8 @@ while Niveau.etat != "close":
                 Niveau.etat = "menu"
 
     if Niveau.etat == "paramettre":
-        menu_p.afficher()
-        input_box1.maj("couleur", Niveau.actuel)
-        input_box2.maj("taille", Niveau.actuel)
-        input_box3.maj("name", Niveau.actuel)
-        input_box1.afficher(events)
-        input_box2.afficher(events)
-        input_box3.afficher(events)
-        if menu_p.boutons[0].est_clique():
-            Niveau.etat = "editeur"
-
+        paramettre.afficher()
+        paramettre.gerer_clic()
     # ==================== EDITEUR =====================
     if Niveau.etat == "editeur":
         editeur.gestion_camera()
@@ -251,19 +239,22 @@ while Niveau.etat != "close":
     pygame.display.flip()
     clock.tick(60)
 
-
 # sauvergarde des objets quand le jeu est fini
 for i in range(1, Niveau.nombre + 1):
     with open("objets/ascensseur"+ str(i) +".json", "w") as f:
         json.dump([asc.to_dict() for asc in Ascensseur.liste[i]], f, indent=4)
-
-for i in range(1, Niveau.nombre + 1):
     with open("objets/plateforme"+str(i)+".json", "w") as f:
         json.dump([plat.to_dict() for plat in Plateforme.liste[i]], f, indent=4)
-
-for i in range(1, Niveau.nombre + 1):
     with open("objets/niveau"+str(i)+".json", "w") as f:
         json.dump(Niveau.liste[i-1].to_dict(), f, indent=4)
 
+nombre_de_niveau = len(glob.glob(dossier + "/objets/niveau*.json"))
+for i in range(1, nombre_de_niveau + 1):
+    if i > Niveau.nombre:
+        os.remove("objets/ascensseur"+ str(i) +".json")
+        os.remove("objets/plateforme"+ str(i) +".json")
+        os.remove("objets/niveau"+ str(i) +".json")
+
+print("fin sauvergardé")
 pygame.quit()
 sys.exit()

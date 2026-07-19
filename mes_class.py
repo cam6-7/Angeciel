@@ -15,4 +15,5 @@ from class_TexteD import TexteD
 from class_Message import Message
 from class_Temps import Timer
 from class_Debug import Debug
+from class_Paramettre import Paramettre
 from cp import *

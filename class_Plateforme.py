@@ -1,4 +1,5 @@
 import pygame, os, glob
+
 pygame.init()
 from class_Niveau import Niveau
 dossier = os.path.dirname(os.path.abspath(__file__))
@@ -9,18 +10,17 @@ class Plateforme:
     liste = {}
     for i in range(1, nombre_de_niveau + 1):
         liste[i] = []
-
     def __init__(self, x, y, l, h, niveau):
         self.niveau = niveau
         self.rect = pygame.Rect(x, y, l, h)
-        if type(self) is Plateforme:
-            Plateforme.liste[self.niveau].append(self)
+        Plateforme.liste[self.niveau].append(self)
+
 
     def supprimer(self):
         if self in Niveau.actuel.ascensseurs :
-            Plateforme.liste[self.niveau].remove(self)
+            Niveau.actuel.ascensseurs.remove(self)
         if self in Niveau.actuel.plateformes:
-            Plateforme.liste[self.niveau].remove(self)
+            Niveau.actuel.plateformes.remove(self)
 
     def maj(self, x, y, l, h):
         self.rect = pygame.Rect(x, y, l, h)

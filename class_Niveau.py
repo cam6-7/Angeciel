@@ -6,8 +6,8 @@ class Niveau:
     en_cours = 1
     nombre = 0
     etat = "menu"
-
     liste = []
+
     def __init__(self, plateformes, ascensseurs, taille, couleur, name = ""):
         self.plateformes = plateformes
         self.ascensseurs = ascensseurs

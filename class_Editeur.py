@@ -28,9 +28,9 @@ class Editeur:
             Bouton("Retour", [10, 50], couleur= WHITE),
             Bouton("Tester", [10, 100], couleur= WHITE),
             Bouton("Creer un \nnouveau niveau", [10, 200], couleur = WHITE, taille= 25),
-            Bouton("paramettre\ndu niveau", [10, 300], couleur=WHITE),
+            Bouton("paramettre\ndu niveau", [10, 275], couleur=WHITE),
             Bouton("créer une\nplateforme", [10, 400], couleur=WHITE),
-            Bouton("créer un\nascensseur", [10, 500], couleur=WHITE),]
+            Bouton("créer un\nascensseur", [10, 475], couleur=WHITE),]
         self.recreation_bouton()
         Editeur.e = self
 
@@ -104,6 +104,7 @@ class Editeur:
             Ascensseur.liste[Niveau.nombre + 1] = []
             Niveau(Plateforme.liste[Niveau.nombre + 1], Ascensseur.liste[Niveau.nombre + 1], 1000, [150, 150, 150])
             Niveau.changer(Niveau.nombre)
+            Niveau.etat = "paramettre"
             self.recreation_bouton()
 
         elif self.boutons[3].est_clique():
@@ -124,7 +125,7 @@ class Editeur:
             boutons_n.append(b)
             i = b.rect.right
         self.boutons_n = ListeBouton(boutons_n)
-        self.decalage = Niveau.nombre - 4
+        self.decalage = 0
         self.boutons_n.decaler(self.decalage)
 
 
