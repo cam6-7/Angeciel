@@ -1,11 +1,10 @@
 from class_Texte import Texte
-from cp import *
-from class_Screen import Screen
+from cp import couleurs as c
 import math
 
 class TexteD(Texte):
 
-    def __init__(self, text, position, couleur=BLACK, taille = 30, police = "arial", centrer = ""):
+    def __init__(self, text, position, couleur=c["BLACK"], taille = 30, police = "arial", centrer = ""):
         super().__init__(text, position, couleur, taille, police, centrer)
         self.base = position[0]
 

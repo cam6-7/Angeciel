@@ -10,10 +10,10 @@ from class_Niveau import Niveau
 from class_Editeur import Editeur
 from fonction_texture import dessiner_plateforme_texturee
 from fonction_ressource_path import resource_path
-from class_ZoneDeTexte import ZoneDeTexte
 from class_TexteD import TexteD
 from class_Message import Message
 from class_Temps import Timer
 from class_Debug import Debug
 from class_Paramettre import Paramettre
-from cp import *
+from cp import couleurs as c
+from class_Question import Question

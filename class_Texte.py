@@ -1,8 +1,10 @@
-from cp import *
+from cp import couleurs as c
 from class_Screen import Screen
+import pygame
+pygame.init()
 
 class Texte:
-    def __init__(self, text, position, couleur=BLACK, taille = 30, police = "arial", centre = ""):
+    def __init__(self, text, position, couleur= c["BLACK"], taille = 30, police = "arial", centre = ""):
         self.text = str(text)
         self.x = position[0]
         self.y = position[1]
@@ -40,8 +42,8 @@ class Texte:
             surface.blit(s, (0, 0))
         return surface
 
-    def mise_a_jour(self, nouveau_text = "", nouvelle_pos = False):
-        if nouveau_text != "":
+    def mise_a_jour(self, nouveau_text  : str = False, nouvelle_pos : tuple = False):
+        if nouveau_text or nouveau_text == "":
             self.text = nouveau_text
             self.surface = self._get_surface()
             self.rect = self.surface.get_rect(topleft = (self.x, self.y))

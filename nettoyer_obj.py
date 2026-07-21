@@ -18,7 +18,7 @@ print("\033[32msupression de", nombre_de_niveau - len(glob.glob(dossier + "/obje
 
 
 
-for i in range(1, nombre_de_niveau+1):
+for i in range(1, nb_bon_niv+1):
     with open("objets/ascensseur"+str(i)+".json", "r") as f:
         data = json.load(f)
     for asc in data:

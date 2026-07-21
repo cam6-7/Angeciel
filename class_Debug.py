@@ -5,11 +5,11 @@ from class_Screen import Screen
 class Debug(Texte):
     liste = []
     nombre = 0
-    def __init__(self, variable, module, etats, description = "", cle = None, fonction  = lambda text : text):
+    def __init__(self, stockage, etats, description = "", cle = None, fonction  = lambda text : text):
         super().__init__("", (0, 0))
         self.fonction = fonction
-        self.variable = variable
-        self.module = module
+        self.stockage = stockage
+        _, self.variable = self.obtenir()
         self.etats = etats
         self.valeur = ""
         self.valeur_o = ""
@@ -22,8 +22,7 @@ class Debug(Texte):
         Timer(1, "i", self.afficher, condition= lambda : Niveau.etat in self.etats)
 
     def afficher(self):
-        self.valeur_o = self.fonction(getattr(self.module, self.variable))
-        getattr(self.module, self.variable)
+        self.valeur_o, _ = self.obtenir()
         self.taille = self._get_surface().get_rect().width
         if self.cle:
             if type(self.valeur_o) == dict:
@@ -36,3 +35,11 @@ class Debug(Texte):
         else:
             self.mise_a_jour(f"{self.description}{self.valeur}", (Screen.largeur() - self.taille, self.y))
         super().afficher()
+
+    def obtenir(self):
+        morceaux = self.stockage.split(".")
+        nom_racine, *reste = morceaux
+        obj = globals()[nom_racine]
+        for attribut in reste:
+            obj = getattr(obj, attribut)
+        return obj, nom_racine

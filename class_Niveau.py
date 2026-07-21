@@ -7,8 +7,9 @@ class Niveau:
     nombre = 0
     etat = "menu"
     liste = []
+    liste_etats = ["menu"]
 
-    def __init__(self, plateformes, ascensseurs, taille, couleur, name = ""):
+    def __init__(self, plateformes, ascensseurs, taille, couleur = (135, 206, 235), name = ""):
         self.plateformes = plateformes
         self.ascensseurs = ascensseurs
         self.taille = taille
@@ -27,6 +28,12 @@ class Niveau:
     @property
     def objets(self):
         return self.plateformes + self.ascensseurs
+
+    @classmethod
+    def changer_etat(cls, nouvel_etat, save = True):
+        if save:
+            cls.liste_etats.append(cls.etat)
+        cls.etat = nouvel_etat
 
     @classmethod
     def suivant(cls):

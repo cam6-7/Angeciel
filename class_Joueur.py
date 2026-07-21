@@ -106,7 +106,7 @@ class Joueur:
             self.vitesse[0] = 0
         # si on va trop a droite
         elif self.rect.right > Niveau.actuel.taille:
-            Niveau.etat = "victoire"
+            Niveau.changer_etat("victoire")
 
         # si on va trop haut
         if self.rect.y < 0:
@@ -123,4 +123,7 @@ class Joueur:
     def reinitialiser_jeu(self):
         self.vitesse = [0, 0]
         self.rect.topleft = (50, 50)
-        Niveau.etat = "jeu" if not Niveau.etat == "test" else "test"
+        if Niveau.etat == "test":
+            Niveau.changer_etat("test")
+        else:
+            Niveau.changer_etat("jeu")

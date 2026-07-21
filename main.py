@@ -1,11 +1,11 @@
-import sys, json, glob, os
+import sys, json, glob, os, pygame
 from mes_class import *
 clock = pygame.time.Clock()
+pygame.init()
 
 # ==================== VARIABLES DU JEU ====================
 dossier = os.path.dirname(os.path.abspath(__file__))
 nombre_de_niveau = len(glob.glob(dossier + "/objets/niveau*.json"))
-premiere_ouverture = True
 ply = Joueur()
 
 # ================= IMPORTS ===================
@@ -48,7 +48,8 @@ for i in range(1, nombre_de_niveau+1):
         )
 editeur = Editeur()
 paramettre = Paramettre()
-Debug("en_cours", Niveau, ["jeu", "test"], "Niveau ")
+
+Debug("Niveau.en_cours", ["jeu", "test"], "Niveau ")
 
 # images
 image_player_d = pygame.image.load(resource_path("resources/image_player_d.png"))
@@ -66,16 +67,16 @@ m_menu.play(-1)
 #les menus
 menu1 = Menu([
             Texte("Bienvenue sur Angeciel",["x", 100], taille=70),
-            Bouton("Commencer le jeu", ["x", 300], couleur=BLUE),
-            Bouton("Choix du niveau", ["x", 400], couleur=GREEN),
-            Bouton("Quitter le jeu", ["x", 500], couleur=RED),
+            Bouton("Commencer le jeu", ["x", 300], couleur=c["BLUE"]),
+            Bouton("Choix du niveau", ["x", 400], couleur=c["GREEN"]),
+            Bouton("Quitter le jeu", ["x", 500], couleur=c["RED"]),
             Bouton("éditeur de niveau", [20, 20], taille= 10)
             ])
 menu_v = Menu([
             Texte(f"Vous avez fini le niveau {Niveau.en_cours}", ["x", 150], taille=70),
-            Bouton("Niveau suivant", ["x", 310], couleur=BLUE),
-            Bouton(f"Refaire le niveau {Niveau.en_cours}", ["x", 400], couleur=GREEN),
-            Bouton("Quitter le jeu", ["x", 490], couleur=RED),
+            Bouton("Niveau suivant", ["x", 310], couleur=c["BLUE"]),
+            Bouton(f"Refaire le niveau {Niveau.en_cours}", ["x", 400], couleur=c["GREEN"]),
+            Bouton("Quitter le jeu", ["x", 490], couleur=c["RED"]),
             Bouton("éditeur de niveau", [20, 20], taille= 10)
             ])
 menu_c = Menu([
@@ -99,13 +100,6 @@ nb_nuage = 7
 for i in range(nb_nuage):
     Nuage()
 
-# zones de textes
-"""
-input_box1 = ZoneDeTexte("", (130, 230), "couleur", Niveau.actuel)
-input_box2 = ZoneDeTexte("", (100, 370), "taille", Niveau.actuel)
-input_box3 = ZoneDeTexte("", (100, 510), "name", Niveau.actuel)"""
-
-
 print("\ndébut\n")
 # ==================== BOUCLE PRINCIPALE ====================
 while Niveau.etat != "close":
@@ -113,13 +107,10 @@ while Niveau.etat != "close":
     for event in pygame.event.get():
         events.append(event)
         if event.type == pygame.QUIT:
-            Niveau.etat = "close"
+            Niveau.changer_etat("close")
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            if Niveau.etat == "jeu" or Niveau.etat == "editeur":
-                premiere_ouverture = False
-                Niveau.etat = "menu"
-            elif Niveau.etat == "test":
-                Niveau.etat = "editeur"
+            if len(Niveau.liste_etats) > 1:
+                Niveau.changer_etat(Niveau.liste_etats.pop(), save= False)
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_p:
             print("\n " + str(pygame.mouse.get_pos()))
             print(pygame.mouse.get_pos()[0] + Screen.camera, pygame.mouse.get_pos()[1] + Screen.camera, "\n" )
@@ -127,31 +118,32 @@ while Niveau.etat != "close":
     # ==================== MENUS ====================
     if Niveau.etat == "menu":
         menu1.afficher()
-        if not premiere_ouverture:
-            menu1.boutons[0].mise_a_jour(f"Reprendre le niveau {Niveau.en_cours}")
+        menu1.boutons[0].mise_a_jour(f"Commencer le niveau {Niveau.en_cours}")
         if menu1.boutons[1].est_clique():
             ply.reinitialiser_jeu()
         if menu1.boutons[2].est_clique():
-            Niveau.etat = "choix_niv"
+            Niveau.changer_etat("choix_niv")
         if menu1.boutons[3].est_clique():
-            Niveau.etat = "close"
+            Niveau.changer_etat("close")
         if menu1.boutons[4].est_clique():
-            Niveau.etat = "editeur"
+            Niveau.changer_etat("editeur")
             editeur.cam_x = -200
             e_type = "rien"
 
     if Niveau.etat == "choix_niv":
         menu_c.afficher()
         if menu_c.boutons[0].est_clique():
-            Niveau.etat = "menu"
+            Niveau.changer_etat("menu")
         for bouton in menu_c.boutons:
             if bouton.est_clique():
                 Niveau.changer(menu_c.boutons.index(bouton))
-                Niveau.etat = "menu"
+                ply.reinitialiser_jeu()
 
     if Niveau.etat == "paramettre":
         paramettre.afficher()
         paramettre.gerer_clic()
+
+
     # ==================== EDITEUR =====================
     if Niveau.etat == "editeur":
         editeur.gestion_camera()
@@ -174,9 +166,9 @@ while Niveau.etat != "close":
         if menu_v.boutons[2].est_clique():
             ply.reinitialiser_jeu()
         if menu_v.boutons[3].est_clique():
-            Niveau.etat = "close"
+            Niveau.changer_etat("close")
         if menu_v.boutons[4].est_clique():
-            Niveau.etat = "editeur"
+            Niveau.changer_etat("editeur")
             Screen.camera = 0
 
 

@@ -6,7 +6,7 @@ from class_Plateforme import Plateforme
 from class_Ascensseur import Ascensseur
 from fonction_texture import dessiner_plateforme_texturee
 from class_Texte import Texte
-from cp import *
+from cp import couleurs as c
 from fonction_ressource_path import resource_path
 from class_BoutonIMG import BoutonIMG
 from class_Message import Message
@@ -25,12 +25,13 @@ class Editeur:
         self.type = "rien"
         self.decalage = 0
         self.boutons = [
-            Bouton("Retour", [10, 50], couleur= WHITE),
-            Bouton("Tester", [10, 100], couleur= WHITE),
-            Bouton("Creer un \nnouveau niveau", [10, 200], couleur = WHITE, taille= 25),
-            Bouton("paramettre\ndu niveau", [10, 275], couleur=WHITE),
-            Bouton("créer une\nplateforme", [10, 400], couleur=WHITE),
-            Bouton("créer un\nascensseur", [10, 475], couleur=WHITE),]
+            Bouton("Retour", [10, 50], couleur= c["WHITE"]),
+            Bouton("Tester", [10, 100], couleur= c["WHITE"]),
+            Bouton("Creer un \nnouveau niveau", [10, 200], couleur = c["WHITE"], taille= 25),
+            Bouton("paramettre\ndu niveau", [10, 275], couleur=c["WHITE"]),
+            Bouton("créer une\nplateforme", [10, 400], couleur=c["WHITE"]),
+            Bouton("créer un\nascensseur", [10, 475], couleur=c["WHITE"]),]
+        self.decalage = 0
         self.recreation_bouton()
         Editeur.e = self
 
@@ -44,7 +45,7 @@ class Editeur:
 
     def afficher(self):
         #fond
-        Screen.screen.fill(WHITE)
+        Screen.screen.fill(c["WHITE"])
         self.draw_grid()
 
         #objets
@@ -57,7 +58,8 @@ class Editeur:
         #boutons
         pygame.draw.rect(Screen.screen, (0, 0, 0), (0, 0, 200, Screen.hauteur()))
         pygame.draw.rect(Screen.screen, (0, 0, 0), (0, 0, Screen.largeur(), 75))
-
+        
+        self.recreation_bouton()
         for b in self.boutons:
             b.afficher()
         self.boutons_n.afficher()
@@ -95,20 +97,20 @@ class Editeur:
     def gestion_bouton(self):
         if self.boutons[0].est_clique():
             self.fermer()
-            Niveau.etat = "menu"
+            Niveau.changer_etat(Niveau.liste_etats.pop(), save=False)
         elif self.boutons[1].est_clique():
             self.action = "test"
             Message("Cliquer là où vous voulez allez")
         elif self.boutons[2].est_clique():
             Plateforme.liste[Niveau.nombre + 1] = []
             Ascensseur.liste[Niveau.nombre + 1] = []
-            Niveau(Plateforme.liste[Niveau.nombre + 1], Ascensseur.liste[Niveau.nombre + 1], 1000, [150, 150, 150])
+            Niveau(Plateforme.liste[Niveau.nombre + 1], Ascensseur.liste[Niveau.nombre + 1], 1000)
             Niveau.changer(Niveau.nombre)
-            Niveau.etat = "paramettre"
+            Niveau.changer_etat("editeur")
             self.recreation_bouton()
 
         elif self.boutons[3].est_clique():
-            Niveau.etat = "paramettre"
+            Niveau.changer_etat("paramettre")
         elif self.boutons[4].est_clique():
             self.type = "plat"
         elif self.boutons[5].est_clique():
@@ -125,7 +127,6 @@ class Editeur:
             boutons_n.append(b)
             i = b.rect.right
         self.boutons_n = ListeBouton(boutons_n)
-        self.decalage = 0
         self.boutons_n.decaler(self.decalage)
 
 
@@ -202,7 +203,7 @@ class Editeur:
                 souris = list(pygame.mouse.get_pos())
                 souris[0] = self.arrondir25(souris[0], "i") + self.camera
                 souris[1] = self.arrondir25(souris[1], "i")
-                Niveau.etat = "test"
+                Niveau.changer_etat("test")
                 Joueur.ply.rect.topleft = souris
                 #Screen.camera = max(0, min(Joueur.ply.rect.x - Screen.largeur() // 2, Niveau.actuel.taille - Screen.largeur()))
                 self.fermer(2)
@@ -249,10 +250,10 @@ class Editeur:
         w, h = surface.get_size()
         # lignes verticales
         for x in range(0, w, cell_size):
-            pygame.draw.line(surface, BLACK, (x, 0), (x, h))
+            pygame.draw.line(surface, c["BLACK"], (x, 0), (x, h))
         # lignes horizontales
         for y in range(0, h, cell_size):
-            pygame.draw.line(surface, BLACK, (0, y), (w, y))
+            pygame.draw.line(surface, c["BLACK"], (0, y), (w, y))
 
     @staticmethod
     def arrondir25(nombre, cote):

@@ -1,12 +1,14 @@
 from class_Texte import Texte
-from cp import *
+from cp import couleurs as c
 from class_Screen import Screen
 from fonction_ressource_path import resource_path
+import pygame
+pygame.init()
 s_click = pygame.mixer.Sound(resource_path("resources/click.mp3"))
 
 class Bouton(Texte):
 
-    def __init__(self, text, position, couleur=BLACK, taille = 30, police = "arial", centre = ""):
+    def __init__(self, text, position, couleur=c["BLACK"], taille = 30, police = "arial", centre = ""):
         super().__init__(text, position, couleur, taille, police, centre)
         self.gtaille = self.taille + 10
         self.ptaille = self.taille
@@ -69,7 +71,7 @@ class ListeBouton:
         i = 250
         for index,b in enumerate(self.boutons):
             if index < decalage:
-                b.mise_a_jour("", (0, b.y))
+                b.mise_a_jour(nouvelle_pos = (0, b.y))
             else :
-                b.mise_a_jour("", (i + 50, b.y))
+                b.mise_a_jour(nouvelle_pos = (i + 50, b.y))
                 i = b.rect.right
