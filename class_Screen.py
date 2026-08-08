@@ -15,3 +15,4 @@ class Screen:
     @classmethod
     def hauteur(cls):
         return cls.screen.get_size()[1]
+

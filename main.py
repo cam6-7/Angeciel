@@ -50,11 +50,7 @@ editeur = Editeur()
 paramettre = Paramettre()
 
 Debug("Niveau.en_cours", ["jeu", "test"], "Niveau ")
-
-# images
-image_player_d = pygame.image.load(resource_path("resources/image_player_d.png"))
-image_player_g = pygame.image.load(resource_path("resources/image_player_g.png"))
-image = image_player_d
+Debug("Niveau.liste_etats", ["jeu", "test"])
 
 # ==================== SON ====================
 m_menu = pygame.mixer.Sound(resource_path("resources/menu.mp3"))
@@ -109,8 +105,9 @@ while Niveau.etat != "close":
         if event.type == pygame.QUIT:
             Niveau.changer_etat("close")
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            if len(Niveau.liste_etats) > 1:
+            if len(Niveau.liste_etats) > 0:
                 Niveau.changer_etat(Niveau.liste_etats.pop(), save= False)
+            else: Niveau.changer_etat("menu", save= False)
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_p:
             print("\n " + str(pygame.mouse.get_pos()))
             print(pygame.mouse.get_pos()[0] + Screen.camera, pygame.mouse.get_pos()[1] + Screen.camera, "\n" )
@@ -174,50 +171,27 @@ while Niveau.etat != "close":
 
     # ==================== JEU =================================================================
     elif Niveau.etat == "jeu" or Niveau.etat == "test":
-        m_menu.stop()
-
-
-        ply.collids = {"gauche" : 0,
-                        "droite" : 0,
-                        "haut" : 0,
-                        "bas": 0}
 
         # Mouvement des ascenseurs
         for asc in Niveau.actuel.ascensseurs:
             asc.mouvement()
-
-         # Deplacements horizontaux
-        ply.vitesse[0] = 0
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT]:
-            ply.vitesse[0] -= ply.force[0]
-            image = image_player_g
-        if keys[pygame.K_RIGHT]:
-            ply.vitesse[0] += ply.force[0]
-            image = image_player_d
-
-        # Sauts + gravite
-        ply.vitesse[1] += ply.gravite
-        if keys[pygame.K_SPACE] and ply.au_sol:
-            ply.vitesse[1] += ply.force[1]
 
         # ==================== COLLISIONS + MOUVEMENTS ====================
         ply.bouger()
 
         # ==================== AFFICHAGE ==================================================================================
         Screen.screen.fill(Niveau.actuel.couleur)
-        # Nuages
 
+        # Nuages
         for pos in Nuage.liste:
             pos.afficher()
-
 
         # Plateformes et ascenseurs
         for obj in Niveau.actuel.objets:
             dessiner_plateforme_texturee(obj.rect.move(- Screen.camera, 0))
 
         # Joueur
-        Screen.screen.blit(image, ply.rect_ecran)
+            ply.afficher()
 
         # Aides pour le niveau 1
         if Niveau.en_cours == 1:

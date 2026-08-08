@@ -8,7 +8,7 @@ font = pygame.font.SysFont("arial", 30)
 
 class Message(Texte):
     stop = False
-    liste = []
+    liste = [None,]
     def __init__(self, message):
         if Niveau.etat == "editeur":
             super().__init__(message, ("x", 100) , centre= "spe")

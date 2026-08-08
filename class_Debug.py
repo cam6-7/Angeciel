@@ -39,7 +39,8 @@ class Debug(Texte):
     def obtenir(self):
         morceaux = self.stockage.split(".")
         nom_racine, *reste = morceaux
+        *_, dernier = morceaux
         obj = globals()[nom_racine]
         for attribut in reste:
             obj = getattr(obj, attribut)
-        return obj, nom_racine
+        return obj, dernier

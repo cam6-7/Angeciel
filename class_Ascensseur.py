@@ -44,48 +44,36 @@ class Ascensseur(Plateforme):
         )
 
     def mouvement(self):
-        ply = Joueur.ply
-        self.move = [0, 0]
-        d = ""
 
         if self.direction == "v":
             if self.avance:
-                self.move[1] = 2
-                d = "haut"
+                self.rect.move_ip(0, 2)
+                Joueur.ply.gerer_collisions("top")
                 if self.rect.y > self.pos_b[1]:
                     self.avance = False
             else:
-                self.move[1] = -2
-                d = "bas"
+                self.rect.move_ip(0, -2)
+                Joueur.ply.gerer_collisions("bottom")
                 if self.rect.y < self.pos_h[1]:
                     self.avance = True
 
         elif self.direction == "h":
             if self.avance:
-                self.move[0] = 2
-                d = "gauche"
+                self.rect.move_ip(2, 0)
+                Joueur.ply.gerer_collisions("left")
+                if self.est_porter():
+                    Joueur.ply.rect.move_ip(2, 0)
+                    Joueur.ply.gerer_collisions("right")
                 if self.rect.x > self.pos_d[0]:
                     self.avance = False
             else:
-                self.move[0] = -2
-                d = "droite"
+                self.rect.move_ip(-2, 0)
+                Joueur.ply.gerer_collisions("right")
+                if self.est_porter():
+                    Joueur.ply.rect.move_ip(2, 0)
+                    Joueur.ply.gerer_collisions("left")
                 if self.rect.x < self.pos_g[0]:
                     self.avance = True
-
-        self.rect.move_ip(*self.move)
-        if self.rect.colliderect(ply.rect):
-            if d == "droite":
-                ply.rect.right = self.rect.left
-                ply.collids["droite"] = 2
-            elif d == "gauche":
-                ply.rect.left = self.rect.right
-                ply.collids["gauche"] = 2
-            elif d == "bas" :
-                ply.rect.bottom = self.rect.top
-                ply.collids["bas"] = 2
-            elif d == "haut":
-                ply.rect.top = self.rect.bottom
-                ply.collids["haut"] = 2
 
     def to_dict(self):
         return {
