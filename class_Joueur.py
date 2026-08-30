@@ -1,4 +1,4 @@
-import pygame
+import pygame, math
 pygame.init()
 from class_Niveau import Niveau
 from class_Screen import Screen
@@ -22,29 +22,47 @@ class Joueur:
     def pos(self):
         return self.rect.topleft
 
+    def deplacer(self, direction, vitesse = 25):
+        if abs(int(round(vitesse, 0))) ==0:
+            return
+        if direction == "verticale":
+            if vitesse < 0:
+                direction = "top"
+            else:
+                direction = "bottom"
+        elif direction == "horizontale":
+            if vitesse < 0:
+                direction = "left"
+            else:
+                direction = "right"
+        for i in range(abs(int(round(vitesse, 0)))):
+            if direction == "top":
+                self.rect.move_ip(0, -1)
+            elif direction == "bottom":
+                self.rect.move_ip(0, 1)
+            elif direction == "left":
+                self.rect.move_ip(-1, 0)
+            elif direction == "right":
+                self.rect.move_ip(1, 0)
+            self.gerer_collisions(direction)
+
     def bouger(self):
         if self.touche():
-            self.reinitialiser_jeu(True)
+            self.reinitialiser_jeu()
         self.au_sol = False
 
-        self.rect.move_ip(0, self.gravite)
+        self.deplacer("verticale", self.gravite - self.saut)
         self.gravite += 0.9
-        self.gerer_collisions("bottom")
-
-        self.rect.move_ip(0, -self.saut)
         self.saut -= 0.5 if self.saut > 0 else 0
-        self.gerer_collisions("top")
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_SPACE] and self.au_sol and self.saut == 0:
             self.saut = 20
         if keys[pygame.K_LEFT]:
-            self.rect.move_ip(-5, 0)
-            self.gerer_collisions("left")
+            self.deplacer("left", 5)
             self.image = image_player_g
         if keys[pygame.K_RIGHT]:
-            self.rect.move_ip(5, 0)
-            self.gerer_collisions("right")
+            self.deplacer("right", 5)
             self.image = image_player_d
         self.limit_move()
         Screen.camera = max(0, min(self.rect.x - Screen.largeur() // 2, Niveau.actuel.taille - Screen.largeur()))
@@ -60,45 +78,35 @@ class Joueur:
                 self.rect.bottom = plat.rect.top
 
     def gerer_collisions(self, direction : str):
+        liste = [obj for obj in Niveau.actuel.objets if obj.rect.colliderect(self.rect)]
+        if len(liste) == 0:
+            return
+        obj = liste[0]
         vitesse = self.gravite - self.saut
-        if self.touche() == 1:
-            for obj in Niveau.actuel.objets:
-                if obj.rect.colliderect(self.rect):
-                    if direction == "top":
-                        self.rect.top = obj.rect.bottom
-                        if vitesse < 0:
-                            self.saut = 0
-                            self.gravite = 0
-                    elif direction == "bottom":
-                        self.rect.bottom = obj.rect.top
-                        if vitesse > 0:
-                            self.saut = 0
-                            self.gravite = 0
-                            self.au_sol = True
 
-                    elif direction == "right":
-                        self.rect.right = obj.rect.left
-                    elif direction == "left":
-                        self.rect.left = obj.rect.right
-                    else: raise ValueError
 
-        elif self.touche() > 1:
-            liste = [ obj.rect for obj in Niveau.actuel.objets if obj.rect.colliderect(self.rect)]
-            obj = liste[0]
-            if direction == "top" and all([objet.bottom == obj.bottom for objet in liste ]):
-                self.rect.top = obj.bottom
+        if direction == "top" and all([objet.rect.bottom == obj.rect.bottom for objet in liste]):
+            self.rect.top = obj.rect.bottom
+            if vitesse < 0:
                 self.saut = 0
                 self.gravite = 0
-            elif direction == "bottom" and all([objet.top == obj.top for objet in liste ]):
-                self.rect.bottom = obj.top
+        elif direction == "bottom" and all([objet.rect.top == obj.rect.top for objet in liste]):
+            self.rect.bottom = obj.rect.top
+            if vitesse > 0:
+                self.saut = 0
+                self.gravite = 0
                 self.au_sol = True
-                self.gravite = 0
-                self.saut = 0
-            elif direction == "right" and all([objet.left == obj.left for objet in liste ]):
-                self.rect.right = obj.left
-            elif direction == "left" and all([objet.right == obj.right for objet in liste ]):
-                self.rect.left = obj.right
-            else: print("erreur :", direction)
+        elif direction == "right" and all([objet.rect.left == obj.rect.left for objet in liste]):
+            self.rect.right = obj.rect.left
+        elif direction == "left" and all([objet.rect.right == obj.rect.right for objet in liste]):
+            self.rect.left = obj.rect.right
+        else:
+            print("erreur :", direction)
+            if not direction in ["top", "bottom", "left", "right"]: raise ValueError
+            else : raise ValueError
+
+        if self.touche():
+            self.reinitialiser_jeu()
 
     def touche(self, dx = 0, dy = 0):
         # fonction qui renvoie le nombre de plateform que touche le joueur
@@ -125,20 +133,17 @@ class Joueur:
             self.gravite = 0
         # si on va trop bas
         elif self.rect.top >= Screen.hauteur():
-            self.reinitialiser_jeu(True)
+            self.reinitialiser_jeu()
 
     @property
     def rect_ecran(self):
         return self.rect.move(-Screen.camera, 0)
 
-    def reinitialiser_jeu(self, mort = False):
+    def reinitialiser_jeu(self):
         self.saut = 0
         self.gravite = 0
         self.rect.topleft = (50, 50)
-        if mort: print("renitialisation du jeu par mort")
-        else: print("renitialisation du jeu basique")
-        save = not mort
         if Niveau.etat == "test":
-            Niveau.changer_etat("test",not  save)
+            Niveau.changer_etat("test")
         else:
-            Niveau.changer_etat("jeu",not  save)
+            Niveau.changer_etat("jeu")

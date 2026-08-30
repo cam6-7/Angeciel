@@ -53,6 +53,8 @@ class Ascensseur(Plateforme):
                     self.avance = False
             else:
                 self.rect.move_ip(0, -2)
+                if self.est_porter():
+                    Joueur.ply.deplacer("top", 2)
                 Joueur.ply.gerer_collisions("bottom")
                 if self.rect.y < self.pos_h[1]:
                     self.avance = True
@@ -62,16 +64,14 @@ class Ascensseur(Plateforme):
                 self.rect.move_ip(2, 0)
                 Joueur.ply.gerer_collisions("left")
                 if self.est_porter():
-                    Joueur.ply.rect.move_ip(2, 0)
-                    Joueur.ply.gerer_collisions("right")
+                    Joueur.ply.deplacer("right", 2)
                 if self.rect.x > self.pos_d[0]:
                     self.avance = False
             else:
                 self.rect.move_ip(-2, 0)
                 Joueur.ply.gerer_collisions("right")
                 if self.est_porter():
-                    Joueur.ply.rect.move_ip(2, 0)
-                    Joueur.ply.gerer_collisions("left")
+                    Joueur.ply.deplacer("left", 2)
                 if self.rect.x < self.pos_g[0]:
                     self.avance = True
 

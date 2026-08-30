@@ -49,9 +49,6 @@ for i in range(1, nombre_de_niveau+1):
 editeur = Editeur()
 paramettre = Paramettre()
 
-Debug("Niveau.en_cours", ["jeu", "test"], "Niveau ")
-Debug("Niveau.liste_etats", ["jeu", "test"])
-
 # ==================== SON ====================
 m_menu = pygame.mixer.Sound(resource_path("resources/menu.mp3"))
 m_jeu = pygame.mixer.Sound(resource_path("resources/jeu.mp3"))
@@ -105,8 +102,9 @@ while Niveau.etat != "close":
         if event.type == pygame.QUIT:
             Niveau.changer_etat("close")
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            if len(Niveau.liste_etats) > 0:
-                Niveau.changer_etat(Niveau.liste_etats.pop(), save= False)
+            if len(Niveau.liste_etats) >= 2:
+                del Niveau.liste_etats[-1]
+                Niveau.changer_etat(Niveau.liste_etats[-1], save= False)
             else: Niveau.changer_etat("menu", save= False)
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_p:
             print("\n " + str(pygame.mouse.get_pos()))

@@ -37,3 +37,4 @@ class Plateforme:
             "largeur": self.rect.width,
             "hauteur": self.rect.height,
         }
+
