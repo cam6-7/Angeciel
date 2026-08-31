@@ -3,7 +3,6 @@ from class_Screen import Screen
 from class_Bouton import Bouton, ListeBouton
 from class_Niveau import Niveau
 from class_Plateforme import Plateforme
-from class_Ascensseur import Ascensseur
 from fonction_texture import dessiner_plateforme_texturee
 from class_Texte import Texte
 from cp import couleurs as c
@@ -49,11 +48,9 @@ class Editeur:
         self.draw_grid()
 
         #objets
-        for plat in Niveau.actuel.plateformes:
+        for plat in Niveau.actuel.objets:
+            plat.mouvement()
             dessiner_plateforme_texturee(plat.rect.move(- self.camera, 0))
-        for asc in Niveau.actuel.ascensseurs:
-            asc.mouvement()
-            dessiner_plateforme_texturee(asc.rect.move(- self.camera, 0))
 
         #boutons
         pygame.draw.rect(Screen.screen, (0, 0, 0), (0, 0, 200, Screen.hauteur()))
@@ -103,8 +100,7 @@ class Editeur:
             Message("Cliquer là où vous voulez allez")
         elif self.boutons[2].est_clique():
             Plateforme.liste[Niveau.nombre + 1] = []
-            Ascensseur.liste[Niveau.nombre + 1] = []
-            Niveau(Plateforme.liste[Niveau.nombre + 1], Ascensseur.liste[Niveau.nombre + 1], 1000)
+            Niveau(Plateforme.liste[Niveau.nombre + 1], 1000)
             Niveau.changer(Niveau.nombre)
             Niveau.changer_etat("editeur")
             self.recreation_bouton()
@@ -158,7 +154,7 @@ class Editeur:
                 obj.supprimer()
                 clic = 1
         if clic == 0 and self.type != "rien":
-            self.att = Plateforme(0, 0, 0, 0, Niveau.en_cours)
+            self.att = Plateforme(Niveau.en_cours, (0, 0), [(0, 0)])
             self.action = "creer"
 
     def _clic_enfonce(self):
@@ -225,7 +221,7 @@ class Editeur:
                     self.att2.rect.x += 25
                     self.att2.rect.y = self.att.rect.y
                 elif event.key == pygame.K_RETURN:
-                    Ascensseur(Niveau.en_cours, self.att.rect.size, self.att.rect.topleft, self.att2.rect.topleft)
+                    Plateforme(Niveau.en_cours, self.att.rect.size,[list(self.att.rect.topleft), list(self.att2.rect.topleft)])
                     self.att.supprimer()
                     self.att2.supprimer()
                     self.action = "rien"

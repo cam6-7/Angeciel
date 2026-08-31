@@ -1,6 +1,5 @@
 from class_Joueur import Joueur
 from class_Plateforme import Plateforme
-from class_Ascensseur import Ascensseur
 from class_Screen import Screen
 from class_Texte import Texte
 from class_Bouton import Bouton

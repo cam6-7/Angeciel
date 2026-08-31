@@ -1,158 +1,406 @@
 [
     {
-        "x": 2025,
-        "y": 0,
-        "largeur": 25,
-        "hauteur": 375
+        "niveau": 1,
+        "taille": [
+            125,
+            25
+        ],
+        "positions": [
+            [
+                150,
+                350
+            ],
+            [
+                150,
+                500
+            ]
+        ],
+        "avance": true
     },
     {
-        "x": 700,
-        "y": 425,
-        "largeur": 25,
-        "hauteur": 100
+        "niveau": 1,
+        "taille": [
+            200,
+            25
+        ],
+        "positions": [
+            [
+                1175,
+                425
+            ],
+            [
+                1950,
+                425
+            ]
+        ],
+        "avance": true
     },
     {
-        "x": 2975,
-        "y": 200,
-        "largeur": 425,
-        "hauteur": 25
+        "niveau": 1,
+        "taille": [
+            75,
+            25
+        ],
+        "positions": [
+            [
+                2900,
+                200
+            ],
+            [
+                2900,
+                350
+            ]
+        ],
+        "avance": true
     },
     {
-        "x": 3400,
-        "y": 100,
-        "largeur": 100,
-        "hauteur": 25
+        "niveau": 1,
+        "taille": [
+            700,
+            25
+        ],
+        "positions": [
+            [
+                0,
+                500
+            ]
+        ],
+        "avance": true
     },
     {
-        "x": 4175,
-        "y": 275,
-        "largeur": 100,
-        "hauteur": 25
+        "niveau": 1,
+        "taille": [
+            25,
+            100
+        ],
+        "positions": [
+            [
+                700,
+                425
+            ]
+        ],
+        "avance": true
     },
     {
-        "x": 4325,
-        "y": 275,
-        "largeur": 100,
-        "hauteur": 25
+        "niveau": 1,
+        "taille": [
+            550,
+            25
+        ],
+        "positions": [
+            [
+                725,
+                425
+            ]
+        ],
+        "avance": true
     },
     {
-        "x": 4475,
-        "y": 275,
-        "largeur": 100,
-        "hauteur": 25
+        "niveau": 1,
+        "taille": [
+            25,
+            100
+        ],
+        "positions": [
+            [
+                875,
+                325
+            ]
+        ],
+        "avance": true
     },
     {
-        "x": 3475,
-        "y": 125,
-        "largeur": 25,
-        "hauteur": 475
+        "niveau": 1,
+        "taille": [
+            25,
+            375
+        ],
+        "positions": [
+            [
+                2025,
+                0
+            ]
+        ],
+        "avance": true
     },
     {
-        "x": 3375,
-        "y": 100,
-        "largeur": 25,
-        "hauteur": 100
+        "niveau": 1,
+        "taille": [
+            200,
+            25
+        ],
+        "positions": [
+            [
+                2025,
+                425
+            ]
+        ],
+        "avance": true
     },
     {
-        "x": 4625,
-        "y": 275,
-        "largeur": 100,
-        "hauteur": 25
+        "niveau": 1,
+        "taille": [
+            100,
+            25
+        ],
+        "positions": [
+            [
+                2050,
+                350
+            ]
+        ],
+        "avance": true
     },
     {
-        "x": 4775,
-        "y": 275,
-        "largeur": 225,
-        "hauteur": 25
+        "niveau": 1,
+        "taille": [
+            25,
+            50
+        ],
+        "positions": [
+            [
+                2200,
+                375
+            ]
+        ],
+        "avance": true
     },
     {
-        "x": 725,
-        "y": 425,
-        "largeur": 550,
-        "hauteur": 25
+        "niveau": 1,
+        "taille": [
+            775,
+            25
+        ],
+        "positions": [
+            [
+                2200,
+                350
+            ]
+        ],
+        "avance": true
     },
     {
-        "x": 2025,
-        "y": 425,
-        "largeur": 200,
-        "hauteur": 25
+        "niveau": 1,
+        "taille": [
+            425,
+            25
+        ],
+        "positions": [
+            [
+                2975,
+                200
+            ]
+        ],
+        "avance": true
     },
     {
-        "x": 2200,
-        "y": 375,
-        "largeur": 25,
-        "hauteur": 50
+        "niveau": 1,
+        "taille": [
+            25,
+            100
+        ],
+        "positions": [
+            [
+                3375,
+                100
+            ]
+        ],
+        "avance": true
     },
     {
-        "x": 2050,
-        "y": 350,
-        "largeur": 100,
-        "hauteur": 25
+        "niveau": 1,
+        "taille": [
+            100,
+            25
+        ],
+        "positions": [
+            [
+                3400,
+                100
+            ]
+        ],
+        "avance": true
     },
     {
-        "x": 2200,
-        "y": 350,
-        "largeur": 775,
-        "hauteur": 25
+        "niveau": 1,
+        "taille": [
+            25,
+            475
+        ],
+        "positions": [
+            [
+                3475,
+                125
+            ]
+        ],
+        "avance": true
     },
     {
-        "x": 3500,
-        "y": 575,
-        "largeur": 300,
-        "hauteur": 25
+        "niveau": 1,
+        "taille": [
+            300,
+            25
+        ],
+        "positions": [
+            [
+                3500,
+                575
+            ]
+        ],
+        "avance": true
     },
     {
-        "x": 3800,
-        "y": 475,
-        "largeur": 25,
-        "hauteur": 125
+        "niveau": 1,
+        "taille": [
+            25,
+            125
+        ],
+        "positions": [
+            [
+                3800,
+                475
+            ]
+        ],
+        "avance": true
     },
     {
-        "x": 3825,
-        "y": 475,
-        "largeur": 100,
-        "hauteur": 25
+        "niveau": 1,
+        "taille": [
+            100,
+            25
+        ],
+        "positions": [
+            [
+                3825,
+                475
+            ]
+        ],
+        "avance": true
     },
     {
-        "x": 3900,
-        "y": 375,
-        "largeur": 25,
-        "hauteur": 100
+        "niveau": 1,
+        "taille": [
+            25,
+            100
+        ],
+        "positions": [
+            [
+                3900,
+                375
+            ]
+        ],
+        "avance": true
     },
     {
-        "x": 3925,
-        "y": 375,
-        "largeur": 100,
-        "hauteur": 25
+        "niveau": 1,
+        "taille": [
+            100,
+            25
+        ],
+        "positions": [
+            [
+                3925,
+                375
+            ]
+        ],
+        "avance": true
     },
     {
-        "x": 4000,
-        "y": 275,
-        "largeur": 25,
-        "hauteur": 100
+        "niveau": 1,
+        "taille": [
+            25,
+            100
+        ],
+        "positions": [
+            [
+                4000,
+                275
+            ]
+        ],
+        "avance": true
     },
     {
-        "x": 4025,
-        "y": 275,
-        "largeur": 100,
-        "hauteur": 25
+        "niveau": 1,
+        "taille": [
+            100,
+            25
+        ],
+        "positions": [
+            [
+                4025,
+                275
+            ]
+        ],
+        "avance": true
     },
     {
-        "x": 0,
-        "y": 0,
-        "largeur": 0,
-        "hauteur": 0
+        "niveau": 1,
+        "taille": [
+            100,
+            25
+        ],
+        "positions": [
+            [
+                4175,
+                275
+            ]
+        ],
+        "avance": true
     },
     {
-        "x": 0,
-        "y": 500,
-        "largeur": 700,
-        "hauteur": 25
+        "niveau": 1,
+        "taille": [
+            100,
+            25
+        ],
+        "positions": [
+            [
+                4325,
+                275
+            ]
+        ],
+        "avance": true
     },
     {
-        "x": 875,
-        "y": 325,
-        "largeur": 25,
-        "hauteur": 100
+        "niveau": 1,
+        "taille": [
+            100,
+            25
+        ],
+        "positions": [
+            [
+                4475,
+                275
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "niveau": 1,
+        "taille": [
+            100,
+            25
+        ],
+        "positions": [
+            [
+                4625,
+                275
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "niveau": 1,
+        "taille": [
+            225,
+            25
+        ],
+        "positions": [
+            [
+                4775,
+                275
+            ]
+        ],
+        "avance": true
     }
 ]

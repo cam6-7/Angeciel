@@ -11,29 +11,10 @@ ply = Joueur()
 # ================= IMPORTS ===================
 # ascensseurs
 
-for i in range(1, nombre_de_niveau+1):
-    with open("objets/ascensseur"+str(i)+".json", "r") as f:
-        data = json.load(f)
-    for asc in data:
-        Ascensseur(
-            niveau =asc["niveau"],
-            taille=(asc["taille"]),
-            pos1=(asc["pos1"]),
-            pos2 =(asc["pos2"])
-
-        )
 # plateformes
 for i in range(1, nombre_de_niveau+1):
     with open("objets/plateforme"+str(i)+".json", "r") as f:
-        data = json.load(f)
-    for plat in data:
-        Plateforme(
-            niveau = i,
-            x = plat["x"],
-            y = plat["y"],
-            l = plat["largeur"],
-            h = plat["hauteur"],
-        )
+        [Plateforme(plat["niveau"], plat["taille"], plat["positions"]) for plat in json.load(f)]
 
 # niveaux
 for i in range(1, nombre_de_niveau+1):
@@ -41,11 +22,12 @@ for i in range(1, nombre_de_niveau+1):
         data = json.load(f)
         Niveau(
             Plateforme.liste[i],
-            Ascensseur.liste[i],
             data["taille"],
             data["couleur"],
             name = data["name"]
         )
+
+
 editeur = Editeur()
 paramettre = Paramettre()
 
@@ -171,8 +153,8 @@ while Niveau.etat != "close":
     elif Niveau.etat == "jeu" or Niveau.etat == "test":
 
         # Mouvement des ascenseurs
-        for asc in Niveau.actuel.ascensseurs:
-            asc.mouvement()
+        for plat in Niveau.actuel.objets:
+            plat.mouvement()
 
         # ==================== COLLISIONS + MOUVEMENTS ====================
         ply.bouger()
@@ -205,8 +187,6 @@ while Niveau.etat != "close":
 
 # sauvergarde des objets quand le jeu est fini
 for i in range(1, Niveau.nombre + 1):
-    with open("objets/ascensseur"+ str(i) +".json", "w") as f:
-        json.dump([asc.to_dict() for asc in Ascensseur.liste[i]], f, indent=4)
     with open("objets/plateforme"+str(i)+".json", "w") as f:
         json.dump([plat.to_dict() for plat in Plateforme.liste[i]], f, indent=4)
     with open("objets/niveau"+str(i)+".json", "w") as f:

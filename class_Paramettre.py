@@ -1,4 +1,3 @@
-from class_Ascensseur import Ascensseur
 from class_Bouton import Bouton
 from class_Editeur import Editeur
 from class_Niveau import Niveau
@@ -37,9 +36,8 @@ class Paramettre:
             self.gerer_decalage()
             Niveau.changer_etat("editeur")
         elif self.boutons["dupliquer"].est_clique():
-            Plateforme.liste[Niveau.nombre + 1] = Niveau.actuel.plateformes
-            Ascensseur.liste[Niveau.nombre + 1] = Niveau.actuel.ascensseurs
-            Niveau(Plateforme.liste[Niveau.nombre + 1], Ascensseur.liste[Niveau.nombre + 1], Niveau.actuel.taille, Niveau.actuel.couleur)
+            Plateforme.liste[Niveau.nombre + 1] = Niveau.actuel.objets
+            Niveau(Plateforme.liste[Niveau.nombre + 1], Niveau.actuel.taille, Niveau.actuel.couleur)
             Niveau.changer(Niveau.nombre)
             Editeur.e.recreation_bouton()
             self.gerer_decalage()
