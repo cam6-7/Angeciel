@@ -30,9 +30,9 @@ class Plateforme:
         self.avance = avance
         Plateforme.liste[self.niveau].append(self)
 
-    def est_porter(self):
+    def porte(self):
 
-        if self.direction == "v" and self.avance and Joueur.ply.touche(0, 3) == 1: tolerance = 2
+        if self.direction in ("top", "down") and Joueur.ply.touche(0, 3) == 1: tolerance = 2
         else: tolerance = 0
         return (
                 abs(Joueur.ply.rect.bottom - self.rect.top) <= tolerance
@@ -45,8 +45,6 @@ class Plateforme:
             pos = self.rect.topleft
         else:
             pos = self.pos1
-
-
         if pos[1] < self.pos2[1]:
             return "bottom"
         elif pos[1] > self.pos2[1]:
@@ -56,27 +54,23 @@ class Plateforme:
         elif pos[0] < self.pos2[0]:
             return "right"
 
+    @staticmethod
+    def _vecteur(direction):
+        return {"top": (0, -2), "bottom": (0, 2), "left": (-2, 0), "right": (2, 0)}[direction]
+
     def mouvement(self):
         if self.nb_positions < 2:
             return
-        if self.direction == "top":
-            self.rect.move_ip(0, -2)
-            Joueur.ply.gerer_collisions("bottom")
-        elif self.direction == "bottom":
-            self.rect.move_ip(0, 2)
-            Joueur.ply.gerer_collisions("top")
-        elif self.direction == "left":
-            self.rect.move_ip(-2, 0)
-            Joueur.ply.gerer_collisions("right")
-        elif self.direction == "right":
-            self.rect.move_ip(2, 0)
-            Joueur.ply.gerer_collisions("left")
-        if self.est_porter():
+        dx, dy = self._vecteur(self.direction)
+        self.rect.move_ip(dx, dy)
+        self.check_avance()
+        if self.porte:
+            Joueur.ply.rect.move_ip(dx, 0)
             Joueur.ply.rect.bottom = self.rect.top
             Joueur.ply.au_sol = True
-            Joueur.ply.saut = 0
-            Joueur.ply.gravite = 0
-        self.check_avance()
+            Joueur.ply.vy = 0
+        elif self.rect.colliderect(Joueur.ply.rect):
+            Joueur.ply.deplacer('x' if dx else 'y', dx or dy, True)
 
     def check_avance(self):
         if self.direction != self.get_direction(True):
@@ -99,6 +93,7 @@ class Plateforme:
                     self.pos1 = self.positions[self.nu_position]
                     self.pos2 = self.positions[self.nu_position - 1]
 
+            self.rect.topleft = self.pos1
             self.direction = self.get_direction()
 
 

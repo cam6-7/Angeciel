@@ -198,5 +198,7 @@ for i in range(1, nombre_de_niveau + 1):
         os.remove("objets/niveau"+ str(i) +".json")
 
 print("fin sauvergardé")
+Screen.screen.fill((0, 0, 0))
+pygame.display.flip()
 pygame.quit()
 sys.exit()

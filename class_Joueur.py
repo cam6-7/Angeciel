@@ -7,6 +7,10 @@ from typing import ClassVar
 # images
 image_player_g = pygame.image.load(resource_path("resources/image_player_g.png"))
 image_player_d = pygame.image.load(resource_path("resources/image_player_d.png"))
+VITESSE_MARCHE = 5
+GRAVITE = 0.9
+VITESSE_SAUT = 20
+
 class Joueur:
     ply: ClassVar["Joueur"] = None
     def __init__(self):
@@ -16,21 +20,23 @@ class Joueur:
         self.image = pygame.image.load(resource_path("resources/image_player_d.png"))
         self.gravite = 0
         self.saut = 0
+        self.vx = 0
+        self.vy = 0
         Joueur.ply = self
 
     @property
     def pos(self):
         return self.rect.topleft
 
-    def deplacer(self, direction, vitesse = 25):
+    def deplacer(self, direction, vitesse = 25, force = False):
         if abs(int(round(vitesse, 0))) ==0:
             return
-        if direction == "verticale":
+        if direction == "y":
             if vitesse < 0:
                 direction = "top"
             else:
                 direction = "bottom"
-        elif direction == "horizontale":
+        elif direction == "x":
             if vitesse < 0:
                 direction = "left"
             else:
@@ -44,32 +50,37 @@ class Joueur:
                 self.rect.move_ip(-1, 0)
             elif direction == "right":
                 self.rect.move_ip(1, 0)
-            self.gerer_collisions(direction)
+            if not force:
+                self.gerer_collisions(direction)
+        if force and self.touche():
+            self.reinitialiser_jeu()
 
     def bouger(self):
         if self.touche():
             print("erreur de logique, touche avant déplacement")
             self.reinitialiser_jeu()
+
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            self.vx = VITESSE_MARCHE
+            self.image = image_player_g
+        if keys[pygame.K_RIGHT]:
+            self.vx = VITESSE_MARCHE
+            self.image = image_player_d
+        if keys[pygame.K_SPACE] and self.au_sol:
+            self.vy = -VITESSE_SAUT
+
+        self.vy += GRAVITE
+
+        self.deplacer('x', self.vx)
+        self.deplacer('y', self.vy)
+
         self.au_sol = False
         for plat in Niveau.actuel.objets:
             plat.mouvement()
 
-        self.deplacer("verticale", self.gravite - self.saut)
-        self.gravite += 0.9
-        self.saut -= 0.5 if self.saut > 0 else 0
-
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_SPACE] and self.au_sol and self.saut == 0:
-            self.saut = 20
-        if keys[pygame.K_LEFT]:
-            self.deplacer("left", 5)
-            self.image = image_player_g
-        if keys[pygame.K_RIGHT]:
-            self.deplacer("right", 5)
-            self.image = image_player_d
         self.limit_move()
-        Screen.camera = max(0, min(self.rect.x - Screen.largeur() // 2, Niveau.actuel.taille - Screen.largeur()))
-
+        Screen.camera = max(0, min(self.rect.x - Screen.largeur() // 2,  Niveau.actuel.taille - Screen.largeur()))
 
     def afficher(self):
         Screen.screen.blit(self.image, self.rect_ecran)
