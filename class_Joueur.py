@@ -1,4 +1,4 @@
-import pygame, math
+import pygame
 pygame.init()
 from class_Niveau import Niveau
 from class_Screen import Screen
@@ -48,8 +48,11 @@ class Joueur:
 
     def bouger(self):
         if self.touche():
+            print("erreur de logique, touche avant déplacement")
             self.reinitialiser_jeu()
         self.au_sol = False
+        for plat in Niveau.actuel.objets:
+            plat.mouvement()
 
         self.deplacer("verticale", self.gravite - self.saut)
         self.gravite += 0.9
@@ -71,31 +74,22 @@ class Joueur:
     def afficher(self):
         Screen.screen.blit(self.image, self.rect_ecran)
 
-
-    def transportage(self):
-        for plat in Niveau.actuel.ascensseurs:
-            if plat.est_porter():
-                self.rect.bottom = plat.rect.top
-
     def gerer_collisions(self, direction : str):
         liste = [obj for obj in Niveau.actuel.objets if obj.rect.colliderect(self.rect)]
         if len(liste) == 0:
             return
         obj = liste[0]
-        vitesse = self.gravite - self.saut
 
 
         if direction == "top" and all([objet.rect.bottom == obj.rect.bottom for objet in liste]):
             self.rect.top = obj.rect.bottom
-            if vitesse < 0:
-                self.saut = 0
-                self.gravite = 0
+            self.saut = 0
+            self.gravite = 0
         elif direction == "bottom" and all([objet.rect.top == obj.rect.top for objet in liste]):
             self.rect.bottom = obj.rect.top
-            if vitesse > 0:
-                self.saut = 0
-                self.gravite = 0
-                self.au_sol = True
+            self.saut = 0
+            self.gravite = 0
+            self.au_sol = True
         elif direction == "right" and all([objet.rect.left == obj.rect.left for objet in liste]):
             self.rect.right = obj.rect.left
         elif direction == "left" and all([objet.rect.right == obj.rect.right for objet in liste]):

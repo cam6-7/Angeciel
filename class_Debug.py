@@ -1,7 +1,4 @@
-from class_Niveau import Niveau
-from class_Texte import Texte
-from class_Temps import Timer
-from class_Screen import Screen
+from mes_class import *
 class Debug(Texte):
     liste = []
     nombre = 0

@@ -35,9 +35,9 @@ class Plateforme:
         if self.direction == "v" and self.avance and Joueur.ply.touche(0, 3) == 1: tolerance = 2
         else: tolerance = 0
         return (
-                abs(Joueur.rect.bottom - self.rect.top) <= tolerance
-                and Joueur.rect.right > self.rect.left
-                and Joueur.rect.left < self.rect.right
+                abs(Joueur.ply.rect.bottom - self.rect.top) <= tolerance
+                and Joueur.ply.rect.right > self.rect.left
+                and Joueur.ply.rect.left < self.rect.right
         )
 
     def get_direction(self, vraiepose = False):
@@ -59,15 +59,23 @@ class Plateforme:
     def mouvement(self):
         if self.nb_positions < 2:
             return
-        print(self.direction)
         if self.direction == "top":
             self.rect.move_ip(0, -2)
+            Joueur.ply.gerer_collisions("bottom")
         elif self.direction == "bottom":
             self.rect.move_ip(0, 2)
+            Joueur.ply.gerer_collisions("top")
         elif self.direction == "left":
             self.rect.move_ip(-2, 0)
+            Joueur.ply.gerer_collisions("right")
         elif self.direction == "right":
             self.rect.move_ip(2, 0)
+            Joueur.ply.gerer_collisions("left")
+        if self.est_porter():
+            Joueur.ply.rect.bottom = self.rect.top
+            Joueur.ply.au_sol = True
+            Joueur.ply.saut = 0
+            Joueur.ply.gravite = 0
         self.check_avance()
 
     def check_avance(self):

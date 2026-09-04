@@ -30,6 +30,8 @@ for i in range(1, nombre_de_niveau+1):
 
 editeur = Editeur()
 paramettre = Paramettre()
+Debug("Joueur.ply.au_sol", "jeu, debug, menu")
+Debug("Joueur.ply.saut", "jeu, debug, menu")
 
 # ==================== SON ====================
 m_menu = pygame.mixer.Sound(resource_path("resources/menu.mp3"))
@@ -151,10 +153,6 @@ while Niveau.etat != "close":
 
     # ==================== JEU =================================================================
     elif Niveau.etat == "jeu" or Niveau.etat == "test":
-
-        # Mouvement des ascenseurs
-        for plat in Niveau.actuel.objets:
-            plat.mouvement()
 
         # ==================== COLLISIONS + MOUVEMENTS ====================
         ply.bouger()
