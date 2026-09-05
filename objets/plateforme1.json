@@ -384,23 +384,5 @@
             ]
         ],
         "avance": true
-    },
-    {
-        "niveau": 1,
-        "taille": [
-            150,
-            25
-        ],
-        "positions": [
-            [
-                200,
-                350
-            ],
-            [
-                200,
-                500
-            ]
-        ],
-        "avance": true
     }
 ]

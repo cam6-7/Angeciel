@@ -1,0 +1,72 @@
+[
+    {
+        "niveau": 5,
+        "taille": [
+            800,
+            25
+        ],
+        "positions": [
+            [
+                0,
+                575
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "niveau": 5,
+        "taille": [
+            600,
+            25
+        ],
+        "positions": [
+            [
+                800,
+                575
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "niveau": 5,
+        "taille": [
+            25,
+            25
+        ],
+        "positions": [
+            [
+                800,
+                550
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "niveau": 5,
+        "taille": [
+            25,
+            25
+        ],
+        "positions": [
+            [
+                450,
+                550
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "niveau": 5,
+        "taille": [
+            25,
+            25
+        ],
+        "positions": [
+            [
+                1250,
+                550
+            ]
+        ],
+        "avance": true
+    }
+]
