@@ -23,6 +23,7 @@ class Editeur:
         self.souris1 = None
         self.type = "rien"
         self.decalage = 0
+        self.montrer_boutons = True
         self.boutons = [
             Bouton("Retour", [10, 50], couleur= c["WHITE"]),
             Bouton("Tester", [10, 100], couleur= c["WHITE"]),
@@ -32,6 +33,7 @@ class Editeur:
             Bouton("créer un\nascensseur", [10, 475], couleur=c["WHITE"]),]
         self.decalage = 0
         self.recreation_bouton()
+        self.listespos = []
         Editeur.e = self
 
     def afficher_fleche(self):
@@ -54,24 +56,28 @@ class Editeur:
 
         #boutons
         pygame.draw.rect(Screen.screen, (0, 0, 0), (0, 0, 200, Screen.hauteur()))
-        pygame.draw.rect(Screen.screen, (0, 0, 0), (0, 0, Screen.largeur(), 75))
-        
-        self.recreation_bouton()
         for b in self.boutons:
             b.afficher()
-        self.boutons_n.afficher()
-        self.afficher_fleche()
 
-        if self.fleche_g.est_clique():
-            self.decalage -= 1 if self.decalage >= 0 else 0
-            self.boutons_n.decaler(self.decalage)
+        if self.montrer_boutons:
+            pygame.draw.rect(Screen.screen, (0, 0, 0), (0, 0, Screen.largeur(), 75))
 
-        elif self.fleche_d.est_clique():
-            self.decalage += 1
-            self.boutons_n.decaler(self.decalage)
-            while (Screen.largeur() - 50) - self.boutons_n.boutons[-1].rect.right >= self.boutons_n.boutons[-1].rect.width:
-                self.decalage -= 1
+            for b in self.boutons:
+                b.afficher()
+            self.recreation_bouton()
+            self.boutons_n.afficher()
+            self.afficher_fleche()
+
+            if self.fleche_g.est_clique():
+                self.decalage -= 1 if self.decalage >= 0 else 0
                 self.boutons_n.decaler(self.decalage)
+
+            elif self.fleche_d.est_clique():
+                self.decalage += 1
+                self.boutons_n.decaler(self.decalage)
+                while (Screen.largeur() - 50) - self.boutons_n.boutons[-1].rect.right >= self.boutons_n.boutons[-1].rect.width:
+                    self.decalage -= 1
+                    self.boutons_n.decaler(self.decalage)
 
 
     def gestion_camera(self):
@@ -86,8 +92,9 @@ class Editeur:
             if self.camera < -200:
                 Screen.camera = 0
                 self.camera = -200
-            elif self.camera > Niveau.actuel.taille - Screen.hauteur():
-                self.camera = Niveau.actuel.taille - Screen.hauteur()
+            elif self.camera > Niveau.actuel.taille - Screen.largeur() // 2 - 100:
+                Screen.camera = Niveau.actuel.taille - Screen.largeur() // 2 + 100
+                self.camera = Screen.camera - 200
 
 
 
@@ -111,7 +118,7 @@ class Editeur:
             self.type = "plat"
         elif self.boutons[5].est_clique():
             self.type = "asc"
-        elif self.boutons_n.est_cliquer():
+        elif self.boutons_n.est_cliquer() and self.montrer_boutons:
             Niveau.changer(self.boutons_n.boutons.index(self.boutons_n.bouton) + 1)
             self.fermer(1)
 
@@ -191,6 +198,7 @@ class Editeur:
 
         elif self.type == "asc":
             self.action = "modifier"
+            self.listespos.append(self.att.rect.topleft)
             self.att2 = self.att.copy()
 
     def _gestion_test(self):
@@ -201,7 +209,8 @@ class Editeur:
                 souris[1] = self.arrondir25(souris[1], "i")
                 Niveau.changer_etat("test")
                 Joueur.ply.rect.topleft = souris
-                #Screen.camera = max(0, min(Joueur.ply.rect.x - Screen.largeur() // 2, Niveau.actuel.taille - Screen.largeur()))
+                Joueur.ply.postest = souris
+                Screen.camera = max(0, min(Joueur.ply.rect.x - Screen.largeur() // 2, Niveau.actuel.taille - Screen.largeur()))
                 self.fermer(2)
 
 
@@ -210,22 +219,25 @@ class Editeur:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
                     self.att2.rect.y -= 25
-                    self.att2.rect.x =self.att.rect.x
+                    self.att2.rect.x = self.listespos[-1][0]
                 elif event.key == pygame.K_DOWN:
                     self.att2.rect.y += 25
-                    self.att2.rect.x = self.att.rect.x
+                    self.att2.rect.x = self.listespos[-1][0]
                 elif event.key == pygame.K_LEFT:
                     self.att2.rect.x -= 25
-                    self.att2.rect.y = self.att.rect.y
+                    self.att2.rect.y = self.listespos[-1][1]
                 elif event.key == pygame.K_RIGHT:
                     self.att2.rect.x += 25
-                    self.att2.rect.y = self.att.rect.y
+                    self.att2.rect.y = self.listespos[-1][1]
                 elif event.key == pygame.K_RETURN:
-                    Plateforme(Niveau.en_cours, self.att.rect.size,[list(self.att.rect.topleft), list(self.att2.rect.topleft)])
-                    self.att.supprimer()
-                    self.att2.supprimer()
-                    self.action = "rien"
-                    self.type = "rien"
+                    if self.att2.rect.topleft == self.listespos[-1]:
+                        Plateforme(Niveau.en_cours, self.att.rect.size, self.listespos)
+                        self.att.supprimer()
+                        self.att2.supprimer()
+                        self.action = "rien"
+                        self.type = "rien"
+                    else:
+                        self.listespos.append(self.att2.rect.topleft)
 
 
 

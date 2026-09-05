@@ -1,4 +1,7 @@
 import pygame, os, glob
+
+from class_Message import Message
+
 pygame.init()
 from class_Joueur import Joueur
 
@@ -20,7 +23,13 @@ class Plateforme:
         if self.nb_positions == 1:
             self.pos1 = positions[0]
             self.rect = pygame.Rect(self.pos1[0], self.pos1[1], self.taille[0], self.taille[1])
-        elif self.nb_positions >= 2:
+        elif not avance:
+            self.nu_position = self.nu_position - 1
+            self.pos1 = self.positions[self.nu_position]
+            self.pos2 = self.positions[self.nu_position - 1]
+            self.rect = pygame.Rect(self.pos1[0], self.pos1[1], self.taille[0], self.taille[1])
+            self.direction = self.get_direction()
+        else :
             self.pos1 = self.positions[self.nu_position]
             self.pos2 = self.positions[self.nu_position + 1]
             self.rect = pygame.Rect(self.pos1[0], self.pos1[1], self.taille[0], self.taille[1])
@@ -32,8 +41,11 @@ class Plateforme:
 
     def porte(self):
 
-        if self.direction in ("top", "down") and Joueur.ply.touche(0, 3) == 1: tolerance = 2
-        else: tolerance = 0
+        if self.direction in ("top", "bottom") and Joueur.ply.touche(0, 3) == 1:
+            tolerance = 2
+        else:
+            tolerance = 0
+
         return (
                 abs(Joueur.ply.rect.bottom - self.rect.top) <= tolerance
                 and Joueur.ply.rect.right > self.rect.left
@@ -64,7 +76,7 @@ class Plateforme:
         dx, dy = self._vecteur(self.direction)
         self.rect.move_ip(dx, dy)
         self.check_avance()
-        if self.porte:
+        if self.porte():
             Joueur.ply.rect.move_ip(dx, 0)
             Joueur.ply.rect.bottom = self.rect.top
             Joueur.ply.au_sol = True

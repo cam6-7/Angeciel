@@ -7,19 +7,18 @@ from typing import ClassVar
 # images
 image_player_g = pygame.image.load(resource_path("resources/image_player_g.png"))
 image_player_d = pygame.image.load(resource_path("resources/image_player_d.png"))
-VITESSE_MARCHE = 5
-GRAVITE = 0.9
-VITESSE_SAUT = 20
+VITESSE_MARCHE = 7
+GRAVITE = 1.7
+VITESSE_SAUT = GRAVITE * 13
 
 class Joueur:
     ply: ClassVar["Joueur"] = None
     def __init__(self):
         self.rect = pygame.Rect(50, 50, 25, 25)
+        self.postest = (50, 50)
         self.au_sol = False
         self.taille = 25
         self.image = pygame.image.load(resource_path("resources/image_player_d.png"))
-        self.gravite = 0
-        self.saut = 0
         self.vx = 0
         self.vy = 0
         Joueur.ply = self
@@ -60,22 +59,23 @@ class Joueur:
             print("erreur de logique, touche avant déplacement")
             self.reinitialiser_jeu()
 
+        self.vx = 0
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
-            self.vx = VITESSE_MARCHE
+            self.vx -= VITESSE_MARCHE
             self.image = image_player_g
         if keys[pygame.K_RIGHT]:
-            self.vx = VITESSE_MARCHE
+            self.vx += VITESSE_MARCHE
             self.image = image_player_d
         if keys[pygame.K_SPACE] and self.au_sol:
             self.vy = -VITESSE_SAUT
 
-        self.vy += GRAVITE
-
-        self.deplacer('x', self.vx)
-        self.deplacer('y', self.vy)
+        self.vy = min(self.vy + GRAVITE, 100)
 
         self.au_sol = False
+        self.deplacer('x', self.vx)
+        self.deplacer('y', int(self.vy))
+
         for plat in Niveau.actuel.objets:
             plat.mouvement()
 
@@ -91,16 +91,13 @@ class Joueur:
             return
         obj = liste[0]
 
-
         if direction == "top" and all([objet.rect.bottom == obj.rect.bottom for objet in liste]):
             self.rect.top = obj.rect.bottom
-            self.saut = 0
-            self.gravite = 0
+            self.vy = 0
         elif direction == "bottom" and all([objet.rect.top == obj.rect.top for objet in liste]):
             self.rect.bottom = obj.rect.top
-            self.saut = 0
-            self.gravite = 0
             self.au_sol = True
+            self.vy = 0
         elif direction == "right" and all([objet.rect.left == obj.rect.left for objet in liste]):
             self.rect.right = obj.rect.left
         elif direction == "left" and all([objet.rect.right == obj.rect.right for objet in liste]):
@@ -129,13 +126,12 @@ class Joueur:
             self.rect.left = 0
         # si on va trop a droite
         elif self.rect.right > Niveau.actuel.taille:
-            Niveau.changer_etat("victoire")
+            Niveau.changer_etat("victoire", False)
 
         # si on va trop haut
         if self.rect.y < 0:
             self.rect.y = 0
-            self.saut = 0
-            self.gravite = 0
+            self.vy = 0
         # si on va trop bas
         elif self.rect.top >= Screen.hauteur():
             self.reinitialiser_jeu()
@@ -145,10 +141,10 @@ class Joueur:
         return self.rect.move(-Screen.camera, 0)
 
     def reinitialiser_jeu(self):
-        self.saut = 0
-        self.gravite = 0
         self.rect.topleft = (50, 50)
+        self.vy = 0
         if Niveau.etat == "test":
             Niveau.changer_etat("test")
+            self.rect.topleft = self.postest
         else:
             Niveau.changer_etat("jeu")

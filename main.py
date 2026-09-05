@@ -14,7 +14,7 @@ ply = Joueur()
 # plateformes
 for i in range(1, nombre_de_niveau+1):
     with open("objets/plateforme"+str(i)+".json", "r") as f:
-        [Plateforme(plat["niveau"], plat["taille"], plat["positions"]) for plat in json.load(f)]
+        [Plateforme(plat["niveau"], plat["taille"], plat["positions"], plat["avance"]) for plat in json.load(f)]
 
 # niveaux
 for i in range(1, nombre_de_niveau+1):
@@ -30,8 +30,6 @@ for i in range(1, nombre_de_niveau+1):
 
 editeur = Editeur()
 paramettre = Paramettre()
-Debug("Joueur.ply.au_sol", "jeu, debug, menu")
-Debug("Joueur.ply.saut", "jeu, debug, menu")
 
 # ==================== SON ====================
 m_menu = pygame.mixer.Sound(resource_path("resources/menu.mp3"))
@@ -93,6 +91,8 @@ while Niveau.etat != "close":
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_p:
             print("\n " + str(pygame.mouse.get_pos()))
             print(pygame.mouse.get_pos()[0] + Screen.camera, pygame.mouse.get_pos()[1] + Screen.camera, "\n" )
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_m and Niveau.etat == "editeur":
+            Editeur.e.montrer_boutons = not Editeur.e.montrer_boutons
 
     # ==================== MENUS ====================
     if Niveau.etat == "menu":

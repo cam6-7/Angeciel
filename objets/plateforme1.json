@@ -2,24 +2,6 @@
     {
         "niveau": 1,
         "taille": [
-            125,
-            25
-        ],
-        "positions": [
-            [
-                150,
-                350
-            ],
-            [
-                150,
-                500
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "niveau": 1,
-        "taille": [
             200,
             25
         ],
@@ -33,7 +15,7 @@
                 425
             ]
         ],
-        "avance": true
+        "avance": false
     },
     {
         "niveau": 1,
@@ -399,6 +381,24 @@
             [
                 4775,
                 275
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "niveau": 1,
+        "taille": [
+            150,
+            25
+        ],
+        "positions": [
+            [
+                200,
+                350
+            ],
+            [
+                200,
+                500
             ]
         ],
         "avance": true

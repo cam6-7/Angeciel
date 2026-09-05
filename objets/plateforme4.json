@@ -108,20 +108,6 @@
     {
         "niveau": 4,
         "taille": [
-            100,
-            25
-        ],
-        "positions": [
-            [
-                1250,
-                200
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "niveau": 4,
-        "taille": [
             300,
             25
         ],
@@ -556,20 +542,6 @@
     {
         "niveau": 4,
         "taille": [
-            50,
-            25
-        ],
-        "positions": [
-            [
-                3525,
-                575
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "niveau": 4,
-        "taille": [
             25,
             25
         ],
@@ -675,188 +647,6 @@
             [
                 3950,
                 200
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "niveau": 4,
-        "taille": [
-            300,
-            25
-        ],
-        "positions": [
-            [
-                4100,
-                200
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "niveau": 4,
-        "taille": [
-            25,
-            50
-        ],
-        "positions": [
-            [
-                4375,
-                225
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "niveau": 4,
-        "taille": [
-            50,
-            25
-        ],
-        "positions": [
-            [
-                4400,
-                250
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "niveau": 4,
-        "taille": [
-            150,
-            25
-        ],
-        "positions": [
-            [
-                4450,
-                200
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "niveau": 4,
-        "taille": [
-            25,
-            50
-        ],
-        "positions": [
-            [
-                4450,
-                225
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "niveau": 4,
-        "taille": [
-            25,
-            50
-        ],
-        "positions": [
-            [
-                4575,
-                225
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "niveau": 4,
-        "taille": [
-            50,
-            25
-        ],
-        "positions": [
-            [
-                4600,
-                250
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "niveau": 4,
-        "taille": [
-            150,
-            25
-        ],
-        "positions": [
-            [
-                4650,
-                200
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "niveau": 4,
-        "taille": [
-            25,
-            50
-        ],
-        "positions": [
-            [
-                4650,
-                225
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "niveau": 4,
-        "taille": [
-            25,
-            50
-        ],
-        "positions": [
-            [
-                4775,
-                225
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "niveau": 4,
-        "taille": [
-            50,
-            25
-        ],
-        "positions": [
-            [
-                4800,
-                250
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "niveau": 4,
-        "taille": [
-            500,
-            25
-        ],
-        "positions": [
-            [
-                4850,
-                200
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "niveau": 4,
-        "taille": [
-            25,
-            50
-        ],
-        "positions": [
-            [
-                4850,
-                225
             ]
         ],
         "avance": true
@@ -1109,6 +899,112 @@
             [
                 5800,
                 0
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "niveau": 4,
+        "taille": [
+            50,
+            25
+        ],
+        "positions": [
+            [
+                1300,
+                200
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "niveau": 4,
+        "taille": [
+            75,
+            25
+        ],
+        "positions": [
+            [
+                3475,
+                575
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "niveau": 4,
+        "taille": [
+            50,
+            25
+        ],
+        "positions": [
+            [
+                4600,
+                225
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "niveau": 4,
+        "taille": [
+            700,
+            25
+        ],
+        "positions": [
+            [
+                4650,
+                200
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "niveau": 4,
+        "taille": [
+            525,
+            25
+        ],
+        "positions": [
+            [
+                4075,
+                200
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "niveau": 4,
+        "taille": [
+            775,
+            25
+        ],
+        "positions": [
+            [
+                4375,
+                0
+            ],
+            [
+                4375,
+                175
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "niveau": 4,
+        "taille": [
+            300,
+            25
+        ],
+        "positions": [
+            [
+                4075,
+                0
+            ],
+            [
+                4075,
+                175
             ]
         ],
         "avance": true
