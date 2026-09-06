@@ -25,10 +25,7 @@ class Niveau:
             Niveau.actuel = self
 
     @classmethod
-    def changer_etat(cls, nouvel_etat, save = True):
-        if save:
-            if cls.etat != nouvel_etat and cls.etat != cls.liste[-1]:
-                cls.liste_etats.append(nouvel_etat)
+    def changer_etat(cls, nouvel_etat):
         cls.etat = nouvel_etat
 
     @classmethod

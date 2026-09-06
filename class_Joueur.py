@@ -126,7 +126,7 @@ class Joueur:
             self.rect.left = 0
         # si on va trop a droite
         elif self.rect.right > Niveau.actuel.taille:
-            Niveau.changer_etat("victoire", False)
+            Niveau.changer_etat("victoire")
 
         # si on va trop haut
         if self.rect.y < 0:

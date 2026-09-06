@@ -100,8 +100,13 @@ class Editeur:
 
     def gestion_bouton(self):
         if self.boutons[0].est_clique():
-            self.fermer()
-            Niveau.changer_etat(Niveau.liste_etats.pop(), save=False)
+            liste_etat = {"menu" : "menu",
+                          "jeu" : "menu",
+                          "editeur" : "menu",
+                          "paramettre" : "editeur",
+                          "victoire" : "victoire",
+                          }
+            Niveau.changer_etat(liste_etat[Niveau.etat])
         elif self.boutons[1].est_clique():
             self.action = "test"
             Message("Cliquer là où vous voulez allez")
@@ -199,7 +204,6 @@ class Editeur:
         elif self.type == "asc":
             self.action = "modifier"
             self.listespos.append(self.att.rect.topleft)
-            self.att2 = self.att.copy()
 
     def _gestion_test(self):
         if pygame.mouse.get_pos()[0] > 200 and pygame.mouse.get_pos()[1] > 75:
@@ -215,29 +219,31 @@ class Editeur:
 
 
     def _creation_asc(self, events):
+        for pos in self.listespos:
+            dessiner_plateforme_texturee(pygame.Rect(pos[0] - self.camera, pos[1], *self.att.taille))
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    self.att2.rect.y -= 25
-                    self.att2.rect.x = self.listespos[-1][0]
+                    self.att.rect.y -= 25
+                    self.att.rect.x = self.listespos[-1][0]
                 elif event.key == pygame.K_DOWN:
-                    self.att2.rect.y += 25
-                    self.att2.rect.x = self.listespos[-1][0]
+                    self.att.rect.y += 25
+                    self.att.rect.x = self.listespos[-1][0]
                 elif event.key == pygame.K_LEFT:
-                    self.att2.rect.x -= 25
-                    self.att2.rect.y = self.listespos[-1][1]
+                    self.att.rect.x -= 25
+                    self.att.rect.y = self.listespos[-1][1]
                 elif event.key == pygame.K_RIGHT:
-                    self.att2.rect.x += 25
-                    self.att2.rect.y = self.listespos[-1][1]
+                    self.att.rect.x += 25
+                    self.att.rect.y = self.listespos[-1][1]
                 elif event.key == pygame.K_RETURN:
-                    if self.att2.rect.topleft == self.listespos[-1]:
+                    if self.att.rect.topleft == self.listespos[-1]:
                         Plateforme(Niveau.en_cours, self.att.rect.size, self.listespos)
                         self.att.supprimer()
-                        self.att2.supprimer()
+                        self.listespos.clear()
                         self.action = "rien"
                         self.type = "rien"
                     else:
-                        self.listespos.append(self.att2.rect.topleft)
+                        self.listespos.append(self.att.rect.topleft)
 
 
 

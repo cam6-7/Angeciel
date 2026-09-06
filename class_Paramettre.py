@@ -26,7 +26,13 @@ class Paramettre:
 
     def gerer_clic(self):
         if self.boutons["retour"].est_clique():
-            Niveau.changer_etat(Niveau.liste_etats.pop(), save=False)
+            liste_etat = {"menu" : "menu",
+                          "jeu" : "menu",
+                          "editeur" : "menu",
+                          "paramettre" : "editeur",
+                          "victoire" : "victoire",
+                          }
+            Niveau.changer_etat(liste_etat[Niveau.etat])
         elif self.boutons["supprimer"].est_clique():
             niveau = Niveau.actuel
             Niveau.changer(Niveau.en_cours - 1)

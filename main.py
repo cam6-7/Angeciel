@@ -84,10 +84,14 @@ while Niveau.etat != "close":
         if event.type == pygame.QUIT:
             Niveau.changer_etat("close")
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            if len(Niveau.liste_etats) >= 2:
-                del Niveau.liste_etats[-1]
-                Niveau.changer_etat(Niveau.liste_etats[-1], save= False)
-            else: Niveau.changer_etat("menu", save= False)
+            liste_etat = {"menu" : "menu",
+                          "jeu" : "menu",
+                          "editeur" : "menu",
+                          "paramettre" : "editeur",
+                          "test" : "editeur",
+                          "victoire" : "victoire",
+                          }
+            Niveau.changer_etat(liste_etat[Niveau.etat])
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_p:
             print("\n " + str(pygame.mouse.get_pos()))
             print(pygame.mouse.get_pos()[0] + Screen.camera, pygame.mouse.get_pos()[1] + Screen.camera, "\n" )
