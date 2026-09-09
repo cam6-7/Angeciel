@@ -38,8 +38,8 @@ class Editeur:
         Editeur.e = self
 
     def afficher_fleche(self):
-        image_d = pygame.image.load(resource_path("../resources/flèche2.png"))
-        image_g = pygame.transform.flip(pygame.image.load(resource_path("../resources/flèche2.png")), True, False)
+        image_d = pygame.image.load(resource_path("resources/flèche2.png"))
+        image_g = pygame.transform.flip(pygame.image.load(resource_path("resources/flèche2.png")), True, False)
         self.fleche_d = BoutonIMG(image_d, (Screen.largeur() - 75, 15))
         self.fleche_g = BoutonIMG(image_g, (200, 15))
         self.fleche_d.afficher()
