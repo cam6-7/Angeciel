@@ -1,4 +1,4 @@
-from class_Screen import Screen
+from core.class_Screen import Screen
 from fonction_ressource_path import resource_path
 import pygame
 pygame.init()

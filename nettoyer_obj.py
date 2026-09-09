@@ -1,7 +1,7 @@
 import os, glob, json
 
-from class_Niveau import Niveau
-from class_Plateforme import Plateforme
+from entities.class_Niveau import Niveau
+from entities.class_Plateforme import Plateforme
 
 dossier = os.path.dirname(os.path.abspath(__file__))
 nombre_de_niveau = len(glob.glob(dossier + "/objets/niveau*.json"))

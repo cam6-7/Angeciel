@@ -1,5 +1,20 @@
 import sys, json, glob, os, pygame
-from mes_class import *
+
+from UI.class_Bouton import Bouton
+from UI.class_Texte import Texte
+from core.class_Screen import Screen
+from core.class_Temps import Timer
+from entities.class_Joueur import Joueur
+from entities.class_Niveau import Niveau
+from entities.class_Nuage import Nuage
+from entities.class_Plateforme import Plateforme
+from fonction_ressource_path import resource_path
+from UI.class_TexteD import TexteD
+from fonction_texture import dessiner_plateforme_texturee
+from scenes.class_Editeur import Editeur
+from scenes.class_Menu import Menu
+from scenes.class_Paramettre import Paramettre
+
 clock = pygame.time.Clock()
 pygame.init()
 
@@ -41,17 +56,16 @@ m_menu.play(-1)
 #les menus
 menu1 = Menu([
             Texte("Bienvenue sur Angeciel",["x", 100], taille=70),
-            Bouton("Commencer le jeu", ["x", 300], couleur=c["BLUE"]),
-            Bouton("Choix du niveau", ["x", 400], couleur=c["GREEN"]),
-            Bouton("Quitter le jeu", ["x", 500], couleur=c["RED"]),
-            Bouton("éditeur de niveau", [20, 20], taille= 10)
+            Bouton("Commencer le jeu", ["x", 300], (0,0, 255)),
+            Bouton("Choix du niveau", ["x", 400], (0, 255, 0)),
+            Bouton("Quitter le jeu", ["x", 500], (255, 0, 0)),
+            Bouton("éditeur de niveau", [20, 20], taille= 20)
             ])
 menu_v = Menu([
             Texte(f"Vous avez fini le niveau {Niveau.en_cours}", ["x", 150], taille=70),
-            Bouton("Niveau suivant", ["x", 310], couleur=c["BLUE"]),
-            Bouton(f"Refaire le niveau {Niveau.en_cours}", ["x", 400], couleur=c["GREEN"]),
-            Bouton("Quitter le jeu", ["x", 490], couleur=c["RED"]),
-            Bouton("éditeur de niveau", [20, 20], taille= 10)
+            Bouton("Niveau suivant", ["x", 310], (0, 0, 255)),
+            Bouton(f"Refaire le niveau {Niveau.en_cours}", ["x", 400], (0, 255, 0)),
+            Bouton("Quitter le jeu", ["x", 490], (255, 0, 0)),
             ])
 menu_c = Menu([
             Bouton("retour", ["x", 50] ),
