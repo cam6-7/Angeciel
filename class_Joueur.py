@@ -7,9 +7,9 @@ from typing import ClassVar
 # images
 image_player_g = pygame.image.load(resource_path("resources/image_player_g.png"))
 image_player_d = pygame.image.load(resource_path("resources/image_player_d.png"))
-VITESSE_MARCHE = 7
-GRAVITE = 1.7
-VITESSE_SAUT = GRAVITE * 13
+VITESSE_MARCHE = 5
+DELTA_GRAVITE = [0.1, 0.5]
+FORCE_SAUT = 23
 
 class Joueur:
     ply: ClassVar["Joueur"] = None
@@ -68,9 +68,14 @@ class Joueur:
             self.vx += VITESSE_MARCHE
             self.image = image_player_d
         if keys[pygame.K_SPACE] and self.au_sol:
-            self.vy = -VITESSE_SAUT
-
-        self.vy = min(self.vy + GRAVITE, 100)
+            self.vy -= FORCE_SAUT
+        elif self.au_sol:
+            self.vy = 0
+        self.vy += DELTA_GRAVITE[1]
+        if self.vy > 0:
+            self.vy += self.vy * DELTA_GRAVITE[0]
+        elif self.vy < 0:
+            self.vy -= self.vy * DELTA_GRAVITE[0]
 
         self.au_sol = False
         self.deplacer('x', self.vx)

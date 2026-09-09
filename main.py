@@ -30,7 +30,6 @@ for i in range(1, nombre_de_niveau+1):
 
 editeur = Editeur()
 paramettre = Paramettre()
-
 # ==================== SON ====================
 m_menu = pygame.mixer.Sound(resource_path("resources/menu.mp3"))
 m_jeu = pygame.mixer.Sound(resource_path("resources/jeu.mp3"))

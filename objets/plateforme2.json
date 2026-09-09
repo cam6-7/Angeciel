@@ -216,20 +216,6 @@
         "positions": [
             [
                 3075,
-                225
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "niveau": 2,
-        "taille": [
-            50,
-            25
-        ],
-        "positions": [
-            [
-                3075,
                 75
             ]
         ],
@@ -519,6 +505,20 @@
             [
                 3800,
                 575
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "niveau": 2,
+        "taille": [
+            50,
+            25
+        ],
+        "positions": [
+            [
+                3075,
+                250
             ]
         ],
         "avance": true

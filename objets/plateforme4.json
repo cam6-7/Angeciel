@@ -934,48 +934,6 @@
     {
         "niveau": 4,
         "taille": [
-            50,
-            25
-        ],
-        "positions": [
-            [
-                4600,
-                225
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "niveau": 4,
-        "taille": [
-            700,
-            25
-        ],
-        "positions": [
-            [
-                4650,
-                200
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "niveau": 4,
-        "taille": [
-            525,
-            25
-        ],
-        "positions": [
-            [
-                4075,
-                200
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "niveau": 4,
-        "taille": [
             775,
             25
         ],
@@ -1005,6 +963,104 @@
             [
                 4075,
                 175
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "niveau": 4,
+        "taille": [
+            225,
+            25
+        ],
+        "positions": [
+            [
+                4050,
+                200
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "niveau": 4,
+        "taille": [
+            50,
+            25
+        ],
+        "positions": [
+            [
+                4275,
+                225
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "niveau": 4,
+        "taille": [
+            225,
+            25
+        ],
+        "positions": [
+            [
+                4325,
+                200
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "niveau": 4,
+        "taille": [
+            50,
+            25
+        ],
+        "positions": [
+            [
+                4550,
+                225
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "niveau": 4,
+        "taille": [
+            225,
+            25
+        ],
+        "positions": [
+            [
+                4600,
+                200
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "niveau": 4,
+        "taille": [
+            50,
+            25
+        ],
+        "positions": [
+            [
+                4825,
+                225
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "niveau": 4,
+        "taille": [
+            475,
+            25
+        ],
+        "positions": [
+            [
+                4875,
+                200
             ]
         ],
         "avance": true
