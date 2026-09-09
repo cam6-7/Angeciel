@@ -4,7 +4,7 @@ from entities.class_Niveau import Niveau
 from entities.class_Plateforme import Plateforme
 from UI.class_Question import Question
 from core.class_Screen import Screen
-from fonction_texture import dessiner_plateforme_texturee
+from core.fonction_texture import dessiner_plateforme_texturee
 from pygame import Rect
 class Paramettre:
     p = None

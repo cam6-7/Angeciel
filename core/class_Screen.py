@@ -1,6 +1,6 @@
 import pygame
 pygame.init()
-from fonction_ressource_path import resource_path
+from core.fonction_ressource_path import resource_path
 class Screen:
 
     camera = 0

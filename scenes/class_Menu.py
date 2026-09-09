@@ -1,5 +1,5 @@
 from core.class_Screen import Screen
-from fonction_texture import dessiner_plateforme_texturee
+from core.fonction_texture import dessiner_plateforme_texturee
 import pygame
 pygame.init()
 class Menu:

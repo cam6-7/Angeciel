@@ -8,9 +8,9 @@ from entities.class_Joueur import Joueur
 from entities.class_Niveau import Niveau
 from entities.class_Nuage import Nuage
 from entities.class_Plateforme import Plateforme
-from fonction_ressource_path import resource_path
+from core.fonction_ressource_path import resource_path
 from UI.class_TexteD import TexteD
-from fonction_texture import dessiner_plateforme_texturee
+from core.fonction_texture import dessiner_plateforme_texturee
 from scenes.class_Editeur import Editeur
 from scenes.class_Menu import Menu
 from scenes.class_Paramettre import Paramettre

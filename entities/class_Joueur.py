@@ -2,7 +2,7 @@ import pygame
 pygame.init()
 from entities.class_Niveau import Niveau
 from core.class_Screen import Screen
-from fonction_ressource_path import resource_path
+from core.fonction_ressource_path import resource_path
 from typing import ClassVar
 # images
 image_player_g = pygame.image.load(resource_path("resources/image_player_g.png"))

@@ -1,7 +1,7 @@
 import pygame
 pygame.init()
 from core.class_Screen import Screen
-from fonction_ressource_path import resource_path
+from core.fonction_ressource_path import resource_path
 s_click = pygame.mixer.Sound(resource_path("resources/click.mp3"))
 
 class BoutonIMG:

@@ -1,7 +1,7 @@
 import random
 from core.class_Screen import Screen
 import pygame
-from fonction_ressource_path import resource_path
+from core.fonction_ressource_path import resource_path
 
 nuage = pygame.image.load(resource_path("resources/nuage.png"))
 

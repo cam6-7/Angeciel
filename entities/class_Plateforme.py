@@ -1,6 +1,6 @@
 import pygame, glob
 from entities.class_Joueur import Joueur
-from fonction_ressource_path import resource_path
+from core.fonction_ressource_path import resource_path
 nombre_de_niveau = len(glob.glob(resource_path("objets/niveau*.json")))
 class Plateforme:
 

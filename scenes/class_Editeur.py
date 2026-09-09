@@ -3,9 +3,9 @@ from core.class_Screen import Screen
 from UI.class_Bouton import Bouton, ListeBouton
 from entities.class_Niveau import Niveau
 from entities.class_Plateforme import Plateforme
-from fonction_texture import dessiner_plateforme_texturee
+from core.fonction_texture import dessiner_plateforme_texturee
 from UI.class_Texte import Texte
-from fonction_ressource_path import resource_path
+from core.fonction_ressource_path import resource_path
 from UI.class_BoutonIMG import BoutonIMG
 from UI.class_Message import Message
 import pygame
