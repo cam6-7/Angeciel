@@ -70,14 +70,6 @@ menu_v = Menu([
             Bouton(f"Refaire le niveau {Niveau.en_cours}", ["x", 400], (0, 255, 0)),
             Bouton("Quitter le jeu", ["x", 490], (255, 0, 0)),
             ])
-menu_c = Menu([
-            Bouton("retour", ["x", 50] ),
-            Bouton("niveau1", [1000/3, 200], centre = "spe" ),
-            Bouton("niveau2", [1000/3 * 2, 200], centre = "spe"),
-            Bouton("niveau3", [1000/3, 400], centre = "spe"),
-            Bouton("niveau4", [1000/3 * 2, 400], centre = "spe")
-            ])
-
 
 # textes de tutoriels
 aide1 = TexteD('Utilisez les\nflèches directionnelles\npour vous déplacer', [50, 425], taille = 20)
@@ -113,7 +105,18 @@ class Game:
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_m and Niveau.etat == "editeur":
                 Editeur.e.montrer_boutons = not Editeur.e.montrer_boutons
 
-        # ==================== MENUS ====================
+        self.display_menus(events)
+        if Niveau.etat == "jeu" or Niveau.etat == "test":
+            ply.bouger()
+            self.display()
+
+        Timer.mise_a_jour()
+        pygame.display.flip()
+        clock.tick(60)
+
+    @staticmethod
+    def display_menus(events):
+
         if Niveau.etat == "menu":
             menu1.afficher()
             menu1.boutons[0].mise_a_jour(f"Commencer le niveau {Niveau.en_cours}")
@@ -126,16 +129,6 @@ class Game:
             if menu1.boutons[4].est_clique():
                 Niveau.changer_etat("editeur")
                 editeur.cam_x = -200
-                e_type = "rien"
-
-        if Niveau.etat == "choix_niv":
-            menu_c.afficher()
-            if menu_c.boutons[0].est_clique():
-                Niveau.changer_etat("menu")
-            for bouton in menu_c.boutons:
-                if bouton.est_clique():
-                    Niveau.changer(menu_c.boutons.index(bouton))
-                    ply.reinitialiser_jeu()
 
         if Niveau.etat == "paramettre":
             paramettre.afficher()
@@ -166,38 +159,31 @@ class Game:
                 Niveau.changer_etat("close")
 
 
-        # ==================== JEU =================================================================
-        elif Niveau.etat == "jeu" or Niveau.etat == "test":
+    @staticmethod
+    def display():
+        Screen.screen.fill(Niveau.actuel.couleur)
 
-            # ==================== COLLISIONS + MOUVEMENTS ====================
-            ply.bouger()
+        # Nuages
+        for pos in Nuage.liste:
+            pos.afficher()
 
-            # ==================== AFFICHAGE ==================================================================================
-            Screen.screen.fill(Niveau.actuel.couleur)
+        # Plateformes et ascenseurs
+        for obj in Niveau.actuel.objets:
+            dessiner_plateforme_texturee(obj.rect.move(- Screen.camera, 0))
 
-            # Nuages
-            for pos in Nuage.liste:
-                pos.afficher()
+            # Joueur
+            ply.afficher()
 
-            # Plateformes et ascenseurs
-            for obj in Niveau.actuel.objets:
-                dessiner_plateforme_texturee(obj.rect.move(- Screen.camera, 0))
+        # Aides pour le niveau 1
+        if Niveau.en_cours == 1:
+            aide1.move(Screen.camera, ply.rect_ecran)
+            aide2.move(Screen.camera, ply.rect_ecran)
+            aide3.move(Screen.camera, ply.rect_ecran)
+            aide4.move(Screen.camera, ply.rect_ecran)
+            aide5.move(Screen.camera, ply.rect_ecran)
 
-                # Joueur
-                ply.afficher()
-
-            # Aides pour le niveau 1
-            if Niveau.en_cours == 1:
-                aide1.move(Screen.camera, ply.rect_ecran)
-                aide2.move(Screen.camera, ply.rect_ecran)
-                aide3.move(Screen.camera, ply.rect_ecran)
-                aide4.move(Screen.camera, ply.rect_ecran)
-                aide5.move(Screen.camera, ply.rect_ecran)
-
-        Timer.mise_a_jour()
-        pygame.display.flip()
-        clock.tick(60)
-    def save(self):
+    @staticmethod
+    def save():
         # sauvergarde des objets quand le jeu est fini
         for i in range(1, Niveau.nombre + 1):
             with open("objets/plateforme" + str(i) + ".json", "w") as f:
