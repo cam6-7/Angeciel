@@ -1,12 +1,12 @@
 import pygame
 pygame.init()
-from class_Niveau import Niveau
+from entities.class_Niveau import Niveau
 from core.class_Screen import Screen
 from fonction_ressource_path import resource_path
 from typing import ClassVar
 # images
-image_player_g = pygame.image.load(resource_path("../resources/image_player_g.png"))
-image_player_d = pygame.image.load(resource_path("../resources/image_player_d.png"))
+image_player_g = pygame.image.load(resource_path("resources/image_player_g.png"))
+image_player_d = pygame.image.load(resource_path("resources/image_player_d.png"))
 VITESSE_MARCHE = 5
 DELTA_GRAVITE = [0.1, 0.5]
 FORCE_SAUT = 23
@@ -18,7 +18,7 @@ class Joueur:
         self.postest = (50, 50)
         self.au_sol = False
         self.taille = 25
-        self.image = pygame.image.load(resource_path("../resources/image_player_d.png"))
+        self.image = pygame.image.load(resource_path("resources/image_player_d.png"))
         self.vx = 0
         self.vy = 0
         Joueur.ply = self

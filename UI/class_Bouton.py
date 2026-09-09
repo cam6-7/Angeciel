@@ -3,7 +3,7 @@ from core.class_Screen import Screen
 from fonction_ressource_path import resource_path
 import pygame
 pygame.init()
-s_click = pygame.mixer.Sound(resource_path("../resources/click.mp3"))
+s_click = pygame.mixer.Sound(resource_path("resources/click.mp3"))
 
 class Bouton(Texte):
 
