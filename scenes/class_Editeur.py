@@ -51,7 +51,7 @@ class Editeur:
         self.draw_grid()
 
         #objets
-        for plat in Niveau.actuel.objets:
+        for plat in Niveau.actuel.plateformes:
             plat.mouvement()
             dessiner_plateforme_texturee(plat.rect.move(- self.camera, 0))
 
@@ -112,8 +112,7 @@ class Editeur:
             self.action = "test"
             Message("Cliquer là où vous voulez allez")
         elif self.boutons[2].est_clique():
-            Plateforme.liste[Niveau.nombre + 1] = []
-            Niveau(Plateforme.liste[Niveau.nombre + 1], 1000)
+            Niveau()
             Niveau.changer(Niveau.nombre)
             Niveau.changer_etat("editeur")
             self.recreation_bouton()
@@ -162,7 +161,7 @@ class Editeur:
         sourisE[0] += self.camera
 
         clic = 0
-        for obj in Niveau.actuel.objets:
+        for obj in Niveau.actuel.plateformes:
             if obj.rect.collidepoint(sourisE):
                 obj.supprimer()
                 clic = 1
@@ -198,7 +197,6 @@ class Editeur:
         self.att = self.att.maj(x, y, l, h)
 
     def _clic_relache(self):
-        r = self.att.rect
         if self.type == "plat":
             self.action = "rien"
 

@@ -11,8 +11,6 @@ class Paramettre:
     def __init__(self):
         self.boutons = {
             "retour" : Bouton("retour", [0, 50]),
-            "taille": Bouton("taille", [0, 200]),
-            "nom": Bouton("nom", [0, 250]),
             "dupliquer": Bouton("dupliquer", [0, 400]),
             "supprimer": Bouton("supprimer", [0, 450]),
         }
@@ -41,16 +39,12 @@ class Paramettre:
             self.gerer_decalage()
             Niveau.changer_etat("editeur")
         elif self.boutons["dupliquer"].est_clique():
-            Plateforme.liste[Niveau.nombre + 1] = Niveau.actuel.objets
-            Niveau(Plateforme.liste[Niveau.nombre + 1], Niveau.actuel.taille, Niveau.actuel.couleur)
+            niv = Niveau()
+            niv.plateformes = Niveau.actuel.plateformes
             Niveau.changer(Niveau.nombre)
             Editeur.e.recreation_bouton()
             self.gerer_decalage()
             Niveau.changer_etat("editeur")
-        elif self.boutons["taille"].est_clique():
-            Question("La taille du niveau?", "Niveau.actuel.taille", typ = int)
-        elif self.boutons["nom"].est_clique():
-            Question("Le nom du niveau?", "Niveau.actuel.name")
 
     @staticmethod
     def gerer_decalage():

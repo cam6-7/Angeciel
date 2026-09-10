@@ -1,6 +1,3 @@
-import pygame
-pygame.init()
-
 class Niveau:
     actuel = None
     en_cours = 1
@@ -9,18 +6,15 @@ class Niveau:
     liste = []
     liste_etats = ["menu"]
 
-    def __init__(self, objets, taille, couleur = (135, 206, 235), name = ""):
-        self.objets = objets
-        self.taille = taille
-        self.couleur = couleur
+    def __init__(self):
+
+        self.plateformes = []
+        self.couleur = (135, 206, 235)
 
         Niveau.nombre += 1
         Niveau.liste.append(self)
         self.numero = Niveau.nombre
-        if name == "":
-            self.name = f"niveau{Niveau.nombre}"
-        else:
-            self.name = name
+        self.name = f"niveau{Niveau.nombre}"
         if self.numero == Niveau.en_cours:
             Niveau.actuel = self
 
@@ -45,9 +39,8 @@ class Niveau:
         for niv in cls.liste:
             if niv.numero == Niveau.en_cours:
                 Niveau.actuel = niv
-    def to_dict(self):
-        return {
-            "name": self.name,
-            "taille": self.taille,
-            "couleur": self.couleur,
-        }
+
+    @property
+    def taille(self):
+        if len(self.plateformes) == 0: return  1000
+        else: return max(obj.rect.right for obj in self.plateformes)

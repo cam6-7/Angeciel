@@ -22,7 +22,6 @@ for i in range(1, nombre_de_niveau+1):
         data = json.load(f)
         Niveau(
             Plateforme.liste[i],
-            data["taille"],
             data["couleur"],
             name = data["name"]
         )
@@ -48,5 +47,3 @@ print("\033[32msupression de", nombre_de_suppression, "objets réussi\033[0m")
 for i in range(1, Niveau.nombre + 1):
     with open( "objets/plateforme"+str(i)+".json", "w") as f:
         json.dump([plat.to_dict() for plat in Plateforme.liste[i]], f, indent=4)
-    with open( "objets/niveau"+str(i)+".json", "w") as f:
-        json.dump(Niveau.liste[i-1].to_dict(), f, indent=4)

@@ -1,13 +1,9 @@
-import pygame, glob
+import pygame
 from entities.class_Joueur import Joueur
-from core.fonction_ressource_path import resource_path
-nombre_de_niveau = len(glob.glob(resource_path("objets/niveau*.json")))
+from entities.class_Niveau import Niveau
+
+
 class Plateforme:
-
-    liste = {}
-    for i in range(1, nombre_de_niveau + 1):
-        liste[i] = []
-
     def __init__(self, niveau, taille, positions , avance : bool = True):
         self.niveau = niveau
         self.taille = taille
@@ -18,8 +14,7 @@ class Plateforme:
         self.nu_position = 0 if avance else self.nb_positions - 1
         self.rect = pygame.Rect(self.pos1[0], self.pos1[1], self.taille[0], self.taille[1])
         self.direction = self.get_direction()
-        Plateforme.liste[self.niveau].append(self)
-
+        Niveau.actuel.plateformes.append(self)
 
     @property
     def pos1(self):
@@ -78,9 +73,11 @@ class Plateforme:
             self.rect.topleft = self.pos1
             self.direction = self.get_direction()
 
-
     def supprimer(self):
-        Plateforme.liste[self.niveau].remove(self)
+        if self in Niveau.actuel.plateformes:
+            Niveau.actuel.plateformes.remove(self)
+        else:
+            print("Erreur, il n'y a pas cette plateforme dans le niveau", Niveau.en_cours)
 
     def maj(self, x, y, l, h):
         self.supprimer()

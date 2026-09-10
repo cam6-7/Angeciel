@@ -1,16 +1,10 @@
-import glob
-import json
-import os
-import sys
-
-import pygame
+import glob, json, os, sys, pygame
 from  entities.class_Joueur import Joueur
 from UI.class_Bouton import Bouton
 from UI.class_Texte import Texte
 from UI.class_TexteD import TexteD
 from core.class_Screen import Screen
 from core.class_Temps import Timer
-from core.fonction_ressource_path import resource_path
 from core.fonction_texture import dessiner_plateforme_texturee
 from entities.class_Niveau import Niveau
 from entities.class_Nuage import Nuage
@@ -18,42 +12,6 @@ from entities.class_Plateforme import Plateforme
 from scenes.class_Editeur import Editeur
 from scenes.class_Menu import Menu
 from scenes.class_Paramettre import Paramettre
-
-
-clock = pygame.time.Clock()
-ply = Joueur()
-editeur = Editeur()
-paramettre = Paramettre()
-
-dossier = os.path.dirname(os.path.abspath(__file__))
-nombre_de_niveau = len(glob.glob(dossier + "/objets/niveau*.json"))
-
-# ================= IMPORTS ===================
-# ascensseurs
-
-# plateformes
-for i in range(1, nombre_de_niveau+1):
-    with open("objets/plateforme"+str(i)+".json", "r") as f:
-        [Plateforme(plat["niveau"], plat["taille"], plat["positions"], plat["avance"]) for plat in json.load(f)]
-
-# niveaux
-for i in range(1, nombre_de_niveau+1):
-    with open("objets/niveau"+str(i)+".json", "r") as f:
-        data = json.load(f)
-        Niveau(
-            Plateforme.liste[i],
-            data["taille"],
-            data["couleur"],
-            name = data["name"]
-        )
-
-
-# ==================== SON ====================
-m_menu = pygame.mixer.Sound(resource_path("resources/menu.mp3"))
-m_jeu = pygame.mixer.Sound(resource_path("resources/jeu.mp3"))
-m_jeu.set_volume(0.2)
-m_menu.set_volume(0.4)
-m_menu.play(-1)
 
 # ==================== INITIALISATION DES OBJETS ====================
 #les menus
@@ -84,10 +42,36 @@ for i in range(nb_nuage):
     Nuage()
 
 class Game:
+    def __init__(self):
+        self.events = []
+        self.clock = pygame.time.Clock()
+        self.joueur = Joueur()
+        self.editeur = Editeur()
+        self.paramettre = Paramettre()
+
+        dossier = os.path.dirname(os.path.abspath(__file__))
+        nombre_de_niveau = len(glob.glob(dossier + "/objets/plateforme*.json"))
+        for niv in range(1, nombre_de_niveau + 1):
+            Niveau()
+            with open("objets/plateforme" + str(niv) + ".json", "r") as f:
+                [Plateforme(plat["niveau"], plat["taille"], plat["positions"], plat["avance"]) for plat in json.load(f)]
+
     def run(self):
-        events = []
+
+        self.get_events()
+        self.display_menus()
+        if Niveau.etat == "jeu" or Niveau.etat == "test":
+            self.joueur.bouger()
+            self.display_game()
+
+        Timer.mise_a_jour()
+        pygame.display.flip()
+        self.clock.tick(60)
+
+    def get_events(self):
+        self.events = []
         for event in pygame.event.get():
-            events.append(event)
+            self.events.append(event)
             if event.type == pygame.QUIT:
                 Niveau.changer_etat("close")
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
@@ -105,44 +89,28 @@ class Game:
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_m and Niveau.etat == "editeur":
                 Editeur.e.montrer_boutons = not Editeur.e.montrer_boutons
 
-        self.display_menus(events)
-        if Niveau.etat == "jeu" or Niveau.etat == "test":
-            ply.bouger()
-            self.display()
-
-        Timer.mise_a_jour()
-        pygame.display.flip()
-        clock.tick(60)
-
-    @staticmethod
-    def display_menus(events):
-
+    def display_menus(self):
         if Niveau.etat == "menu":
             menu1.afficher()
             menu1.boutons[0].mise_a_jour(f"Commencer le niveau {Niveau.en_cours}")
             if menu1.boutons[1].est_clique():
-                ply.reinitialiser_jeu()
+                self.joueur.reinitialiser_jeu()
             if menu1.boutons[2].est_clique():
                 Niveau.changer_etat("choix_niv")
             if menu1.boutons[3].est_clique():
                 Niveau.changer_etat("close")
             if menu1.boutons[4].est_clique():
                 Niveau.changer_etat("editeur")
-                editeur.cam_x = -200
-
-        if Niveau.etat == "paramettre":
-            paramettre.afficher()
-            paramettre.gerer_clic()
-
-        # ==================== EDITEUR =====================
-        if Niveau.etat == "editeur":
-            editeur.gestion_camera()
-            editeur.afficher()
-            editeur.gestion_creation(events)
-            editeur.gestion_bouton()
-
-        # ==================== VICTOIRE ====================
-        if Niveau.etat == "victoire":
+                self.editeur.cam_x = -200
+        elif Niveau.etat == "paramettre":
+            self.paramettre.afficher()
+            self.paramettre.gerer_clic()
+        elif Niveau.etat == "editeur":
+            self.editeur.gestion_camera()
+            self.editeur.afficher()
+            self.editeur.gestion_creation(self.events)
+            self.editeur.gestion_bouton()
+        elif Niveau.etat == "victoire":
             menu_v.boutons[0].mise_a_jour(f"Vous avez fini le niveau {Niveau.en_cours}")
             if Niveau.en_cours == Niveau.nombre:
                 menu_v.boutons[1].mise_a_jour("Recommencer le jeu")
@@ -152,15 +120,13 @@ class Game:
             menu_v.afficher()
             if menu_v.boutons[1].est_clique():
                 Niveau.suivant()
-                ply.reinitialiser_jeu()
+                self.joueur.reinitialiser_jeu()
             if menu_v.boutons[2].est_clique():
-                ply.reinitialiser_jeu()
+                self.joueur.reinitialiser_jeu()
             if menu_v.boutons[3].est_clique():
                 Niveau.changer_etat("close")
 
-
-    @staticmethod
-    def display():
+    def display_game(self):
         Screen.screen.fill(Niveau.actuel.couleur)
 
         # Nuages
@@ -168,35 +134,27 @@ class Game:
             pos.afficher()
 
         # Plateformes et ascenseurs
-        for obj in Niveau.actuel.objets:
+        for obj in Niveau.actuel.plateformes:
             dessiner_plateforme_texturee(obj.rect.move(- Screen.camera, 0))
 
-            # Joueur
-            ply.afficher()
+        # Joueur
+        self.joueur.afficher()
 
         # Aides pour le niveau 1
         if Niveau.en_cours == 1:
-            aide1.move(Screen.camera, ply.rect_ecran)
-            aide2.move(Screen.camera, ply.rect_ecran)
-            aide3.move(Screen.camera, ply.rect_ecran)
-            aide4.move(Screen.camera, ply.rect_ecran)
-            aide5.move(Screen.camera, ply.rect_ecran)
+            aide1.move(Screen.camera, self.joueur.rect_ecran)
+            aide2.move(Screen.camera, self.joueur.rect_ecran)
+            aide3.move(Screen.camera, self.joueur.rect_ecran)
+            aide4.move(Screen.camera, self.joueur.rect_ecran)
+            aide5.move(Screen.camera, self.joueur.rect_ecran)
 
     @staticmethod
     def save():
         # sauvergarde des objets quand le jeu est fini
-        for i in range(1, Niveau.nombre + 1):
-            with open("objets/plateforme" + str(i) + ".json", "w") as f:
-                json.dump([plat.to_dict() for plat in Plateforme.liste[i]], f, indent=4)
-            with open("objets/niveau" + str(i) + ".json", "w") as f:
-                json.dump(Niveau.liste[i - 1].to_dict(), f, indent=4)
+        for niv in range(1, Niveau.nombre + 1):
+            with open("objets/plateforme" + str(niv) + ".json", "w") as f:
+                json.dump([plat.to_dict() for plat in Niveau.liste[niv - 1].plateformes], f, indent=4)
 
-        nombre_de_niveau = len(glob.glob(dossier + "/objets/niveau*.json"))
-        for i in range(1, nombre_de_niveau + 1):
-            if i > Niveau.nombre:
-                os.remove("objets/ascensseur" + str(i) + ".json")
-                os.remove("objets/plateforme" + str(i) + ".json")
-                os.remove("objets/niveau" + str(i) + ".json")
         print("fin sauvergardé")
         Screen.screen.fill((0, 0, 0))
         pygame.display.flip()

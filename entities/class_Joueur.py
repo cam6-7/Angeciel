@@ -81,7 +81,7 @@ class Joueur:
         self.deplacer('x', self.vx)
         self.deplacer('y', int(self.vy))
 
-        for plat in Niveau.actuel.objets:
+        for plat in Niveau.actuel.plateformes:
             plat.mouvement()
 
         self.limit_move()
@@ -91,7 +91,7 @@ class Joueur:
         Screen.screen.blit(self.image, self.rect_ecran)
 
     def gerer_collisions(self, direction : str):
-        liste = [obj for obj in Niveau.actuel.objets if obj.rect.colliderect(self.rect)]
+        liste = [obj for obj in Niveau.actuel.plateformes if obj.rect.colliderect(self.rect)]
         if len(liste) == 0:
             return
         obj = liste[0]
@@ -120,7 +120,7 @@ class Joueur:
         # (on peut le déplacer pour tester des collisions futures ou antérieurs)
         rect = self.rect.move(dx, dy)
         touche = 0
-        for obj in Niveau.actuel.objets:
+        for obj in Niveau.actuel.plateformes:
             if rect.colliderect(obj.rect):
                 touche += 1
         return touche
