@@ -100,11 +100,10 @@ class Editeur:
             Niveau.changer_etat(liste_etat[Niveau.etat])
         elif self.boutons[1].est_clique():
             self.action = "test"
-            Message("Cliquer là où vous voulez allez")
         elif self.boutons[2].est_clique():
             Niveau()
             Niveau.changer(Niveau.nombre)
-            self.decalage = Niveau.nombre
+            self.decalage = Niveau.nombre - 1
 
         elif self.boutons[3].est_clique():
             Niveau.changer_etat("paramettre")
