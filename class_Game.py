@@ -1,4 +1,6 @@
 import glob, json, os, sys, pygame
+
+from UI.class_Debug import Debug
 from  entities.class_Joueur import Joueur
 from UI.class_Bouton import Bouton
 from UI.class_Texte import Texte
@@ -17,9 +19,8 @@ from scenes.class_Paramettre import Paramettre
 #les menus
 menu1 = Menu([
             Texte("Bienvenue sur Angeciel",["x", 100], taille=70),
-            Bouton("Commencer le jeu", ["x", 300], (0,0, 255)),
-            Bouton("Choix du niveau", ["x", 400], (0, 255, 0)),
-            Bouton("Quitter le jeu", ["x", 500], (255, 0, 0)),
+            Bouton("Commencer le jeu", ["x", 310], (0,0, 255)),
+            Bouton("Quitter le jeu", ["x", 390], (255, 0, 0)),
             Bouton("éditeur de niveau", [20, 20], taille= 20)
             ])
 menu_v = Menu([
@@ -49,12 +50,14 @@ class Game:
         self.editeur = Editeur()
         self.paramettre = Paramettre()
 
-        dossier = os.path.dirname(os.path.abspath(__file__))
-        nombre_de_niveau = len(glob.glob(dossier + "/objets/plateforme*.json"))
-        for niv in range(1, nombre_de_niveau + 1):
+        self.dossier = os.path.dirname(os.path.abspath(__file__))
+        self.nombre_de_niveau = len(glob.glob(self.dossier + "/objets/plateforme*.json"))
+        for niv in range(1, self.nombre_de_niveau + 1):
             Niveau()
             with open("objets/plateforme" + str(niv) + ".json", "r") as f:
                 [Plateforme(plat["niveau"], plat["taille"], plat["positions"], plat["avance"]) for plat in json.load(f)]
+
+        Debug("Niveau.en_cours", '*')
 
     def run(self):
 
@@ -86,8 +89,6 @@ class Game:
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_p:
                 print("\n " + str(pygame.mouse.get_pos()))
                 print(pygame.mouse.get_pos()[0] + Screen.camera, pygame.mouse.get_pos()[1] + Screen.camera, "\n")
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_m and Niveau.etat == "editeur":
-                Editeur.e.montrer_boutons = not Editeur.e.montrer_boutons
 
     def display_menus(self):
         if Niveau.etat == "menu":
@@ -96,19 +97,17 @@ class Game:
             if menu1.boutons[1].est_clique():
                 self.joueur.reinitialiser_jeu()
             if menu1.boutons[2].est_clique():
-                Niveau.changer_etat("choix_niv")
-            if menu1.boutons[3].est_clique():
                 Niveau.changer_etat("close")
-            if menu1.boutons[4].est_clique():
+            if menu1.boutons[3].est_clique():
+                self.editeur = Editeur()
                 Niveau.changer_etat("editeur")
-                self.editeur.cam_x = -200
         elif Niveau.etat == "paramettre":
             self.paramettre.afficher()
             self.paramettre.gerer_clic()
         elif Niveau.etat == "editeur":
             self.editeur.gestion_camera()
+            self.editeur.gestion_click(self.events)
             self.editeur.afficher()
-            self.editeur.gestion_creation(self.events)
             self.editeur.gestion_bouton()
         elif Niveau.etat == "victoire":
             menu_v.boutons[0].mise_a_jour(f"Vous avez fini le niveau {Niveau.en_cours}")
@@ -148,12 +147,13 @@ class Game:
             aide4.move(Screen.camera, self.joueur.rect_ecran)
             aide5.move(Screen.camera, self.joueur.rect_ecran)
 
-    @staticmethod
-    def save():
+    def save(self):
         # sauvergarde des objets quand le jeu est fini
         for niv in range(1, Niveau.nombre + 1):
             with open("objets/plateforme" + str(niv) + ".json", "w") as f:
                 json.dump([plat.to_dict() for plat in Niveau.liste[niv - 1].plateformes], f, indent=4)
+        for niv in range(Niveau.nombre + 1, self.nombre_de_niveau + 1):
+            os.remove(self.dossier + "/objets/plateforme" + str(niv) + ".json")
 
         print("fin sauvergardé")
         Screen.screen.fill((0, 0, 0))

@@ -41,7 +41,7 @@ class Texte:
             surface.blit(s, (0, 0))
         return surface
 
-    def mise_a_jour(self, nouveau_text  : str = False, nouvelle_pos : tuple = False):
+    def mise_a_jour(self, nouveau_text  : str = False, nouvelle_pos : tuple  | list = False):
         if nouveau_text or nouveau_text == "":
             self.text = nouveau_text
             self.surface = self._get_surface()

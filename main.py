@@ -14,5 +14,3 @@ while Niveau.etat != "close":
     game.run()
 
 game.save()
-
-

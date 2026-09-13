@@ -42,35 +42,3 @@ class Bouton(Texte):
                     s_click.play()
                     Bouton.last_clic = pygame.time.get_ticks()
         return touch
-
-class ListeBouton:
-    def __init__(self, boutons):
-        self.boutons = boutons
-        self.bouton = None
-        self.pos = []
-        for b in self.boutons:
-            self.pos.append([b.x, b.y])
-
-    def est_cliquer(self):
-        clique = False
-        for b in self.boutons:
-            if b.est_clique():
-                clique = True
-                self.bouton = b
-        return clique
-
-    def afficher(self):
-        for b in self.boutons:
-            touch = False
-            if 300 <= b.rect.left and b.rect.right < Screen.largeur() - 50:
-                touch = True
-            b.afficher(touch)
-
-    def decaler(self, decalage):
-        i = 250
-        for index,b in enumerate(self.boutons):
-            if index < decalage:
-                b.mise_a_jour(nouvelle_pos = (0, b.y))
-            else :
-                b.mise_a_jour(nouvelle_pos = (i + 50, b.y))
-                i = b.rect.right

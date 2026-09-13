@@ -7,8 +7,8 @@ from entities.class_Niveau import Niveau
 class Debug(Texte):
     liste = []
     nombre = 0
-    def __init__(self, stockage, etats, description = "", cle = None, fonction  = lambda text : text):
-        super().__init__("", (0, 0))
+    def __init__(self, stockage : str, etats, description = "", cle = None, fonction  = lambda text : text):
+        super().__init__("", (0, 0), couleur= (86, 97, 156))
         self.fonction = fonction
         self.stockage = stockage
         _, self.variable = self.obtenir()
@@ -21,7 +21,7 @@ class Debug(Texte):
         self.taille = self._get_surface().get_rect().width
         Debug.liste.append(self)
         Debug.nombre += 1
-        Timer(1, "i", self.afficher, condition= lambda : Niveau.etat in self.etats)
+        Timer(1, "i", self.afficher, condition= lambda : Niveau.etat in self.etats or self.etats == "*")
 
     def afficher(self):
         self.valeur_o, _ = self.obtenir()

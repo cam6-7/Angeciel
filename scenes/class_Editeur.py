@@ -1,28 +1,28 @@
+from UI.class_Debug import Debug
 from entities.class_Joueur import Joueur
 from core.class_Screen import Screen
-from UI.class_Bouton import Bouton, ListeBouton
+from UI.class_Bouton import Bouton
 from entities.class_Niveau import Niveau
 from entities.class_Plateforme import Plateforme
 from core.fonction_texture import dessiner_plateforme_texturee
-from UI.class_Texte import Texte
 from core.fonction_ressource_path import resource_path
 from UI.class_BoutonIMG import BoutonIMG
 from UI.class_Message import Message
 import pygame
-pygame.init()
-clock = pygame.time.Clock()
-class Editeur:
 
-    e = None
-    def __init__(self ):
-        self.camera = -200
+image_d = pygame.image.load(resource_path("resources/flèche2.png"))
+image_g = pygame.transform.flip(pygame.image.load(resource_path("resources/flèche2.png")), True, False)
+
+
+class Editeur:
+    def __init__(self, decalage: int = 0):
         self.action = "rien"
-        self.t = Texte(self.action, (500, 50))
-        self.att = None
-        self.souris1 = None
         self.type = "rien"
-        self.decalage = 0
-        self.montrer_boutons = True
+        self.att : Plateforme = None
+        self.souris1 = None
+        self.decalage = decalage
+        self.fleche_d = BoutonIMG(image_d, (Screen.largeur() - 75, 15))
+        self.fleche_g = BoutonIMG(image_g, (200, 15))
         self.boutons = [
             Bouton("Retour", [10, 50], (255, 255, 255)),
             Bouton("Tester", [10, 100], (255, 255, 255)),
@@ -30,22 +30,13 @@ class Editeur:
             Bouton("paramettre\ndu niveau", [10, 275], (255, 255, 255)),
             Bouton("créer une\nplateforme", [10, 400], (255, 255, 255)),
             Bouton("créer un\nascensseur", [10, 475], (255, 255, 255))]
-
-
-        self.decalage = 0
-        self.recreation_bouton()
+        self.boutons_n = [Bouton(niv.name, (0, 0), (255, 255, 255)) for niv in Niveau.liste]
         self.listespos = []
-        Editeur.e = self
+        Screen.camera = -200
 
-    def afficher_fleche(self):
-        image_d = pygame.image.load(resource_path("resources/flèche2.png"))
-        image_g = pygame.transform.flip(pygame.image.load(resource_path("resources/flèche2.png")), True, False)
-        self.fleche_d = BoutonIMG(image_d, (Screen.largeur() - 75, 15))
-        self.fleche_g = BoutonIMG(image_g, (200, 15))
-        self.fleche_d.afficher()
-        self.fleche_g.afficher()
 
     def afficher(self):
+        Message(self.decalage)
         #fond
         Screen.screen.fill((255, 255, 255))
         self.draw_grid()
@@ -53,49 +44,53 @@ class Editeur:
         #objets
         for plat in Niveau.actuel.plateformes:
             plat.mouvement()
-            dessiner_plateforme_texturee(plat.rect.move(- self.camera, 0))
+            dessiner_plateforme_texturee(plat.rect.move(- Screen.camera, 0))
 
         #boutons
         pygame.draw.rect(Screen.screen, (0, 0, 0), (0, 0, 200, Screen.hauteur()))
+        pygame.draw.rect(Screen.screen, (0, 0, 0), (0, 0, Screen.largeur(), 75))
+
         for b in self.boutons:
             b.afficher()
-
-        if self.montrer_boutons:
-            pygame.draw.rect(Screen.screen, (0, 0, 0), (0, 0, Screen.largeur(), 75))
-
-            for b in self.boutons:
+        pos = [250, 30]
+        print()
+        for i, b in enumerate(self.boutons_n):
+            pos[0] += 50
+            b.mise_a_jour(nouvelle_pos=pos)
+            if i < self.decalage:
+                b.mise_a_jour(nouvelle_pos=(Screen.largeur(), Screen.hauteur()))
+                pos = [250, 30]
+                print(i, "erreur decalage")
+            elif i == self.decalage or b.rect.right < Screen.largeur() - 100:
+                b.mise_a_jour(nouvelle_pos=pos)
                 b.afficher()
-            self.recreation_bouton()
-            self.boutons_n.afficher()
-            self.afficher_fleche()
+                pos = list(b.rect.topright)
+                print("afficher")
+            else:
+                b.mise_a_jour(nouvelle_pos=(Screen.largeur(), Screen.hauteur()))
+                pos = [Screen.largeur(), Screen.hauteur()]
+                print(i)
 
-            if self.fleche_g.est_clique():
-                self.decalage -= 1 if self.decalage >= 0 else 0
-                self.boutons_n.decaler(self.decalage)
 
-            elif self.fleche_d.est_clique():
-                self.decalage += 1
-                self.boutons_n.decaler(self.decalage)
-                while (Screen.largeur() - 50) - self.boutons_n.boutons[-1].rect.right >= self.boutons_n.boutons[-1].rect.width:
-                    self.decalage -= 1
-                    self.boutons_n.decaler(self.decalage)
-
+        self.fleche_d.mise_a_jour(nouvelle_pos=(Screen.largeur() - 75, 15))
+        self.fleche_g.afficher()
+        self.fleche_d.afficher()
+    def maj_boutons(self):
+        if len(self.boutons_n) != Niveau.nombre:
+            self.boutons_n = [Bouton(niv.name, (0, 30), (255, 255, 255)) for niv in Niveau.liste]
 
     def gestion_camera(self):
         Screen.camera -= Screen.camera % 25
-        self.camera = Screen.camera - 200
         if self.action != "modifier":
             keys = pygame.key.get_pressed()
             if keys[pygame.K_LEFT]:
                 Screen.camera -= 25
             elif keys[pygame.K_RIGHT]:
                 Screen.camera += 25
-            if self.camera < -200:
-                Screen.camera = 0
-                self.camera = -200
-            elif self.camera > Niveau.actuel.taille - Screen.largeur() // 2 - 100:
-                Screen.camera = Niveau.actuel.taille - Screen.largeur() // 2 + 100
-                self.camera = Screen.camera - 200
+            if Screen.camera < -200:
+                Screen.camera = -200
+            elif Screen.camera > Niveau.actuel.taille - Screen.largeur() // 2 - 100:
+                Screen.camera = Niveau.actuel.taille - Screen.largeur() // 2 - 100
 
 
 
@@ -114,8 +109,7 @@ class Editeur:
         elif self.boutons[2].est_clique():
             Niveau()
             Niveau.changer(Niveau.nombre)
-            Niveau.changer_etat("editeur")
-            self.recreation_bouton()
+            self.decalage = Niveau.nombre
 
         elif self.boutons[3].est_clique():
             Niveau.changer_etat("paramettre")
@@ -123,140 +117,84 @@ class Editeur:
             self.type = "plat"
         elif self.boutons[5].est_clique():
             self.type = "asc"
-        elif self.boutons_n.est_cliquer() and self.montrer_boutons:
-            Niveau.changer(self.boutons_n.boutons.index(self.boutons_n.bouton) + 1)
-            self.fermer(1)
+        if self.fleche_g.est_clique():
+            self.decalage -= 1
+        elif self.fleche_d.est_clique():
+            self.decalage += 1
+        if self.boutons_n[-1].rect.right + self.boutons_n[self.decalage - 1].rect.width < Screen.largeur() - 100:
+            print('force decalage')
+            self.decalage -= 1
+        if self.decalage < 0: self.decalage = 0
+        self.maj_boutons()
+        for b in self.boutons_n:
+            if b.est_clique():
+                Niveau.changer(self.boutons_n.index(b) + 1)
 
-    def recreation_bouton(self):
-        boutons_n = []
-        i = 250
-        for n in Niveau.liste:
-            b = Bouton(n.name, (i + 50, 25), couleur="WHITE")
-            boutons_n.append(b)
-            i = b.rect.right
-        self.boutons_n = ListeBouton(boutons_n)
-        self.boutons_n.decaler(self.decalage)
-
-
-    def gestion_creation(self, events):
+    def gestion_click(self, events):
         for event in events:
             if pygame.mouse.get_pos()[0] > 200:
                 if pygame.mouse.get_pressed()[0]:
                     if self.action == "rien":
-                        self._clic_debut()
+                        self.souris1 = pygame.mouse.get_pos()
+                        clic = False
+                        for obj in Niveau.actuel.plateformes:
+                            if obj.rect.collidepoint((self.souris1[0] + Screen.camera, self.souris1[1])):
+                                obj.supprimer()
+                                clic = True
+                        if not clic and self.type != "rien":
+                            self.att = Plateforme(Niveau.en_cours, (0, 0), [(0, 0)])
+                            self.action = "creer"
                     if self.action == "creer" and self.type != "rien":
-                        self._clic_enfonce()
+                        s1 = self.souris1
+                        s2 = pygame.mouse.get_pos()
+                        x1 = self.arrondir25(min(s1[0] + Screen.camera, s2[0] + Screen.camera), "i")
+                        x2 = self.arrondir25(max(s1[0] + Screen.camera, s2[0] + Screen.camera), "s")
+                        y1 = self.arrondir25(min(s1[1], s2[1]), "i")
+                        y2 = self.arrondir25(max(s1[1], s2[1]), "s")
+                        self.att = self.att.maj(x1, y1, x2 - x1, y2 - y1)
                 elif event.type == pygame.MOUSEBUTTONUP and event.button == 1 and self.action == "creer":
-                    self._clic_relache()
-        if self.action == "modifier":
-            self._creation_asc(events)
-        elif self.action == "test":
-            self._gestion_test()
-
-
-    def _clic_debut(self):
-
-        self.souris1 = pygame.mouse.get_pos()
-        sourisE = list(pygame.mouse.get_pos())
-        sourisE[0] += self.camera
-
-        clic = 0
-        for obj in Niveau.actuel.plateformes:
-            if obj.rect.collidepoint(sourisE):
-                obj.supprimer()
-                clic = 1
-        if clic == 0 and self.type != "rien":
-            self.att = Plateforme(Niveau.en_cours, (0, 0), [(0, 0)])
-            self.action = "creer"
-
-    def _clic_enfonce(self):
-        s1 = self.souris1
-        s2 = pygame.mouse.get_pos()
-        x1 = s1[0] + self.camera
-        y1 = s1[1]
-        x2 = s2[0] + self.camera
-        y2 = s2[1]
-        if x1 < x2:
-            x1 = self.arrondir25(x1, "i")
-            x2 = self.arrondir25(x2, "s")
-            x = x1
-        else:
-            x1 = self.arrondir25(x1, "s")
-            x2 = self.arrondir25(x2, "i")
-            x = x2
-        if y1 < y2:
-            y1 = self.arrondir25(y1, "i")
-            y2 = self.arrondir25(y2, "s")
-            y = y1
-        else:
-            y1 = self.arrondir25(y1, "s")
-            y2 = self.arrondir25(y2, "i")
-            y = y2
-        l = abs(x1 - x2)
-        h = abs(y1 - y2)
-        self.att = self.att.maj(x, y, l, h)
-
-    def _clic_relache(self):
-        if self.type == "plat":
-            self.action = "rien"
-
-        elif self.type == "asc":
-            self.action = "modifier"
-            self.listespos.append(self.att.rect.topleft)
-
-    def _gestion_test(self):
-        if pygame.mouse.get_pos()[0] > 200 and pygame.mouse.get_pos()[1] > 75:
-            if pygame.mouse.get_pressed()[0]:
-                souris = list(pygame.mouse.get_pos())
-                souris[0] = self.arrondir25(souris[0], "i") + self.camera
-                souris[1] = self.arrondir25(souris[1], "i")
-                Niveau.changer_etat("test")
-                Joueur.ply.rect.topleft = souris
-                Joueur.ply.postest = souris
-                Screen.camera = max(0, min(Joueur.ply.rect.x - Screen.largeur() // 2, Niveau.actuel.taille - Screen.largeur()))
-                self.fermer(2)
-
-
-    def _creation_asc(self, events):
-        for pos in self.listespos:
-            dessiner_plateforme_texturee(pygame.Rect(pos[0] - self.camera, pos[1], *self.att.taille))
-        for event in events:
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP:
-                    self.att.rect.y -= 25
-                    self.att.rect.x = self.listespos[-1][0]
-                elif event.key == pygame.K_DOWN:
-                    self.att.rect.y += 25
-                    self.att.rect.x = self.listespos[-1][0]
-                elif event.key == pygame.K_LEFT:
-                    self.att.rect.x -= 25
-                    self.att.rect.y = self.listespos[-1][1]
-                elif event.key == pygame.K_RIGHT:
-                    self.att.rect.x += 25
-                    self.att.rect.y = self.listespos[-1][1]
-                elif event.key == pygame.K_RETURN:
-                    if self.att.rect.topleft == self.listespos[-1]:
-                        Plateforme(Niveau.en_cours, self.att.rect.size, self.listespos)
-                        self.att.supprimer()
-                        self.listespos.clear()
+                    if self.type == "plat":
                         self.action = "rien"
-                        self.type = "rien"
-                    else:
+                    elif self.type == "asc":
+                        self.action = "modifier"
                         self.listespos.append(self.att.rect.topleft)
-
-
-
-
-    def fermer(self, force = 0):
-        self.action = "rien"
-        self.type = "rien"
-        self.att = None
-        self.souris1 = None
-        if force == 0:
-            self.decalage = 0
-            self.boutons_n.decaler(self.decalage)
-        if force <= 1:
-            Screen.camera = -200
+        if self.action == "modifier":
+            for pos in self.listespos:
+                dessiner_plateforme_texturee(pygame.Rect(pos[0] - Screen.camera, pos[1], *self.att.taille))
+            for event in events:
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_UP:
+                        self.att.rect.y -= 25
+                        self.att.rect.x = self.listespos[-1][0]
+                    elif event.key == pygame.K_DOWN:
+                        self.att.rect.y += 25
+                        self.att.rect.x = self.listespos[-1][0]
+                    elif event.key == pygame.K_LEFT:
+                        self.att.rect.x -= 25
+                        self.att.rect.y = self.listespos[-1][1]
+                    elif event.key == pygame.K_RIGHT:
+                        self.att.rect.x += 25
+                        self.att.rect.y = self.listespos[-1][1]
+                    elif event.key == pygame.K_RETURN:
+                        if self.att.rect.topleft == self.listespos[-1]:
+                            Plateforme(Niveau.en_cours, self.att.rect.size, self.listespos)
+                            self.att.supprimer()
+                            self.listespos.clear()
+                            self.action = "rien"
+                            self.type = "rien"
+                        else:
+                            self.listespos.append(self.att.rect.topleft)
+        elif self.action == "test":
+            if pygame.mouse.get_pos()[0] > 200 and pygame.mouse.get_pos()[1] > 75:
+                if pygame.mouse.get_pressed()[0]:
+                    self.action = "rien"
+                    souris = list(pygame.mouse.get_pos())
+                    souris[0] = self.arrondir25(souris[0], "i") + Screen.camera
+                    souris[1] = self.arrondir25(souris[1], "i")
+                    Niveau.changer_etat("test")
+                    Joueur.ply.rect.topleft = souris
+                    Joueur.ply.postest = souris
+                    Screen.camera = max(0, min(Joueur.ply.rect.x - Screen.largeur() // 2, Niveau.actuel.taille - Screen.largeur()))
 
     @staticmethod
     def draw_grid(surface=Screen.screen, cell_size=25):

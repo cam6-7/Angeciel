@@ -55,3 +55,7 @@ class BoutonIMG:
                     s_click.play()
                     BoutonIMG.last_clic = pygame.time.get_ticks()
         return touch
+
+
+    def mise_a_jour(self, nouvelle_pos):
+        self.position = nouvelle_pos

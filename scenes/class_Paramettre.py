@@ -1,8 +1,6 @@
 from UI.class_Bouton import Bouton
-from scenes.class_Editeur import Editeur
+from UI.class_Message import Message
 from entities.class_Niveau import Niveau
-from entities.class_Plateforme import Plateforme
-from UI.class_Question import Question
 from core.class_Screen import Screen
 from core.fonction_texture import dessiner_plateforme_texturee
 from pygame import Rect
@@ -31,26 +29,19 @@ class Paramettre:
                           }
             Niveau.changer_etat(liste_etat[Niveau.etat])
         elif self.boutons["supprimer"].est_clique():
+            if Niveau.nombre == 1:
+                Message("Erreur, le dernier niveau ne peut etre supprimer")
+                return
             niveau = Niveau.actuel
-            Niveau.changer(Niveau.en_cours - 1)
-            Niveau.liste.remove(niveau)
-            Niveau.nombre -= 1
-            Editeur.e.recreation_bouton()
-            self.gerer_decalage()
-            Niveau.changer_etat("editeur")
+            if niveau in Niveau.liste:
+                Niveau.changer(Niveau.en_cours - 1)
+                Niveau.liste.remove(niveau)
+                Niveau.nombre -= 1
+                Niveau.changer_etat("editeur")
+            else:
+                Message("Erreur, Niveau inexistant")
         elif self.boutons["dupliquer"].est_clique():
             niv = Niveau()
             niv.plateformes = Niveau.actuel.plateformes
             Niveau.changer(Niveau.nombre)
-            Editeur.e.recreation_bouton()
-            self.gerer_decalage()
             Niveau.changer_etat("editeur")
-
-    @staticmethod
-    def gerer_decalage():
-        Editeur.e.decalage = Niveau.nombre
-        Editeur.e.boutons_n.decaler(Editeur.e.decalage)
-        while (Screen.largeur() - 50) - Editeur.e.boutons_n.boutons[-1].rect.right >= Editeur.e.boutons_n.boutons[
-            -1].rect.width:
-            Editeur.e.decalage -= 1
-            Editeur.e.boutons_n.decaler(Editeur.e.decalage)
