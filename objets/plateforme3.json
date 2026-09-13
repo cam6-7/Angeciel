@@ -1,20 +1,176 @@
 [
     {
         "taille": [
+            150,
+            25
+        ],
+        "positions": [
+            [
+                0,
+                550
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "taille": [
+            150,
+            25
+        ],
+        "positions": [
+            [
+                250,
+                450
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "taille": [
+            175,
+            25
+        ],
+        "positions": [
+            [
+                500,
+                350
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "taille": [
+            175,
+            25
+        ],
+        "positions": [
+            [
+                775,
+                250
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "taille": [
+            25,
+            25
+        ],
+        "positions": [
+            [
+                1000,
+                175
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "taille": [
+            250,
+            25
+        ],
+        "positions": [
+            [
+                1075,
+                100
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "taille": [
+            25,
+            25
+        ],
+        "positions": [
+            [
+                1450,
+                550
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "taille": [
             200,
             25
         ],
         "positions": [
             [
-                1175,
-                425
-            ],
-            [
                 1950,
-                425
+                500
             ]
         ],
-        "avance": false
+        "avance": true
+    },
+    {
+        "taille": [
+            200,
+            25
+        ],
+        "positions": [
+            [
+                2800,
+                575
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "taille": [
+            200,
+            25
+        ],
+        "positions": [
+            [
+                3100,
+                475
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "taille": [
+            200,
+            25
+        ],
+        "positions": [
+            [
+                3400,
+                375
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "taille": [
+            225,
+            25
+        ],
+        "positions": [
+            [
+                3775,
+                475
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "taille": [
+            25,
+            25
+        ],
+        "positions": [
+            [
+                1575,
+                550
+            ],
+            [
+                1575,
+                225
+            ]
+        ],
+        "avance": true
     },
     {
         "taille": [
@@ -23,24 +179,20 @@
         ],
         "positions": [
             [
-                2900,
-                200
-            ],
-            [
-                2900,
-                350
+                1700,
+                225
             ]
         ],
         "avance": true
     },
     {
         "taille": [
-            700,
+            25,
             25
         ],
         "positions": [
             [
-                0,
+                1800,
                 500
             ]
         ],
@@ -49,25 +201,12 @@
     {
         "taille": [
             25,
-            100
-        ],
-        "positions": [
-            [
-                700,
-                425
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "taille": [
-            550,
             25
         ],
         "positions": [
             [
-                725,
-                425
+                2225,
+                400
             ]
         ],
         "avance": true
@@ -75,12 +214,12 @@
     {
         "taille": [
             25,
-            100
+            25
         ],
         "positions": [
             [
-                875,
-                325
+                2325,
+                300
             ]
         ],
         "avance": true
@@ -88,76 +227,11 @@
     {
         "taille": [
             25,
-            375
-        ],
-        "positions": [
-            [
-                2025,
-                0
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "taille": [
-            200,
             25
         ],
         "positions": [
             [
-                2025,
-                425
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "taille": [
-            100,
-            25
-        ],
-        "positions": [
-            [
-                2050,
-                350
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "taille": [
-            25,
-            50
-        ],
-        "positions": [
-            [
-                2200,
-                375
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "taille": [
-            775,
-            25
-        ],
-        "positions": [
-            [
-                2200,
-                350
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "taille": [
-            425,
-            25
-        ],
-        "positions": [
-            [
-                2975,
+                2425,
                 200
             ]
         ],
@@ -166,25 +240,12 @@
     {
         "taille": [
             25,
-            100
-        ],
-        "positions": [
-            [
-                3375,
-                100
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "taille": [
-            100,
             25
         ],
         "positions": [
             [
-                3400,
-                100
+                2550,
+                200
             ]
         ],
         "avance": true
@@ -192,25 +253,12 @@
     {
         "taille": [
             25,
-            475
-        ],
-        "positions": [
-            [
-                3475,
-                125
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "taille": [
-            300,
             25
         ],
         "positions": [
             [
-                3500,
-                575
+                2675,
+                200
             ]
         ],
         "avance": true
@@ -218,11 +266,50 @@
     {
         "taille": [
             25,
-            125
+            25
         ],
         "positions": [
             [
-                3800,
+                3050,
+                525
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "taille": [
+            25,
+            25
+        ],
+        "positions": [
+            [
+                3350,
+                425
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "taille": [
+            25,
+            25
+        ],
+        "positions": [
+            [
+                3650,
+                450
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "taille": [
+            25,
+            25
+        ],
+        "positions": [
+            [
+                4100,
                 475
             ]
         ],
@@ -230,12 +317,12 @@
     },
     {
         "taille": [
-            100,
+            25,
             25
         ],
         "positions": [
             [
-                3825,
+                4225,
                 475
             ]
         ],
@@ -244,89 +331,24 @@
     {
         "taille": [
             25,
-            100
-        ],
-        "positions": [
-            [
-                3900,
-                375
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "taille": [
-            100,
-            25
-        ],
-        "positions": [
-            [
-                3925,
-                375
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "taille": [
-            25,
-            100
-        ],
-        "positions": [
-            [
-                4000,
-                275
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "taille": [
-            100,
-            25
-        ],
-        "positions": [
-            [
-                4025,
-                275
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "taille": [
-            100,
-            25
-        ],
-        "positions": [
-            [
-                4175,
-                275
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "taille": [
-            100,
             25
         ],
         "positions": [
             [
                 4325,
-                275
+                375
             ]
         ],
         "avance": true
     },
     {
         "taille": [
-            100,
+            25,
             25
         ],
         "positions": [
             [
-                4475,
+                4425,
                 275
             ]
         ],
@@ -334,12 +356,25 @@
     },
     {
         "taille": [
-            100,
+            25,
             25
         ],
         "positions": [
             [
-                4625,
+                4525,
+                175
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "taille": [
+            25,
+            25
+        ],
+        "positions": [
+            [
+                4650,
                 275
             ]
         ],
@@ -347,7 +382,7 @@
     },
     {
         "taille": [
-            225,
+            25,
             25
         ],
         "positions": [
@@ -360,17 +395,13 @@
     },
     {
         "taille": [
-            150,
+            125,
             25
         ],
         "positions": [
             [
-                200,
-                350
-            ],
-            [
-                200,
-                500
+                4900,
+                275
             ]
         ],
         "avance": true

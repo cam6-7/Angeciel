@@ -14,7 +14,7 @@ class Plateforme:
         self.nu_position = 0 if avance else self.nb_positions - 1
         self.rect = pygame.Rect(self.pos1[0], self.pos1[1], self.taille[0], self.taille[1])
         self.direction = self.get_direction()
-        Niveau.actuel.plateformes.append(self)
+        Niveau.liste[niveau - 1].plateformes.append(self)
 
     @property
     def pos1(self):
@@ -90,7 +90,6 @@ class Plateforme:
 
     def to_dict(self):
         return {
-            "niveau": self.niveau,
             "taille": self.taille,
             "positions": self.positions,
             "avance": self.initial_avance

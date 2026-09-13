@@ -55,10 +55,10 @@ class Game:
         for niv in range(1, self.nombre_de_niveau + 1):
             Niveau()
             with open("objets/plateforme" + str(niv) + ".json", "r") as f:
-                [Plateforme(plat["niveau"], plat["taille"], plat["positions"], plat["avance"]) for plat in json.load(f)]
+                [Plateforme(niv , plat["taille"], plat["positions"], plat["avance"]) for plat in json.load(f)]
 
-        Debug("Niveau.en_cours", '*')
-
+        print(Niveau.liste[0].plateformes[0].rect.topleft)
+        print(Niveau.liste[1].plateformes[0].rect.topleft)
     def run(self):
 
         self.get_events()
@@ -146,6 +146,8 @@ class Game:
             aide3.move(Screen.camera, self.joueur.rect_ecran)
             aide4.move(Screen.camera, self.joueur.rect_ecran)
             aide5.move(Screen.camera, self.joueur.rect_ecran)
+
+
 
     def save(self):
         # sauvergarde des objets quand le jeu est fini

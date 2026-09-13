@@ -36,7 +36,6 @@ class Editeur:
 
 
     def afficher(self):
-        Message(self.decalage)
         #fond
         Screen.screen.fill((255, 255, 255))
         self.draw_grid()
@@ -53,23 +52,19 @@ class Editeur:
         for b in self.boutons:
             b.afficher()
         pos = [250, 30]
-        print()
         for i, b in enumerate(self.boutons_n):
             pos[0] += 50
             b.mise_a_jour(nouvelle_pos=pos)
             if i < self.decalage:
                 b.mise_a_jour(nouvelle_pos=(Screen.largeur(), Screen.hauteur()))
                 pos = [250, 30]
-                print(i, "erreur decalage")
             elif i == self.decalage or b.rect.right < Screen.largeur() - 100:
                 b.mise_a_jour(nouvelle_pos=pos)
                 b.afficher()
                 pos = list(b.rect.topright)
-                print("afficher")
             else:
                 b.mise_a_jour(nouvelle_pos=(Screen.largeur(), Screen.hauteur()))
                 pos = [Screen.largeur(), Screen.hauteur()]
-                print(i)
 
 
         self.fleche_d.mise_a_jour(nouvelle_pos=(Screen.largeur() - 75, 15))
@@ -121,9 +116,10 @@ class Editeur:
             self.decalage -= 1
         elif self.fleche_d.est_clique():
             self.decalage += 1
-        if self.boutons_n[-1].rect.right + self.boutons_n[self.decalage - 1].rect.width < Screen.largeur() - 100:
-            print('force decalage')
-            self.decalage -= 1
+        try:
+            if self.boutons_n[-1].rect.right + self.boutons_n[self.decalage - 1].rect.width < Screen.largeur() - 100: self.decalage -= 1
+        except IndexError:
+            pass
         if self.decalage < 0: self.decalage = 0
         self.maj_boutons()
         for b in self.boutons_n:
