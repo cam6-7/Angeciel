@@ -486,5 +486,57 @@
             ]
         ],
         "avance": true
+    },
+    {
+        "taille": [
+            25,
+            25
+        ],
+        "positions": [
+            [
+                175,
+                50
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "taille": [
+            25,
+            25
+        ],
+        "positions": [
+            [
+                175,
+                50
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "taille": [
+            25,
+            25
+        ],
+        "positions": [
+            [
+                775,
+                50
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "taille": [
+            25,
+            25
+        ],
+        "positions": [
+            [
+                650,
+                25
+            ]
+        ],
+        "avance": true
     }
 ]

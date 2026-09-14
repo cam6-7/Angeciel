@@ -55,16 +55,21 @@ class Editeur:
         for i, b in enumerate(self.boutons_n):
             pos[0] += 50
             b.mise_a_jour(nouvelle_pos=pos)
-            if i < self.decalage:
+            if i == self.decalage:
+                b.mise_a_jour(nouvelle_pos=pos)
+                b.afficher()
+                pos = list(b.rect.topright)
+            elif i < self.decalage:
                 b.mise_a_jour(nouvelle_pos=(Screen.largeur(), Screen.hauteur()))
                 pos = [250, 30]
-            elif i == self.decalage or b.rect.right < Screen.largeur() - 100:
+            elif b.rect.right < Screen.largeur() - 100:
                 b.mise_a_jour(nouvelle_pos=pos)
                 b.afficher()
                 pos = list(b.rect.topright)
             else:
                 b.mise_a_jour(nouvelle_pos=(Screen.largeur(), Screen.hauteur()))
                 pos = [Screen.largeur(), Screen.hauteur()]
+
 
 
         self.fleche_d.mise_a_jour(nouvelle_pos=(Screen.largeur() - 75, 15))
@@ -82,10 +87,11 @@ class Editeur:
                 Screen.camera -= 25
             elif keys[pygame.K_RIGHT]:
                 Screen.camera += 25
-            if Screen.camera < -200:
-                Screen.camera = -200
-            elif Screen.camera > Niveau.actuel.taille - Screen.largeur() // 2 - 100:
-                Screen.camera = Niveau.actuel.taille - Screen.largeur() // 2 - 100
+
+        if Screen.camera < -200:
+            Screen.camera = -200
+        elif Screen.camera > Niveau.actuel.taille - Screen.largeur() // 2 - 100:
+            Screen.camera = Niveau.actuel.taille - Screen.largeur() // 2 - 100
 
 
 
@@ -180,16 +186,14 @@ class Editeur:
                         else:
                             self.listespos.append(self.att.rect.topleft)
         elif self.action == "test":
-            if pygame.mouse.get_pos()[0] > 200 and pygame.mouse.get_pos()[1] > 75:
-                if pygame.mouse.get_pressed()[0]:
-                    self.action = "rien"
-                    souris = list(pygame.mouse.get_pos())
-                    souris[0] = self.arrondir25(souris[0], "i") + Screen.camera
-                    souris[1] = self.arrondir25(souris[1], "i")
-                    Niveau.changer_etat("test")
-                    Joueur.ply.rect.topleft = souris
-                    Joueur.ply.postest = souris
-                    Screen.camera = max(0, min(Joueur.ply.rect.x - Screen.largeur() // 2, Niveau.actuel.taille - Screen.largeur()))
+            if pygame.mouse.get_pos()[0] > 200 and pygame.mouse.get_pos()[1] > 75 and pygame.mouse.get_pressed()[0]:
+                self.action = "rien"
+                souris = list(pygame.mouse.get_pos())
+                souris[0] = self.arrondir25(souris[0], "i") + Screen.camera
+                souris[1] = self.arrondir25(souris[1], "i")
+                Niveau.changer_etat("test")
+                Joueur.ply.rect.topleft = souris
+                Joueur.ply.postest = souris
 
     @staticmethod
     def draw_grid(surface=Screen.screen, cell_size=25):

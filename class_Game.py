@@ -1,6 +1,5 @@
 import glob, json, os, sys, pygame
 
-from UI.class_Debug import Debug
 from  entities.class_Joueur import Joueur
 from UI.class_Bouton import Bouton
 from UI.class_Texte import Texte
@@ -57,8 +56,6 @@ class Game:
             with open("objets/plateforme" + str(niv) + ".json", "r") as f:
                 [Plateforme(niv , plat["taille"], plat["positions"], plat["avance"]) for plat in json.load(f)]
 
-        print(Niveau.liste[0].plateformes[0].rect.topleft)
-        print(Niveau.liste[1].plateformes[0].rect.topleft)
     def run(self):
 
         self.get_events()

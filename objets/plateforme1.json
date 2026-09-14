@@ -357,5 +357,31 @@
             ]
         ],
         "avance": true
+    },
+    {
+        "taille": [
+            25,
+            25
+        ],
+        "positions": [
+            [
+                600,
+                25
+            ]
+        ],
+        "avance": true
+    },
+    {
+        "taille": [
+            25,
+            25
+        ],
+        "positions": [
+            [
+                325,
+                50
+            ]
+        ],
+        "avance": true
     }
 ]

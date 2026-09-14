@@ -4,7 +4,7 @@ from entities.class_Niveau import Niveau
 from entities.class_Plateforme import Plateforme
 dossier = os.path.dirname(os.path.abspath(__file__))
 nombre_de_niveau = len(glob.glob(dossier + "/objets/plateforme*.json"))
-nb_bon_niv = 1
+nb_bon_niv = 4
 nombre_de_suppression = 0
 
 for numero in range(nb_bon_niv + 1, nombre_de_niveau + 1):
