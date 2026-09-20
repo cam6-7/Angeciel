@@ -3,13 +3,13 @@ import math
 
 class TexteD(Texte):
 
-    def __init__(self, text, position, couleur= (0, 0, 0), taille = 30, police = "arial", centrer = ""):
-        super().__init__(text, position, couleur, taille, police, centrer)
+    def __init__(self, text, position, couleur= (0, 0, 0), taillepolice = 30, police ="arial", centrer =""):
+        super().__init__(text, position, couleur, taillepolice, police, centrer)
         self.base = position[0]
 
     def move(self, cam, joueur):
-        self.x = self.base - cam
-        self.mise_a_jour(nouvelle_pos= (self.x, self.y))
+        self.position[0] = self.base - cam
+        self.mise_a_jour(nouvelle_pos= self.position)
         self.transparence(joueur)
         self.afficher()
 

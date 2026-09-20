@@ -1,9 +1,9 @@
 import pygame
+pygame.init()
 
 from entities.class_Niveau import Niveau
 from class_Game import Game
 
-pygame.init()
 
 # ==================== VARIABLES DU JEU ====================
 

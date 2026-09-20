@@ -26,7 +26,7 @@ class Editeur:
         self.boutons = [
             Bouton("Retour", [10, 50], (255, 255, 255)),
             Bouton("Tester", [10, 100], (255, 255, 255)),
-            Bouton("Creer un \nnouveau niveau", [10, 200], (255, 255, 255), taille= 25),
+            Bouton("Creer un \nnouveau niveau", [10, 200], (255, 255, 255), taillepolice= 25),
             Bouton("paramettre\ndu niveau", [10, 275], (255, 255, 255)),
             Bouton("créer une\nplateforme", [10, 400], (255, 255, 255)),
             Bouton("créer un\nascensseur", [10, 475], (255, 255, 255))]
@@ -96,7 +96,7 @@ class Editeur:
 
 
     def gestion_bouton(self):
-        if self.boutons[0].est_clique():
+        if self.boutons[0].est_clique:
             liste_etat = {"menu" : "menu",
                           "jeu" : "menu",
                           "editeur" : "menu",
@@ -104,22 +104,22 @@ class Editeur:
                           "victoire" : "victoire",
                           }
             Niveau.changer_etat(liste_etat[Niveau.etat])
-        elif self.boutons[1].est_clique():
+        elif self.boutons[1].est_clique:
             self.action = "test"
-        elif self.boutons[2].est_clique():
+        elif self.boutons[2].est_clique:
             Niveau()
             Niveau.changer(Niveau.nombre)
             self.decalage = Niveau.nombre - 1
 
-        elif self.boutons[3].est_clique():
+        elif self.boutons[3].est_clique:
             Niveau.changer_etat("paramettre")
-        elif self.boutons[4].est_clique():
+        elif self.boutons[4].est_clique:
             self.type = "plat"
-        elif self.boutons[5].est_clique():
+        elif self.boutons[5].est_clique:
             self.type = "asc"
-        if self.fleche_g.est_clique():
+        if self.fleche_g.est_clique:
             self.decalage -= 1
-        elif self.fleche_d.est_clique():
+        elif self.fleche_d.est_clique:
             self.decalage += 1
         try:
             if self.boutons_n[-1].rect.right + self.boutons_n[self.decalage - 1].rect.width < Screen.largeur() - 100: self.decalage -= 1
@@ -128,7 +128,7 @@ class Editeur:
         if self.decalage < 0: self.decalage = 0
         self.maj_boutons()
         for b in self.boutons_n:
-            if b.est_clique():
+            if b.est_clique:
                 Niveau.changer(self.boutons_n.index(b) + 1)
 
     def gestion_click(self, events):

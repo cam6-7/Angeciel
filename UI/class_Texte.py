@@ -1,69 +1,48 @@
 from core.class_Screen import Screen
 import pygame
-pygame.init()
 
 class Texte:
-    def __init__(self, text, position, couleur= (0, 0, 0), taille = 30, police = "arial", centre = ""):
-        self.text = str(text)
-        self.x = position[0]
-        self.y = position[1]
+    def __init__(self, text : str, position: tuple, couleur: tuple | list= (0, 0, 0), taillepolice: int = 30, police: str = "arial", centre:str = ""):
+        self.text = text
+        self.position = list(position)
         self.couleur = couleur
-        self.taille = taille
+        self.taillepolice = taillepolice
         self.police = police
-        self.font = pygame.font.SysFont(self.police, self.taille)
-        self.centre = ""
-        if type(self.x) == str:
+        self.centre = centre
+        if position[0] == "x":
             self.centre += "x"
-        if type(self.y) == str:
+            self.position[0] = Screen.largeur() // 2
+        if position[1] == "y":
             self.centre += "y"
-        if self.centre == "":
-            self.centre = centre
-        self.base = position
-        self.centrer()
-        self.surface = self._get_surface()
-        self.rect = self.surface.get_rect(topleft=(self.x, self.y))
+            self.position[1] = Screen.hauteur() // 2
+    @property
 
-    def _get_surface(self):
-        if "\n" in self.text:
-            lines = self.text.split("\n")
-            surfaces = [self.font.render(line, True, self.couleur) for line in lines]
-            width = max(s.get_width() for s in surfaces)
-            height = sum(s.get_height() for s in surfaces)
-            surface = pygame.Surface((width, height), pygame.SRCALPHA)
-            y = 0
-            for s in surfaces:
-                surface.blit(s, (0, y))
-                y += s.get_height()
-        else:
-            line = self.text
-            s = self.font.render(line, True, self.couleur)
-            surface = pygame.Surface((s.get_width(), s.get_height()), pygame.SRCALPHA)
-            surface.blit(s, (0, 0))
+    def rect(self) -> pygame.Rect:
+        rect = self.surface.get_rect(topleft = self.position)
+        if "x" in self.centre :
+            rect.centerx = Screen.largeur() // 2
+        if "y" in self.centre :
+            rect.centery = Screen.hauteur() // 2
+        return rect
+
+    @property
+    def surface(self):
+        font = pygame.font.SysFont(self.police, self.taillepolice)
+        surfaces = [font.render(line, True, self.couleur) for line in self.text.split("\n")]
+        width = max(s.get_width() for s in surfaces)
+        height = sum(s.get_height() for s in surfaces)
+        surface = pygame.Surface((width, height), pygame.SRCALPHA)
+        y = 0
+        for s in surfaces:
+            surface.blit(s, (0, y))
+            y += s.get_height()
         return surface
 
-    def mise_a_jour(self, nouveau_text  : str = False, nouvelle_pos : tuple  | list = False):
+    def mise_a_jour(self, nouveau_text  : str | bool = False, nouvelle_pos : tuple  | list | bool = False):
         if nouveau_text or nouveau_text == "":
             self.text = nouveau_text
-            self.surface = self._get_surface()
-            self.rect = self.surface.get_rect(topleft = (self.x, self.y))
         if nouvelle_pos:
-            self.x = nouvelle_pos[0]
-            self.y = nouvelle_pos[1]
-            self.rect = self.surface.get_rect(topleft = nouvelle_pos)
+            self.position = nouvelle_pos
 
     def afficher(self):
-        self.centrer()
         Screen.screen.blit(self.surface, self.rect)
-
-    def centrer(self):
-        if "x" in self.centre :
-            self.rect = self._get_surface().get_rect(midtop = (Screen.largeur() / 2,  self.y))
-            self.x = self.rect.left
-        if "y" in self.centre :
-            self.rect = self._get_surface().get_rect(midleft = (self.x, Screen.hauteur() / 2))
-            self.y = self.rect.top
-        if self.centre == "spe":
-            self.rect = self._get_surface().get_rect(midtop=(self.base[0] * Screen.largeur() / 1000, self.y))
-            self.x = self.rect.left
-            self.rect = self._get_surface().get_rect(midleft=(self.x, self.base[1] * Screen.hauteur() / 600))
-            self.y = self.rect.top

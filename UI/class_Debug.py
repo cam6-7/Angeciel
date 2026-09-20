@@ -18,14 +18,14 @@ class Debug(Texte):
         self.cle = cle
         self.y = 30 * Debug.nombre
         self.description = description
-        self.taille = self._get_surface().get_rect().width
+        self.taille = self.surface().get_rect().width
         Debug.liste.append(self)
         Debug.nombre += 1
         Timer(1, "i", self.afficher, condition= lambda : Niveau.etat in self.etats or self.etats == "*")
 
     def afficher(self):
         self.valeur_o, _ = self.obtenir()
-        self.taille = self._get_surface().get_rect().width
+        self.taille = self.surface().get_rect().width
         if self.cle:
             if type(self.valeur_o) == dict:
                 self.valeur_o = self.valeur_o[self.cle]

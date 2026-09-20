@@ -20,7 +20,7 @@ class Paramettre:
             bouton.afficher()
 
     def gerer_clic(self):
-        if self.boutons["retour"].est_clique():
+        if self.boutons["retour"].est_clique:
             liste_etat = {"menu" : "menu",
                           "jeu" : "menu",
                           "editeur" : "menu",
@@ -28,7 +28,7 @@ class Paramettre:
                           "victoire" : "victoire",
                           }
             Niveau.changer_etat(liste_etat[Niveau.etat])
-        elif self.boutons["supprimer"].est_clique():
+        elif self.boutons["supprimer"].est_clique:
             if Niveau.nombre == 1:
                 Message("Erreur, le dernier niveau ne peut etre supprimer")
                 return
@@ -40,7 +40,7 @@ class Paramettre:
                 Niveau.changer_etat("editeur")
             else:
                 Message("Erreur, Niveau inexistant")
-        elif self.boutons["dupliquer"].est_clique():
+        elif self.boutons["dupliquer"].est_clique:
             niv = Niveau()
             niv.plateformes = Niveau.actuel.plateformes
             Niveau.changer(Niveau.nombre)

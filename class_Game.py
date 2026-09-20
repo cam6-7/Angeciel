@@ -17,24 +17,24 @@ from scenes.class_Paramettre import Paramettre
 # ==================== INITIALISATION DES OBJETS ====================
 #les menus
 menu1 = Menu([
-            Texte("Bienvenue sur Angeciel",["x", 100], taille=70),
+            Texte("Bienvenue sur Angeciel", ["x", 100], taillepolice=70),
             Bouton("Commencer le jeu", ["x", 310], (0,0, 255)),
             Bouton("Quitter le jeu", ["x", 390], (255, 0, 0)),
-            Bouton("éditeur de niveau", [20, 20], taille= 20)
+            Bouton("éditeur de niveau", [20, 20], taillepolice= 20)
             ])
 menu_v = Menu([
-            Texte(f"Vous avez fini le niveau {Niveau.en_cours}", ["x", 150], taille=70),
+            Texte(f"Vous avez fini le niveau {Niveau.en_cours}", ["x", 150], taillepolice=70),
             Bouton("Niveau suivant", ["x", 310], (0, 0, 255)),
             Bouton(f"Refaire le niveau {Niveau.en_cours}", ["x", 400], (0, 255, 0)),
             Bouton("Quitter le jeu", ["x", 490], (255, 0, 0)),
             ])
 
 # textes de tutoriels
-aide1 = TexteD('Utilisez les\nflèches directionnelles\npour vous déplacer', [50, 425], taille = 20)
-aide2 = TexteD("Appuyez sur espace\npour sauter", (500, 440), taille = 20)
-aide3 = TexteD("Attention\nà ne pas tomber", (1200, 330), taille = 20)
-aide4 = TexteD("Sautez\nIl n'y a aucun dégat de chute!", (3300, 50), taille = 20)
-aide5 = TexteD("Bravo,\nvous avez fini le tutoriel,\nbonne chance pour\nla suite !", (4700, 150), taille = 20)
+aide1 = TexteD('Utilisez les\nflèches directionnelles\npour vous déplacer', (50, 425), taillepolice= 20)
+aide2 = TexteD("Appuyez sur espace\npour sauter", (500, 440), taillepolice= 20)
+aide3 = TexteD("Attention\nà ne pas tomber", (1200, 330), taillepolice= 20)
+aide4 = TexteD("Sautez\nIl n'y a aucun dégat de chute!", (3300, 50), taillepolice= 20)
+aide5 = TexteD("Bravo,\nvous avez fini le tutoriel,\nbonne chance pour\nla suite !", (4700, 150), taillepolice= 20)
 
 
 nb_nuage = 7
@@ -91,11 +91,11 @@ class Game:
         if Niveau.etat == "menu":
             menu1.afficher()
             menu1.boutons[0].mise_a_jour(f"Commencer le niveau {Niveau.en_cours}")
-            if menu1.boutons[1].est_clique():
+            if menu1.boutons[1].est_clique:
                 self.joueur.reinitialiser_jeu()
-            if menu1.boutons[2].est_clique():
+            if menu1.boutons[2].est_clique:
                 Niveau.changer_etat("close")
-            if menu1.boutons[3].est_clique():
+            if menu1.boutons[3].est_clique:
                 self.editeur = Editeur()
                 Niveau.changer_etat("editeur")
         elif Niveau.etat == "paramettre":
@@ -114,12 +114,12 @@ class Game:
                 menu_v.boutons[1].mise_a_jour("Niveau suivant")
             menu_v.boutons[2].mise_a_jour(f"Refaire le niveau {Niveau.en_cours}")
             menu_v.afficher()
-            if menu_v.boutons[1].est_clique():
+            if menu_v.boutons[1].est_clique:
                 Niveau.suivant()
                 self.joueur.reinitialiser_jeu()
-            if menu_v.boutons[2].est_clique():
+            if menu_v.boutons[2].est_clique:
                 self.joueur.reinitialiser_jeu()
-            if menu_v.boutons[3].est_clique():
+            if menu_v.boutons[3].est_clique:
                 Niveau.changer_etat("close")
 
     def display_game(self):

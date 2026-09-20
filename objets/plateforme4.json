@@ -1036,19 +1036,6 @@
         ],
         "positions": [
             [
-                650,
-                25
-            ]
-        ],
-        "avance": true
-    },
-    {
-        "taille": [
-            25,
-            25
-        ],
-        "positions": [
-            [
                 625,
                 50
             ]
