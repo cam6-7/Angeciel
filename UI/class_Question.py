@@ -12,8 +12,8 @@ class Question:
     def __init__(self, question : str, stockage : str, typ = str):
         self.stockage = stockage
         self.text = str(self.obtenir())
-        self.question = Texte(question, ["x", 200], (0, 0, 0), police = "couriernew")
-        self.reponse = Texte(self.text, ["x", 400], (0, 0, 0), police = "couriernew")
+        self.question = Texte(question, lambda s: (Screen.largeur() //2 - s.taille[0] // 2, 200), (0, 0, 0), police = "couriernew")
+        self.reponse = Texte(self.text, lambda self: (Screen.largeur() //2 + self.taille // 2, 400), (0, 0, 0), police = "couriernew")
         self.typ = typ
         self.en_cours = True
         self.decalage = 0

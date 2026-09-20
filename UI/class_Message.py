@@ -1,3 +1,4 @@
+from core.class_Screen import Screen
 from core.class_Temps import Timer
 from UI.class_Texte import Texte
 from entities.class_Niveau import Niveau
@@ -11,8 +12,9 @@ class Message(Texte):
     def __init__(self, message):
         self.etat = Niveau.etat
         if Niveau.etat == "editeur":
-            super().__init__(message, ("x", 100) , centre= "spe")
+            super().__init__(message, (lambda s: (Screen.largeur() //2 - s.taille[0] // 2, 100), 0) )
         else:
-            super().__init__(message, ("x", 2) , centre= "x")
+            super().__init__(message, lambda s: (Screen.largeur() //2 - s.taille[0] // 2, 0)
+)
         Message.liste.append(self)
         Timer(3, "c", self.afficher, condition= lambda : not Message.stop and Message.liste[-1] is self and self.etat == Niveau.etat)

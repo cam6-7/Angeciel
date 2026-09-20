@@ -12,10 +12,7 @@ class BoutonIMG(Clickable):
         super().__init__(self.position, self.taille)
 
     def afficher(self):
-        if self.est_survole:
-            fond_surface = pygame.Surface(self.rect.size, pygame.SRCALPHA)
-            fond_surface.fill((80, 80, 80, 150))
-            Screen.screen.blit(fond_surface, self.rect)
+        self.afficherfond()
         Screen.screen.blit(self.image, self.position)
 
     def mise_a_jour(self, nouvelle_pos):

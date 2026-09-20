@@ -3,8 +3,8 @@ import math
 
 class TexteD(Texte):
 
-    def __init__(self, text, position, couleur= (0, 0, 0), taillepolice = 30, police ="arial", centrer =""):
-        super().__init__(text, position, couleur, taillepolice, police, centrer)
+    def __init__(self, text, position, couleur= (0, 0, 0), taillepolice = 30, police ="arial"):
+        super().__init__(text, position, couleur, taillepolice, police)
         self.base = position[0]
 
     def move(self, cam, joueur):

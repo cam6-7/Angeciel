@@ -16,17 +16,18 @@ from scenes.class_Paramettre import Paramettre
 
 # ==================== INITIALISATION DES OBJETS ====================
 #les menus
+
 menu1 = Menu([
-            Texte("Bienvenue sur Angeciel", ["x", 100], taillepolice=70),
-            Bouton("Commencer le jeu", ["x", 310], (0,0, 255)),
-            Bouton("Quitter le jeu", ["x", 390], (255, 0, 0)),
-            Bouton("éditeur de niveau", [20, 20], taillepolice= 20)
+            Texte("Bienvenue sur Angeciel", lambda s: (Screen.largeur() //2 - s.taille[0] // 2, 100), taillepolice=70),
+            Bouton("Commencer le jeu", lambda s: (Screen.largeur() //2 - s.taille[0] // 2, 310), (0,0, 255)),
+            Bouton("Quitter le jeu", lambda s: (Screen.largeur() //2 - s.taille[0] // 2, 390), (255, 0, 0)),
+            Bouton("éditeur de niveau", (20, 20), taillepolice= 20)
             ])
 menu_v = Menu([
-            Texte(f"Vous avez fini le niveau {Niveau.en_cours}", ["x", 150], taillepolice=70),
-            Bouton("Niveau suivant", ["x", 310], (0, 0, 255)),
-            Bouton(f"Refaire le niveau {Niveau.en_cours}", ["x", 400], (0, 255, 0)),
-            Bouton("Quitter le jeu", ["x", 490], (255, 0, 0)),
+            Texte(f"Vous avez fini le niveau {Niveau.en_cours}", lambda s: (Screen.largeur() //2 - s.taille[0] // 2, 150), taillepolice=70),
+            Bouton("Niveau suivant", lambda s: (Screen.largeur() //2 - s.taille[0] // 2, 310), (0, 0, 255)),
+            Bouton(f"Refaire le niveau {Niveau.en_cours}", lambda s: (Screen.largeur() //2 - s.taille[0] // 2, 400), (0, 255, 0)),
+            Bouton("Quitter le jeu", lambda s: (Screen.largeur() //2 - s.taille[0] // 2, 490), (255, 0, 0)),
             ])
 
 # textes de tutoriels

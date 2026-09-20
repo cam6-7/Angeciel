@@ -6,22 +6,10 @@ import pygame
 
 class Bouton(Texte, Clickable):
 
-    def __init__(self, text : str, position : tuple, couleur: tuple = (0, 0, 0), taillepolice: int = 30, police ="arial", centre =""):
+    def __init__(self, text : str, position : tuple | callable, couleur: tuple = (0, 0, 0), taillepolice: int = 30, police ="arial"):
         Texte.__init__(*locals().values())
-        Clickable.__init__(self, tuple(self.position), self.surface.get_rect().size)
-        self.gtaille = (self.gtaille[0] + 20, self.gtaille[1] + 20)
-    @property
-    def rect(self) -> pygame.Rect:
-        rect = self.surface.get_rect(topleft = self.position)
-        if "x" in self.centre :
-            rect.centerx = Screen.largeur() // 2
-        if "y" in self.centre :
-            rect.centery = Screen.hauteur() // 2
-        return rect
+        Clickable.__init__(self, self.position, self.taille)
 
     def afficher(self):
-        if self.est_survole:
-            fond_surface = pygame.Surface(self.rect.size, pygame.SRCALPHA)
-            fond_surface.fill((80, 80, 80, 150))
-            Screen.screen.blit(fond_surface, self.rect)
+        self.afficherfond()
         Screen.screen.blit(self.surface, self.rect)

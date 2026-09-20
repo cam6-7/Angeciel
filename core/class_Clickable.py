@@ -1,30 +1,37 @@
 import pygame
+
+from core.class_Screen import Screen
 from core.fonction_ressource_path import resource_path
 s_click = pygame.mixer.Sound(resource_path("resources/click.mp3"))
 
 
 class Clickable:
     last_clic = 0
-    def __init__(self, position : tuple, taille : tuple):
-        self.position = list(position)
+    def __init__(self, position : tuple| callable, taille : tuple):
+        if callable(position):  self.position = list(position(self))
+        else: self.position = list(position)
         self.taille = list(taille)
-        self.gtaille = (self.taille[0] + 10, self.taille[1] + 10)
-        self.ptaille = self.taille
 
+
+    def afficherfond(self, force = False):
+        if self.est_survole or force:
+            fond_surface = pygame.Surface(self.zonedecollision.size, pygame.SRCALPHA)
+            fond_surface.fill((80, 80, 80, 150))
+            Screen.screen.blit(fond_surface, self.zonedecollision)
 
     @property
     def est_survole(self):
-        return self.rect.collidepoint(pygame.mouse.get_pos())
+        return self.zonedecollision.collidepoint(pygame.mouse.get_pos())
 
     @property
-    def rect(self) -> pygame.Rect:
+    def zonedecollision(self) -> pygame.Rect:
         return pygame.Rect(*self.position, *self.taille)
 
     @property
     def est_clique(self):
         touch = False
         t = pygame.time.get_ticks()
-        if self.rect.collidepoint(pygame.mouse.get_pos()):
+        if self.zonedecollision.collidepoint(pygame.mouse.get_pos()):
             if pygame.mouse.get_pressed()[0]:
                 if t - Clickable.last_clic > 200:
                     touch = True

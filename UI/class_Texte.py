@@ -2,28 +2,19 @@ from core.class_Screen import Screen
 import pygame
 
 class Texte:
-    def __init__(self, text : str, position: tuple, couleur: tuple | list= (0, 0, 0), taillepolice: int = 30, police: str = "arial", centre:str = ""):
+    def __init__(self, text : str, position: tuple | callable, couleur: tuple | list= (0, 0, 0), taillepolice: int = 30, police: str = "arial"):
         self.text = text
-        self.position = list(position)
+        if callable(position): self.position = position
+        else: self.position = list(position)
         self.couleur = couleur
         self.taillepolice = taillepolice
         self.police = police
-        self.centre = centre
-        if position[0] == "x":
-            self.centre += "x"
-            self.position[0] = Screen.largeur() // 2
-        if position[1] == "y":
-            self.centre += "y"
-            self.position[1] = Screen.hauteur() // 2
-    @property
+        self.taille = self.surface.get_rect().size
 
+    @property
     def rect(self) -> pygame.Rect:
-        rect = self.surface.get_rect(topleft = self.position)
-        if "x" in self.centre :
-            rect.centerx = Screen.largeur() // 2
-        if "y" in self.centre :
-            rect.centery = Screen.hauteur() // 2
-        return rect
+        if callable(self.position): return  self.surface.get_rect(topleft = self.position(self))
+        else: return self.surface.get_rect(topleft = self.position)
 
     @property
     def surface(self):
