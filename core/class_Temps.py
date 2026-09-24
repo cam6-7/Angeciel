@@ -7,10 +7,17 @@ class Timer:
         self.type = tip
         self.fonction = fonction
         self.paramettre = [] if paramettres is None else paramettres
+        try:
+            iter(self.paramettre)
+        except TypeError:
+            self.paramettre = (self.paramettre,)
         self.debut = time.get_ticks()
         self.fin = self.debut + self.durre
         self.condition = condition
         Timer.liste.append(self)
+
+    def stop(self):
+        Timer.liste.remove(self)
 
     def modifier(self, paramettres):
         self.paramettre = paramettres

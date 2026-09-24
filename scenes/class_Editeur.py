@@ -7,7 +7,6 @@ from entities.class_Plateforme import Plateforme
 from core.fonction_texture import dessiner_plateforme_texturee
 from core.fonction_ressource_path import resource_path
 from UI.class_BoutonIMG import BoutonIMG
-from UI.class_Message import Message
 import pygame
 
 image_d = pygame.image.load(resource_path("resources/flèche2.png"))

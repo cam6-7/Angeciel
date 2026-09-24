@@ -1,5 +1,7 @@
 import glob, json, os, sys, pygame
 
+from UI.class_Debug import Debug
+from UI.class_Message import Message
 from  entities.class_Joueur import Joueur
 from UI.class_Bouton import Bouton
 from UI.class_Texte import Texte
@@ -84,9 +86,11 @@ class Game:
                               "victoire": "victoire",
                               }
                 Niveau.changer_etat(liste_etat[Niveau.etat])
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_p:
-                print("\n " + str(pygame.mouse.get_pos()))
-                print(pygame.mouse.get_pos()[0] + Screen.camera, pygame.mouse.get_pos()[1] + Screen.camera, "\n")
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    Message("\n" + str(pygame.mouse.get_pos()))
+                    Message(str(pygame.mouse.get_pos()[0] + Screen.camera) +", " + str(pygame.mouse.get_pos()[1]) + "\n")
+
 
     def display_menus(self):
         if Niveau.etat == "menu":

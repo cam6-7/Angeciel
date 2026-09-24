@@ -8,7 +8,7 @@ s_click = pygame.mixer.Sound(resource_path("resources/click.mp3"))
 class Clickable:
     last_clic = 0
     def __init__(self, position : tuple| callable, taille : tuple):
-        if callable(position):  self.position = list(position(self))
+        if callable(position):  self.position = position
         else: self.position = list(position)
         self.taille = list(taille)
 
@@ -23,9 +23,12 @@ class Clickable:
     def est_survole(self):
         return self.zonedecollision.collidepoint(pygame.mouse.get_pos())
 
+
     @property
     def zonedecollision(self) -> pygame.Rect:
-        return pygame.Rect(*self.position, *self.taille)
+        if callable(self.position): pos : list = list(self.position(self))
+        else: pos : list = self.position
+        return pygame.Rect(*pos, *self.taille)
 
     @property
     def est_clique(self):

@@ -10,11 +10,15 @@ class Texte:
         self.taillepolice = taillepolice
         self.police = police
         self.taille = self.surface.get_rect().size
+        self.nb_lignes = 0
+        self.surface
 
     @property
     def rect(self) -> pygame.Rect:
-        if callable(self.position): return  self.surface.get_rect(topleft = self.position(self))
-        else: return self.surface.get_rect(topleft = self.position)
+        if callable(self.position):
+            return  self.surface.get_rect(topleft = self.position(self))
+        else:
+            return self.surface.get_rect(topleft = self.position)
 
     @property
     def surface(self):
@@ -23,6 +27,7 @@ class Texte:
         width = max(s.get_width() for s in surfaces)
         height = sum(s.get_height() for s in surfaces)
         surface = pygame.Surface((width, height), pygame.SRCALPHA)
+        self.nb_lignes = len(surfaces)
         y = 0
         for s in surfaces:
             surface.blit(s, (0, y))

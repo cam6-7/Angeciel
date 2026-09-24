@@ -1,20 +1,40 @@
+from UI.class_Bouton import Bouton
 from core.class_Screen import Screen
 from core.class_Temps import Timer
-from UI.class_Texte import Texte
-from entities.class_Niveau import Niveau
 import pygame
-pygame.init()
 font = pygame.font.SysFont("arial", 30)
+tempsaffichage = 100
 
-class Message(Texte):
-    stop = False
-    liste = [None,]
-    def __init__(self, message):
-        self.etat = Niveau.etat
-        if Niveau.etat == "editeur":
-            super().__init__(message, (lambda s: (Screen.largeur() //2 - s.taille[0] // 2, 100), 0) )
-        else:
-            super().__init__(message, lambda s: (Screen.largeur() //2 - s.taille[0] // 2, 0)
-)
+class Message(Bouton):
+    liste : list= [None,]
+    liste_relative : list = [None,]
+    def __init__(self, texte):
         Message.liste.append(self)
-        Timer(3, "c", self.afficher, condition= lambda : not Message.stop and Message.liste[-1] is self and self.etat == Niveau.etat)
+        Message.liste_relative.append(self)
+        self.decalage = 0
+
+        super().__init__(texte, lambda s: (Screen.largeur() - s.taille[0] + self.decalage, Screen.hauteur() - ((Message.liste_relative.index(s) + 1) * 40) - s.taille[1]))
+
+        self.timer1 = Timer(tempsaffichage, "c", self.afficher)
+        self.timer2 = Timer(tempsaffichage, "m", Message.liste.remove, paramettres=self)
+        self.timers = [Timer(tempsaffichage, "m", Message.liste_relative.remove, paramettres=self)]
+        for l in range(self.nb_lignes - 1):
+            Message.liste_relative.append(self)
+            self.timers.append(Timer(tempsaffichage, "m", Message.liste_relative.remove, paramettres=self))
+        self.decalage = self.taille[0]
+
+
+
+    def afficher(self):
+        self.decalage *= 0.9
+        if self.decalage < 0: self.decalage = 0
+        super().afficher()
+        if self.est_clique:
+            Message.liste.remove(self)
+            Message.liste_relative = [m for m in Message.liste_relative if m != self]
+            self.timer1.stop()
+            self.timer2.stop()
+            for timer in self.timers:
+                timer.stop()
+
+
