@@ -1,4 +1,4 @@
-from UI.class_Texte import Texte
+from core.class_Texte import Texte
 import math
 
 class TexteD(Texte):

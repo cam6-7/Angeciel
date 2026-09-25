@@ -1,4 +1,4 @@
-from UI.class_Texte import Texte
+from core.class_Texte import Texte
 from core.class_Screen import Screen
 from core.class_Temps import Timer
 from entities.class_Niveau import Niveau

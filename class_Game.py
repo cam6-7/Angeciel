@@ -1,10 +1,9 @@
 import glob, json, os, sys, pygame
 
-from UI.class_Debug import Debug
 from UI.class_Message import Message
 from  entities.class_Joueur import Joueur
 from UI.class_Bouton import Bouton
-from UI.class_Texte import Texte
+from core.class_Texte import Texte
 from UI.class_TexteD import TexteD
 from core.class_Screen import Screen
 from core.class_Temps import Timer
@@ -23,7 +22,7 @@ menu1 = Menu([
             Texte("Bienvenue sur Angeciel", lambda s: (Screen.largeur() //2 - s.taille[0] // 2, 100), taillepolice=70),
             Bouton("Commencer le jeu", lambda s: (Screen.largeur() //2 - s.taille[0] // 2, 310), (0,0, 255)),
             Bouton("Quitter le jeu", lambda s: (Screen.largeur() //2 - s.taille[0] // 2, 390), (255, 0, 0)),
-            Bouton("éditeur de niveau", (20, 20), taillepolice= 20)
+            Bouton("éditeur de niveau", (20, 20), taillepolice= 10)
             ])
 menu_v = Menu([
             Texte(f"Vous avez fini le niveau {Niveau.en_cours}", lambda s: (Screen.largeur() //2 - s.taille[0] // 2, 150), taillepolice=70),

@@ -1,7 +1,6 @@
-from UI.class_Texte import Texte
+from core.class_Texte import Texte
 from core.class_Clickable import Clickable
 from core.class_Screen import Screen
-import pygame
 
 
 class Bouton(Texte, Clickable):
