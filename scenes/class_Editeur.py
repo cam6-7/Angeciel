@@ -33,6 +33,11 @@ class Editeur:
         self.listespos = []
         Screen.camera = -200
 
+    def run(self, events):
+        self.gestion_camera()
+        self.gestion_click(events)
+        self.afficher()
+        self.gestion_bouton()
 
     def afficher(self):
         #fond

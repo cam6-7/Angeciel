@@ -2,42 +2,16 @@ import glob, json, os, sys, pygame
 
 from UI.class_Message import Message
 from  entities.class_Joueur import Joueur
-from UI.class_Bouton import Bouton
-from core.class_Texte import Texte
-from UI.class_TexteD import TexteD
 from core.class_Screen import Screen
 from core.class_Temps import Timer
-from core.fonction_texture import dessiner_plateforme_texturee
 from entities.class_Niveau import Niveau
 from entities.class_Nuage import Nuage
 from entities.class_Plateforme import Plateforme
 from scenes.class_Editeur import Editeur
-from scenes.class_Menu import Menu
-from scenes.class_Paramettre import Paramettre
-
-# ==================== INITIALISATION DES OBJETS ====================
-#les menus
-
-menu1 = Menu([
-            Texte("Bienvenue sur Angeciel", lambda s: (Screen.largeur() //2 - s.taille[0] // 2, 100), taillepolice=70),
-            Bouton("Commencer le jeu", lambda s: (Screen.largeur() //2 - s.taille[0] // 2, 310), (0,0, 255)),
-            Bouton("Quitter le jeu", lambda s: (Screen.largeur() //2 - s.taille[0] // 2, 390), (255, 0, 0)),
-            Bouton("éditeur de niveau", (20, 20), taillepolice= 10)
-            ])
-menu_v = Menu([
-            Texte(f"Vous avez fini le niveau {Niveau.en_cours}", lambda s: (Screen.largeur() //2 - s.taille[0] // 2, 150), taillepolice=70),
-            Bouton("Niveau suivant", lambda s: (Screen.largeur() //2 - s.taille[0] // 2, 310), (0, 0, 255)),
-            Bouton(f"Refaire le niveau {Niveau.en_cours}", lambda s: (Screen.largeur() //2 - s.taille[0] // 2, 400), (0, 255, 0)),
-            Bouton("Quitter le jeu", lambda s: (Screen.largeur() //2 - s.taille[0] // 2, 490), (255, 0, 0)),
-            ])
-
-# textes de tutoriels
-aide1 = TexteD('Utilisez les\nflèches directionnelles\npour vous déplacer', (50, 425), taillepolice= 20)
-aide2 = TexteD("Appuyez sur espace\npour sauter", (500, 440), taillepolice= 20)
-aide3 = TexteD("Attention\nà ne pas tomber", (1200, 330), taillepolice= 20)
-aide4 = TexteD("Sautez\nIl n'y a aucun dégat de chute!", (3300, 50), taillepolice= 20)
-aide5 = TexteD("Bravo,\nvous avez fini le tutoriel,\nbonne chance pour\nla suite !", (4700, 150), taillepolice= 20)
-
+from scenes.class_GameSession import GameSession
+from scenes.class_LevelParametersMenu import LevelParametersMenu
+from scenes.class_MainMenu import MainMenu
+from scenes.class_VictoryMenu import VictoryMenu
 
 nb_nuage = 7
 for i in range(nb_nuage):
@@ -47,9 +21,13 @@ class Game:
     def __init__(self):
         self.events = []
         self.clock = pygame.time.Clock()
+
         self.joueur = Joueur()
         self.editeur = Editeur()
-        self.paramettre = Paramettre()
+        self.paramettre = LevelParametersMenu()
+        self.game_session = GameSession()
+        self.main_menu = MainMenu()
+        self.victoy_menu = VictoryMenu()
 
         self.dossier = os.path.dirname(os.path.abspath(__file__))
         self.nombre_de_niveau = len(glob.glob(self.dossier + "/objets/plateforme*.json"))
@@ -62,9 +40,6 @@ class Game:
 
         self.get_events()
         self.display_menus()
-        if Niveau.etat == "jeu" or Niveau.etat == "test":
-            self.joueur.bouger()
-            self.display_game()
 
         Timer.mise_a_jour()
         pygame.display.flip()
@@ -93,61 +68,16 @@ class Game:
 
     def display_menus(self):
         if Niveau.etat == "menu":
-            menu1.afficher()
-            menu1.boutons[0].mise_a_jour(f"Commencer le niveau {Niveau.en_cours}")
-            if menu1.boutons[1].est_clique:
-                self.joueur.reinitialiser_jeu()
-            if menu1.boutons[2].est_clique:
-                Niveau.changer_etat("close")
-            if menu1.boutons[3].est_clique:
-                self.editeur = Editeur()
-                Niveau.changer_etat("editeur")
+            new_editeur = self.main_menu.run(self.joueur)
+            if new_editeur: self.editeur = Editeur()
         elif Niveau.etat == "paramettre":
-            self.paramettre.afficher()
-            self.paramettre.gerer_clic()
+            self.paramettre.run()
         elif Niveau.etat == "editeur":
-            self.editeur.gestion_camera()
-            self.editeur.gestion_click(self.events)
-            self.editeur.afficher()
-            self.editeur.gestion_bouton()
+            self.editeur.run(self.events)
         elif Niveau.etat == "victoire":
-            menu_v.boutons[0].mise_a_jour(f"Vous avez fini le niveau {Niveau.en_cours}")
-            if Niveau.en_cours == Niveau.nombre:
-                menu_v.boutons[1].mise_a_jour("Recommencer le jeu")
-            else:
-                menu_v.boutons[1].mise_a_jour("Niveau suivant")
-            menu_v.boutons[2].mise_a_jour(f"Refaire le niveau {Niveau.en_cours}")
-            menu_v.afficher()
-            if menu_v.boutons[1].est_clique:
-                Niveau.suivant()
-                self.joueur.reinitialiser_jeu()
-            if menu_v.boutons[2].est_clique:
-                self.joueur.reinitialiser_jeu()
-            if menu_v.boutons[3].est_clique:
-                Niveau.changer_etat("close")
-
-    def display_game(self):
-        Screen.screen.fill(Niveau.actuel.couleur)
-
-        # Nuages
-        for pos in Nuage.liste:
-            pos.afficher()
-
-        # Plateformes et ascenseurs
-        for obj in Niveau.actuel.plateformes:
-            dessiner_plateforme_texturee(obj.rect.move(- Screen.camera, 0))
-
-        # Joueur
-        self.joueur.afficher()
-
-        # Aides pour le niveau 1
-        if Niveau.en_cours == 1:
-            aide1.move(Screen.camera, self.joueur.rect_ecran)
-            aide2.move(Screen.camera, self.joueur.rect_ecran)
-            aide3.move(Screen.camera, self.joueur.rect_ecran)
-            aide4.move(Screen.camera, self.joueur.rect_ecran)
-            aide5.move(Screen.camera, self.joueur.rect_ecran)
-
+            self.victoy_menu.run(self.joueur)
+        elif Niveau.etat == "jeu" or Niveau.etat == "test":
+            self.game_session.run(self.joueur)
 
 
     def save(self):
