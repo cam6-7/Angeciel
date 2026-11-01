@@ -138,7 +138,7 @@ class Joueur:
             self.rect.y = 0
             self.vy = 0
         # si on va trop bas
-        elif self.rect.top >= Screen.hauteur():
+        elif self.rect.bottom >= Screen.hauteur():
             self.reinitialiser_jeu()
 
     @property
